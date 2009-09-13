@@ -1,0 +1,19 @@
+#summary Guía de instalación
+#labels Phase-Deploy
+
+= Compatibilidad =
+
+El entorno es compatible con Windows 95 y versiones superiores.
+También ha sido probado en Linux, corriendo sobre Wine.
+
+
+= Instalación =
+
+El entorno no requiere instalación, es únicamente el archivo ejecutable. Se distribuye con un instalador para reducir el tamaño de la descarga y facilitar la creación de una carpeta y accesos directos al ejecutable.
+
+
+= Compilación =
+
+Si pretende compilar los fuentes, en teoría, además de compilarse con Delphi5, deberían poder compilarse con Kilix (Linux) y con Lazarus (Windows,Linux,Mac).
+
+Para poder compilar el proyecto, debe instalar primero los componentes SynEdit.
