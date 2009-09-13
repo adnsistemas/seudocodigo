@@ -288,7 +288,7 @@ var
 begin
   if FMessageLine >= 0 then begin
     msg := ce.CompilerMessages[FMessageLine];
-    if Line = TSynEdit(Sender).RowToLine(msg.Row) then begin
+    if Line = msg.Row then begin
       Special := True;
       BG := clGreen;
       FG := clWhite;
@@ -844,6 +844,8 @@ begin
     SetToMessage;
 end;
 
+{ resalta la línea del editor, correspondiente a la línea en donde se ha encontrado
+un error, advertencia o consejo }
 procedure Teditor.SetToMessage;
 var
   i: Longint;
@@ -860,7 +862,7 @@ begin
       SetActivePage(msg.ModuleName)
     else
       SetActivePage(ce.MainFileName);
-    lpos := Currented.RowToLine(msg.Row);
+    lpos := msg.Row;//Currented.LineToRow(msg.Row);
     Currented.InvalidateLine(lpos);
   end;
   i := Messages.ItemIndex;
@@ -874,12 +876,12 @@ begin
       SetActivePage(msg.ModuleName)
     else
       SetActivePage(ce.MainFileName);
-    lpos := Currented.RowToLine(msg.Row);
+    lpos := msg.Row;//Currented.LineToRow(msg.Row);
     if oldml = lpos then begin
       Currented.SetFocus;
     end else begin
       Currented.GotoLineAndCenter(lpos);
-      bp := Currented.DisplayToBufferPos(DisplayCoord(msg.Col,msg.Row));
+      bp := BufferCoord(msg.Col,msg.Row);
       Currented.SetCaretAndSelection(bp,bp,BufferCoord(bp.Char + 1,bp.Line));
       Currented.InvalidateLine(lpos);
     end;
@@ -894,7 +896,7 @@ begin
   if (FMessageLine >= 0) and (FMessageLine < ce.CompilerMessageCount) then begin
     msg := ce.CompilerMessages[FMessageLine];
     if Assigned(msg) and Assigned(CurrentEd) then
-      Currented.InvalidateLine(Currented.RowToLine(msg.Row));
+      Currented.InvalidateLine(msg.Row);
   end;
   FMessageLine := -1;
 end;
