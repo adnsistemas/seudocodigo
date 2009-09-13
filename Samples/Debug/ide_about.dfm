@@ -141,6 +141,26 @@ object AcercaForm: TAcercaForm
     WordWrap = True
     OnClick = Label7Click
   end
+  object Label10: TLabel
+    Tag = 3
+    Left = 0
+    Top = 164
+    Width = 467
+    Height = 20
+    Cursor = crHandPoint
+    Align = alTop
+    Alignment = taCenter
+    AutoSize = False
+    Caption = 'Proyecto Google Code'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clHighlight
+    Font.Height = -11
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold, fsUnderline]
+    ParentFont = False
+    WordWrap = True
+    OnClick = Label7Click
+  end
   object Panel1: TPanel
     Left = 0
     Top = 201

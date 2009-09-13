@@ -23,6 +23,7 @@ type
     Label8: TLabel;
     Panel2: TPanel;
     Label9: TLabel;
+    Label10: TLabel;
     procedure Label7Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
   private
@@ -40,7 +41,7 @@ uses shellapi;
 {$R *.DFM}
 
 const
-  Urls:array[0..3] of PChar = ('http://www.frm.utn.edu.ar/algoritmos','http://www.remobjects.com/','http://synedit.sourceforge.net/','mailto:dabdala@frm.utn.edu.ar');
+  Urls:array[0..4] of PChar = ('http://www.frm.utn.edu.ar/algoritmos','http://www.remobjects.com/','http://synedit.sourceforge.net/','mailto:dabdala@frm.utn.edu.ar','http://code.google.com/p/seudocodigo/');
 
 procedure TAcercaForm.Label7Click(Sender: TObject);
 begin
