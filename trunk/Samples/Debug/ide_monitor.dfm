@@ -1,0 +1,67 @@
+object VMonitorForm: TVMonitorForm
+  Left = 555
+  Top = 38
+  Width = 601
+  Height = 483
+  ActiveControl = Memo1
+  BorderIcons = []
+  Caption = 'Monitor'
+  Color = clBtnFace
+  DragKind = dkDock
+  DragMode = dmAutomatic
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  FormStyle = fsStayOnTop
+  OldCreateOrder = False
+  OnActivate = FormActivate
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  OnResize = FormResize
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Memo1: TMemo
+    Left = 0
+    Top = 0
+    Width = 585
+    Height = 447
+    Align = alClient
+    BorderStyle = bsNone
+    Color = clBlack
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWhite
+    Font.Height = -13
+    Font.Name = 'Courier'
+    Font.Pitch = fpFixed
+    Font.Style = []
+    ParentFont = False
+    ReadOnly = True
+    ScrollBars = ssVertical
+    TabOrder = 0
+    WordWrap = False
+    OnEnter = Memo1Enter
+  end
+  object Edit1: TEdit
+    Left = 32
+    Top = 8
+    Width = 121
+    Height = 13
+    BorderStyle = bsNone
+    Color = clBlack
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWhite
+    Font.Height = -13
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    MaxLength = 75
+    ParentFont = False
+    TabOrder = 1
+    Text = 'Edit1'
+    OnKeyDown = Edit1KeyDown
+    OnKeyPress = Edit1KeyPress
+    OnKeyUp = Edit1KeyUp
+  end
+end

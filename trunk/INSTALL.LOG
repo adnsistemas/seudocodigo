@@ -1,0 +1,359 @@
+***  Installation Started 04/30/2009 0:47  ***
+Title: RemObjects Pascal Script
+Source: C:\Users\David\AppData\Local\Temp\GLB8A29.tmp | 04-30-2009 | 00:47:08 | 71680
+Made Dir: C:\Program Files\RemObjects Software
+Made Dir: C:\Program Files\RemObjects Software\Pascal Script for Delphi
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\UNWISE.EXE | 07-26-2002 | 17:02:06 | | 153088 | 5be5019b
+RegDB Key: Software\Microsoft\Windows\CurrentVersion\Uninstall\Pascal Script
+RegDB Val: Pascal Script
+RegDB Name: DisplayName
+RegDB Root: 2
+RegDB Key: Software\Microsoft\Windows\CurrentVersion\Uninstall\Pascal Script
+RegDB Val: C:\PROGRA~1\REMOBJ~1\PASCAL~1\UNWISE.EXE C:\PROGRA~1\REMOBJ~1\PASCAL~1\INSTALL.LOG
+RegDB Name: UninstallString
+RegDB Root: 2
+RegDB Key: Software\Microsoft\Windows\CurrentVersion\Uninstall\Pascal Script
+RegDB Val: Toshiba
+RegDB Name: RegCompany
+RegDB Root: 2
+RegDB Key: Software\Microsoft\Windows\CurrentVersion\Uninstall\Pascal Script
+RegDB Val: David
+RegDB Name: RegOwner
+RegDB Root: 2
+Made Dir: C:\Program Files\RemObjects Software\Everwood
+Made Dir: C:\Program Files\RemObjects Software\Everwood\Bin
+File Copy: C:\Program Files\RemObjects Software\Everwood\Bin\EWSetRegistryPath.exe | 01-06-2006 | 12:16:34 | | 116224 | 96193577
+File Copy: C:\Program Files\RemObjects Software\Everwood\Bin\RemObjects_Everwood_D6.bpl | 02-27-2009 | 12:16:26 | 2.0.3.133 | 260096 | ffd094ad
+File Copy: C:\Program Files\RemObjects Software\Everwood\Bin\RemObjects_Everwood_D7.bpl | 02-27-2009 | 12:16:28 | 2.0.3.133 | 261120 | aaecdb99
+File Copy: C:\Program Files\RemObjects Software\Everwood\Bin\RemObjects_Everwood_D6.dcp | 02-27-2009 | 12:16:26 | | 84031 | 73402651
+File Copy: C:\Program Files\RemObjects Software\Everwood\Bin\RemObjects_Everwood_D7.dcp | 02-27-2009 | 12:16:28 | | 87349 | 4ff9a818
+File Copy: C:\Program Files\RemObjects Software\Everwood\Bin\RemObjects_Everwood_D9.bpl | 02-27-2009 | 12:16:30 | 2.0.3.133 | 267776 | 8999e8d8
+File Copy: C:\Program Files\RemObjects Software\Everwood\Bin\RemObjects_Everwood_D9.dcp | 02-27-2009 | 12:16:30 | | 91452 | 1efd6b65
+File Copy: C:\Program Files\RemObjects Software\Everwood\Bin\RemObjects_Everwood_D10.bpl | 02-27-2009 | 12:16:32 | 2.0.3.133 | 264192 | 8dba89fe
+File Copy: C:\Program Files\RemObjects Software\Everwood\Bin\RemObjects_Everwood_D10.dcp | 02-27-2009 | 12:16:32 | | 91696 | fab92345
+File Copy: C:\Program Files\RemObjects Software\Everwood\Bin\RemObjects_Everwood_D11.bpl | 02-27-2009 | 12:16:34 | 2.0.3.133 | 264192 | 44edc688
+File Copy: C:\Program Files\RemObjects Software\Everwood\Bin\RemObjects_Everwood_D11.dcp | 02-27-2009 | 12:16:34 | | 91708 | 56e30af5
+File Copy: C:\Program Files\RemObjects Software\Everwood\Bin\RemObjects_Everwood_D12.bpl | 02-27-2009 | 12:16:38 | 2.0.3.133 | 266752 | ea0414a9
+File Copy: C:\Program Files\RemObjects Software\Everwood\Bin\RemObjects_Everwood_D12.dcp | 02-27-2009 | 12:16:38 | | 94999 | c49efa34
+Made Dir: C:\Program Files\RemObjects Software\Everwood\Source
+Made Dir: C:\Program Files\RemObjects Software\Everwood\Source\Delphi
+File Copy: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\RemObjects_Everwood_D6.dpk | 10-20-2006 | 21:54:12 | | 1321 | aac43c71
+File Copy: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\RemObjects_Everwood_D6.cfg | 10-08-2007 | 20:58:00 | | 376 | 584bcad7
+File Copy: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\RemObjects_Everwood_D6.dof | 10-08-2007 | 20:58:00 | | 5009 | dc2ee817
+File Copy: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\RemObjects_Everwood_D6.res | 02-27-2009 | 12:16:24 | | 392 | fcbb4f3c
+File Copy: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\RemObjects_Everwood_D7.dpk | 10-20-2006 | 21:54:12 | | 1321 | 7229b44a
+File Copy: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\RemObjects_Everwood_D7.cfg | 10-08-2007 | 20:58:00 | | 540 | 6cd75910
+File Copy: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\RemObjects_Everwood_D7.dof | 10-08-2007 | 20:58:00 | | 3326 | 770233c0
+File Copy: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\RemObjects_Everwood_D7.res | 02-27-2009 | 12:16:26 | | 392 | fcbb4f3c
+File Copy: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\RemObjects_Everwood_D9.bdsproj | 01-03-2006 | 17:39:24 | | 10398 | aeae826a
+File Copy: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\RemObjects_Everwood_D9.cfg | 10-08-2007 | 20:58:00 | | 512 | 7e4f5fc8
+File Copy: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\RemObjects_Everwood_D9.dof | 10-20-2006 | 21:54:12 | | 3535 | b9f87056
+File Copy: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\RemObjects_Everwood_D9.dpk | 10-20-2006 | 21:54:12 | | 1321 | bc0ed08e
+File Copy: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\RemObjects_Everwood_D9.res | 02-27-2009 | 12:16:28 | | 392 | fcbb4f3c
+File Copy: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\RemObjects_Everwood_D10.bdsproj | 01-03-2006 | 17:39:24 | | 10393 | 5377e35f
+File Copy: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\RemObjects_Everwood_D10.cfg | 10-08-2007 | 20:58:00 | | 518 | 4ac93bc
+File Copy: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\RemObjects_Everwood_D10.dpk | 10-20-2006 | 21:54:12 | | 1322 | c217326f
+File Copy: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\RemObjects_Everwood_D10.res | 02-27-2009 | 12:16:30 | | 392 | fcbb4f3c
+File Copy: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\RemObjects_Everwood_D11.dproj | 10-08-2007 | 20:58:00 | | 6790 | 67314d14
+File Copy: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\RemObjects_Everwood_D11.dpk | 09-13-2007 | 12:16:32 | | 1322 | 1afaba54
+File Copy: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\RemObjects_Everwood_D11.res | 02-27-2009 | 12:16:32 | | 392 | fcbb4f3c
+File Copy: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\RemObjects_Everwood_D12.res | 02-27-2009 | 12:16:36 | | 392 | fcbb4f3c
+File Copy: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\RemObjects_Everwood_D12.dpk | 07-08-2008 | 14:05:12 | | 1322 | a8bd2458
+File Copy: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\RemObjects_Everwood_D12.dproj | 09-04-2008 | 16:29:26 | | 8753 | efc6ef90
+File Copy: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\RemObjects_Everwood_Reg.pas | 07-30-2008 | 15:33:58 | | 443 | 88a50b97
+File Copy: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\uEWAbout.lfm | 07-31-2008 | 13:45:02 | | 342008 | 49293644
+File Copy: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\uEWAbout.lrs | 07-31-2008 | 13:45:02 | | 410335 | 1daf6fe2
+File Copy: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\uEWWizard.lfm | 07-30-2008 | 15:33:58 | | 19405 | a1e1f0fc
+File Copy: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\uEWWizard.lrs | 07-30-2008 | 15:33:58 | | 26977 | 5d451eb
+File Copy: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\uEWMenuManager_laz.pas | 07-31-2008 | 13:45:02 | | 6046 | e5dc5e52
+File Copy: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\uEWOTAHelpers_laz.pas | 07-31-2008 | 12:53:54 | | 5965 | d726f46a
+File Copy: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\EverwoodIDEResources.lrs | 01-03-2008 | 18:53:06 | | 42295 | 72042da7
+File Copy: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\RemObjects_Everwood_Lazarus_Unix.lpk | 08-15-2008 | 08:43:46 | | 2454 | 268618ff
+File Copy: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\RemObjects_Everwood_Lazarus_Windows.lpk | 11-11-2008 | 17:54:48 | | 2514 | 855e5d0c
+File Copy: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\EverwoodIDEResources.res | 02-27-2009 | 12:16:24 | | 15292 | 40e5d0a2
+Made Dir: C:\Program Files\RemObjects Software\Pascal Script for Delphi\BACKUP
+File Overwrite: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\EverwoodIDEResources.lrs | 01-03-2008 | 18:53:06 | | 42295 | 72042da7
+Backup Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\BACKUP\EverwoodIDEResources.lrs
+File Copy: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\uEWOTAMessages.pas | 08-19-2006 | 14:44:52 | | 1601 | 2805e15e
+File Copy: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\uEWOTANewModuleExpert.pas | 01-27-2007 | 21:39:30 | | 286 | 978aef87
+File Copy: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\uEWOTANewProjectExpert.pas | 01-27-2007 | 21:39:30 | | 291 | a44ff5d9
+File Copy: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\uEWOTARepositoryExpert.pas | 01-03-2008 | 18:53:06 | | 9176 | fed76b4c
+File Copy: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\uEWOTAWizards.pas | 01-27-2007 | 21:39:30 | | 9523 | f87eaa98
+File Copy: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\uEWSampleInfo.dfm | 05-05-2008 | 10:53:20 | | 36589 | 2398803a
+File Copy: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\uEWSampleInfo.pas | 10-17-2007 | 14:23:18 | | 3687 | 932f0bf8
+File Copy: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\uEWStringTools.pas | 07-31-2008 | 12:53:54 | | 970 | 5bb068c
+File Copy: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\uEWTools.pas | 07-31-2008 | 12:53:54 | | 2282 | 1bc32989
+File Copy: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\uEWWizard.dfm | 01-27-2007 | 21:39:30 | | 19494 | 9e40a13d
+File Copy: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\uEWWizard.pas | 01-03-2008 | 18:53:06 | | 7398 | 27f975ac
+File Overwrite: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\uEWWizard.lrs | 07-30-2008 | 15:33:58 | | 26977 | 5d451eb
+Backup Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\BACKUP\uEWWizard.lrs
+File Overwrite: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\uEWWizard.lfm | 07-30-2008 | 15:33:58 | | 19405 | a1e1f0fc
+Backup Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\BACKUP\uEWWizard.lfm
+File Copy: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\uEWAbout.dfm | 08-12-2008 | 13:36:54 | | 342395 | 7ad8af3f
+File Copy: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\uEWAbout.pas | 07-31-2008 | 13:45:02 | | 3248 | 1ece7ac4
+File Overwrite: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\uEWAbout.lrs | 07-31-2008 | 13:45:02 | | 410335 | 1daf6fe2
+Backup Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\BACKUP\uEWAbout.lrs
+File Overwrite: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\uEWAbout.lfm | 07-31-2008 | 13:45:02 | | 342008 | 49293644
+Backup Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\BACKUP\uEWAbout.lfm
+File Copy: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\uEWHelpers.pas | 01-03-2008 | 18:53:06 | | 2886 | 12b359f2
+File Copy: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\uEWMenuManager.pas | 06-05-2008 | 15:49:00 | | 8747 | f4c5ebc9
+File Copy: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\uEWOTAHelpers.pas | 08-07-2008 | 12:30:22 | | 11105 | 11bedfeb
+File Copy: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\Everwood.inc | 01-03-2008 | 18:53:06 | | 71 | 7678d69e
+File Copy: C:\Program Files\RemObjects Software\Everwood\Source\Delphi\eDefines.inc | 08-07-2008 | 12:30:22 | | 16839 | 59b6969b
+RegDB Key: Software\RemObjects\Everwood for Delphi
+RegDB Val: 1
+RegDB Name: Installed
+RegDB Root: 1
+RegDB Key: Software\RemObjects\Everwood for Delphi
+RegDB Val: C:\Program Files\RemObjects Software\Everwood
+RegDB Name: InstallDir
+RegDB Root: 1
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\License.txt | 01-08-2009 | 13:47:26 | | 9443 | af431896
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\README.html | 11-28-2008 | 14:30:32 | | 1753 | dde37eaf
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\ps.png | 04-25-2004 | 17:16:12 | | 16701 | a7a101
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Launch.exe | 12-03-2003 | 19:26:00 | | 14848 | 81197b84
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Changes.txt | 12-19-2005 | 22:41:40 | | 4447 | 7bb0bcbe
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Pascal Script.ico | 05-01-2004 | 21:03:18 | | 22486 | d564aa43
+Made Dir: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Bin
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Bin\PSUnitImporter.exe | 02-27-2009 | 12:25:24 | 3.0.37.761 | 1347584 | 202c8983
+Made Dir: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Dcu
+Made Dir: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Dcu\D6
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Dcu\D6\PascalScript_Core_D6.bpl | 02-27-2009 | 12:25:02 | 3.0.37.761 | 639488 | 7ab2ba9d
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Dcu\D6\PascalScript_Core_D6.dcp | 02-27-2009 | 12:25:02 | | 778380 | 1cc2b626
+Made Dir: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Dcu\D7
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Dcu\D7\PascalScript_Core_D7.bpl | 02-27-2009 | 12:25:04 | 3.0.37.761 | 647168 | f41a2c1c
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Dcu\D7\PascalScript_Core_D7.dcp | 02-27-2009 | 12:25:04 | | 779972 | 352aef04
+Made Dir: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Dcu\D10
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Dcu\D10\PascalScript_Core_D10.bpl | 02-27-2009 | 12:25:06 | 3.0.37.761 | 642560 | 5c8e2281
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Dcu\D10\PascalScript_Core_D10.dcp | 02-27-2009 | 12:25:06 | | 794621 | 5af271ce
+Made Dir: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Dcu\D11
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Dcu\D11\PascalScript_Core_D11.bpl | 02-27-2009 | 12:25:12 | 3.0.37.761 | 643072 | 5ff55238
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Dcu\D11\PascalScript_Core_D11.dcp | 02-27-2009 | 12:25:12 | | 794699 | e69edb96
+Made Dir: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Dcu\D12
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Dcu\D12\PascalScript_Core_D12.bpl | 02-27-2009 | 12:25:16 | 3.0.37.761 | 674304 | 26f4853f
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Dcu\D12\PascalScript_Core_D12.dcp | 02-27-2009 | 12:25:16 | | 837760 | 68d50780
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Dcu\D7\PascalScript_RO_D7.bpl | 02-27-2009 | 12:25:04 | 3.0.37.761 | 56320 | ee25f6eb
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Dcu\D7\PascalScript_RO_D7.dcp | 02-27-2009 | 12:25:04 | | 43980 | 5fef7181
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Dcu\D12\PascalScript_RO_D12.bpl | 02-27-2009 | 12:25:18 | 3.0.37.761 | 54272 | 3367197f
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Dcu\D12\PascalScript_RO_D12.dcp | 02-27-2009 | 12:25:18 | | 44380 | 1e45a090
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Dcu\D10\PascalScript_RO_D10.bpl | 02-27-2009 | 12:25:10 | 3.0.37.761 | 50176 | f4471a7a
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Dcu\D10\PascalScript_RO_D10.dcp | 02-27-2009 | 12:25:10 | | 41839 | 17710a9d
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Dcu\D11\PascalScript_RO_D11.bpl | 02-27-2009 | 12:25:14 | 3.0.37.761 | 50176 | 1b1a7db0
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Dcu\D11\PascalScript_RO_D11.dcp | 02-27-2009 | 12:25:14 | | 41844 | c0aee1c
+Made Dir: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\PascalScript_Core_D10.bdsproj | 02-27-2009 | 12:25:08 | | 8283 | d83255b1
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\PascalScript_Core_D10.dpk | 10-26-2007 | 14:20:00 | | 2210 | c7553ea5
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\PascalScript_Core_D10.res | 02-27-2009 | 12:25:06 | | 628 | b8d9e0b
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\PascalScript_Core_D10.cfg | 12-19-2005 | 17:57:54 | | 535 | 129a73f7
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\PascalScript_Core_D11.dproj | 02-27-2009 | 12:25:12 | | 7395 | fe58e8c6
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\PascalScript_Core_D11.dpk | 10-26-2007 | 14:20:00 | | 2210 | 21339bd2
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\PascalScript_Core_D11.res | 02-27-2009 | 12:25:10 | | 628 | b8d9e0b
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\PascalScript_Core_D7.dpk | 10-26-2007 | 14:20:00 | | 2209 | 70232fa6
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\PascalScript_Core_D7.dof | 02-27-2009 | 12:25:04 | | 1937 | 281b1f4d
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\PascalScript_Core_D7.res | 02-27-2009 | 12:25:02 | | 628 | b8d9e0b
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\PascalScript_Core_D6.dof | 02-27-2009 | 12:25:02 | | 1869 | 599a4064
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\PascalScript_Core_D6.dpk | 10-26-2007 | 14:20:00 | | 2209 | 96458ad1
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\PascalScript_Core_D6.res | 02-27-2009 | 12:25:00 | | 628 | 17aa061e
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\PascalScript_Core_D5.dof | 02-27-2009 | 12:25:00 | | 1786 | 21061a8c
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\PascalScript_Core_D5.dpk | 10-16-2006 | 18:24:32 | | 2209 | 679f6309
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\PascalScript_Core_D4.dpk | 10-16-2006 | 18:24:32 | | 2208 | ac617051
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\PascalScript_Core_D4.dof | 02-27-2009 | 12:25:00 | | 1786 | c918aa04
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\PascalScript_Core_D3.dof | 02-27-2009 | 12:25:00 | | 1804 | 5288eae4
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\PascalScript_Core_D3.dpk | 10-16-2006 | 18:24:32 | | 2209 | 5f5bb6f8
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\PascalScript_Core_K3.kof | 04-20-2004 | 20:57:42 | | 1786 | 2be344e0
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\PascalScript_Core_K3.dpk | 04-20-2004 | 20:57:42 | | 2209 | 69dc73d4
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\PascalScript_Core_D12.dpk | 07-10-2008 | 17:05:56 | | 2210 | d0e9720a
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\PascalScript_Core_D12.dproj | 02-27-2009 | 12:25:16 | | 5895 | 977748ed
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\PascalScript_Core_D12.res | 02-27-2009 | 12:25:14 | | 628 | b8d9e0b
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\PascalScript_Core_Glyphs.RES | 02-27-2009 | 12:25:00 | | 18328 | e7641689
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\PascalScript_Core_Reg.pas | 12-10-2007 | 15:32:28 | | 1611 | d98b8369
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\PascalScript_RO_D11.dproj | 02-27-2009 | 12:25:14 | | 6568 | c3206aa9
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\PascalScript_RO_D11.dpk | 09-13-2007 | 15:22:22 | | 930 | b7bbca3
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\PascalScript_RO_D12.dpk | 07-10-2008 | 17:05:56 | | 930 | edd495ae
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\PascalScript_RO_D12.dproj | 02-27-2009 | 12:25:18 | | 5132 | a9e255b9
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\PascalScript_RO_D12.res | 02-27-2009 | 12:25:16 | | 628 | b8d9e0b
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\PascalScript_RO_D10.bdsproj | 02-27-2009 | 12:25:10 | | 8244 | c0156282
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\PascalScript_RO_D10.cfg | 04-26-2006 | 12:16:06 | | 846 | 995e9ae1
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\PascalScript_RO_D10.dpk | 02-23-2006 | 15:15:02 | | 930 | ab48f3b5
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\PascalScript_RO_D7.dpk | 02-23-2006 | 15:15:02 | | 834 | 42a10e79
+File Overwrite: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\PascalScript_RO_D7.dpk | 02-23-2006 | 15:15:02 | | 834 | 42a10e79
+Backup Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\BACKUP\PascalScript_RO_D7.dpk
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\PascalScript_RO_D7.dof | 02-27-2009 | 12:25:04 | | 1958 | 43635fb7
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\PascalScript_RO_D7.res | 02-27-2009 | 12:25:04 | | 628 | b8d9e0b
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\PascalScript_RO_D6.dpk | 02-23-2006 | 15:15:02 | | 834 | 21e8b115
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\PascalScript_RO_D6.dof | 02-27-2009 | 12:25:00 | | 1804 | 252473d1
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\PascalScript_RO_D6.res | 04-25-2004 | 17:02:16 | | 616 | 9bbf6df1
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\PascalScript_RO_Glyphs.RES | 02-27-2009 | 12:25:00 | | 1876 | 88704ce0
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\PascalScript_RO_Reg.pas | 08-01-2008 | 12:25:56 | | 734 | a6ce3a4f
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\x86.inc | 08-01-2008 | 12:25:56 | | 24030 | e160c5c4
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\powerpc.inc | 12-05-2007 | 13:55:56 | | 10572 | 39cf152e
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\PascalScript.inc | 08-01-2008 | 12:25:56 | | 1762 | ebf201ef
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\eDefines.inc | 08-14-2008 | 12:53:32 | | 16839 | 59b6969b
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\BuildPackages_D6.bpg | 04-25-2004 | 17:02:16 | | 875 | 17e01450
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\BuildPackages_D7.bpg | 04-25-2004 | 17:02:16 | | 875 | dc57cb7
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\BuildPackages_D10.bdsgroup | 12-19-2005 | 18:12:14 | | 856 | 1e8535b2
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\BuildPackages_D11.groupproj | 09-13-2007 | 15:22:22 | | 1853 | 214bf1b2
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\BuildPackages_D12.groupproj | 07-10-2008 | 17:05:56 | | 1853 | 5797259b
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\uPSDebugger.pas | 08-14-2008 | 10:10:34 | | 15835 | b14f7d05
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\uPSDisassembly.pas | 02-11-2008 | 11:36:58 | | 16034 | 69070560
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\uPSPreProcessor.pas | 11-14-2008 | 14:32:00 | | 22131 | 4633e18c
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\uPSR_buttons.pas | 10-01-2004 | 19:23:56 | | 789 | 45ccccdd
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\uPSR_classes.pas | 07-27-2005 | 16:41:56 | | 14735 | 7bec20bc
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\uPSR_comobj.pas | 07-27-2005 | 16:41:56 | | 2154 | 6098c2a9
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\uPSR_controls.pas | 02-11-2008 | 11:36:58 | | 10953 | bee36feb
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\uPSR_dateutils.pas | 03-15-2007 | 16:32:38 | | 1863 | 57f190dd
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\uPSR_DB.pas | 10-10-2008 | 08:46:24 | | 76422 | fbb55314
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\uPSR_dll.pas | 11-14-2008 | 14:32:00 | | 7218 | 43c52b29
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\uPSR_extctrls.pas | 01-05-2006 | 19:08:30 | | 3674 | fab516f0
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\uPSR_forms.pas | 02-11-2008 | 11:36:58 | | 13909 | f2ca791b
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\uPSR_graphics.pas | 10-04-2006 | 12:08:40 | | 8488 | 8c2b726e
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\uPSR_menus.pas | 01-05-2006 | 19:08:30 | | 17296 | a63d3bb4
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\uPSR_std.pas | 10-01-2004 | 19:23:56 | | 2710 | 17cc7c4a
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\uPSR_stdctrls.pas | 01-05-2006 | 19:08:30 | | 11025 | 43456fc
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\uPSRuntime.pas | 11-14-2008 | 14:32:00 | | 392315 | 1541b9b7
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\uPSUtils.pas | 11-14-2008 | 14:32:00 | | 36093 | 42786796
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\uPSC_buttons.pas | 11-15-2004 | 14:39:22 | | 2806 | 35ea551
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\uPSC_classes.pas | 10-10-2008 | 08:46:24 | | 12371 | ca15b3e2
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\uPSC_comobj.pas | 10-10-2008 | 08:46:24 | | 612 | 2f8421bb
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\uPSC_controls.pas | 10-10-2008 | 08:46:24 | | 9796 | cc65a10
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\uPSC_dateutils.pas | 10-10-2008 | 08:46:24 | | 1553 | b09b037b
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\uPSC_DB.pas | 10-10-2008 | 08:46:24 | | 36742 | 9455d164
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\uPSC_dll.pas | 08-14-2008 | 10:10:34 | | 3868 | 85f6349e
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\uPSC_extctrls.pas | 10-10-2008 | 08:46:24 | | 12642 | 3cd6a9b7
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\uPSC_forms.pas | 10-10-2008 | 08:46:24 | | 11922 | 11c8d11b
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\uPSC_graphics.pas | 10-10-2008 | 08:46:24 | | 13222 | 18c36fe3
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\uPSC_menus.pas | 10-10-2008 | 08:46:24 | | 9930 | 1879af0
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\uPSC_std.pas | 10-10-2008 | 08:46:24 | | 2707 | 14be4e3d
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\uPSC_stdctrls.pas | 10-10-2008 | 08:46:24 | | 25016 | a9602d32
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\uPSCompiler.pas | 11-14-2008 | 14:32:00 | | 452991 | 813bcd82
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\uPSComponent.pas | 09-30-2008 | 08:42:14 | | 42421 | 8f066bc0
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\uPSComponent_COM.pas | 10-01-2004 | 19:23:56 | | 755 | 7d8d0635
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\uPSComponent_Controls.pas | 01-05-2006 | 19:08:30 | | 1636 | c15c38a7
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\uPSComponent_DB.pas | 03-15-2007 | 16:32:38 | | 715 | 3a93c74c
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\uPSComponent_Default.pas | 10-04-2006 | 12:08:40 | | 1945 | 64df0be9
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\uPSComponent_Forms.pas | 01-05-2006 | 19:08:30 | | 1438 | d778cbb8
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\uPSComponent_StdCtrls.pas | 01-05-2006 | 19:08:30 | | 1558 | d2e2afb9
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\uROPSServerLink.pas | 09-30-2008 | 08:42:14 | | 34828 | fa674987
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\uROPSImports.pas | 07-27-2005 | 22:23:26 | | 10899 | 67ed1671
+Made Dir: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples
+Made Dir: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Console
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Console\sample4.dpr | 07-12-2005 | 16:29:16 | | 3652 | c62d935
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Console\sample5.dpr | 07-12-2005 | 16:29:16 | | 3946 | e7c2eb31
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Console\sample6.dpr | 07-12-2005 | 16:29:16 | | 4597 | 473765e
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Console\sample7.dpr | 07-12-2005 | 16:29:16 | | 4854 | fc4ed706
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Console\sample8.dpr | 07-12-2005 | 16:29:16 | | 4045 | bd5cb91b
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Console\sample1.dpr | 07-12-2005 | 16:29:16 | | 2051 | f2022a40
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Console\sample2.dpr | 07-12-2005 | 16:29:16 | | 2745 | e0bc2dda
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Console\sample3.dpr | 07-12-2005 | 16:29:16 | | 2797 | f1bb348c
+Made Dir: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Debug
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Debug\ide_debugoutput.pas | 05-04-2004 | 14:08:08 | | 580 | 6d77c2b7
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Debug\ide_editor.dfm | 05-04-2004 | 14:08:08 | | 5732 | 212433b7
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Debug\ide_editor.pas | 05-04-2004 | 14:08:08 | | 10086 | deb814f6
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Debug\readme.txt | 05-04-2004 | 14:08:08 | | 62 | c9df037d
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Debug\ide.dpr | 05-04-2004 | 14:08:08 | | 309 | 3133d127
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Debug\ide.res | 05-04-2004 | 14:08:08 | | 876 | 1671909e
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Debug\ide_debugoutput.dfm | 05-04-2004 | 14:08:08 | | 521 | 69396746
+Made Dir: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Import
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Import\fDwin.pas | 04-20-2004 | 20:57:42 | | 380 | 2aca94c7
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Import\fMain.pas | 08-02-2005 | 14:23:30 | | 12131 | cb87ae26
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Import\Import.res | 04-20-2004 | 20:57:42 | | 22748 | 7b82a90a
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Import\fDwin.dfm | 04-20-2004 | 20:57:42 | | 608 | b0dc1522
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Import\fMain.dfm | 04-25-2004 | 17:02:16 | | 1997 | 2b89a703
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Import\Import.dpr | 04-20-2004 | 20:57:42 | | 310 | fbd0d2b2
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Import\importtest.rops | 04-20-2004 | 20:57:42 | | 188 | 8ad17bd8
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Import\longfortest.rops | 04-20-2004 | 20:57:42 | | 132 | f2f55245
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Import\rectest.rops | 04-20-2004 | 20:57:42 | | 168 | 95f5d1ea
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Import\stringtest.rops | 04-20-2004 | 20:57:42 | | 81 | e855a712
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Import\t1.rops | 04-25-2004 | 17:02:16 | | 82 | fdd4ff5e
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Import\t2.rops | 04-20-2004 | 20:57:42 | | 71 | ac71c911
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Import\t3.rops | 04-20-2004 | 20:57:42 | | 44 | fae7f743
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Import\t4.rops | 04-20-2004 | 20:57:42 | | 92 | a4ea2881
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Import\t5.rops | 04-20-2004 | 20:57:42 | | 120 | 9555109e
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Import\t6.rops | 04-20-2004 | 20:57:42 | | 314 | 146387e4
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Import\t7.rops | 04-20-2004 | 20:57:42 | | 76 | 1fdd5565
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Import\t8.rops | 04-20-2004 | 20:57:42 | | 748 | ec525a55
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Import\t9.rops | 04-25-2004 | 17:02:16 | | 236 | 8ce601a5
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Import\t10.rops | 04-20-2004 | 20:57:42 | | 187 | 79538f8a
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Import\t11.rops | 04-25-2004 | 17:02:16 | | 1353 | fda91ca6
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Import\testdefine.rops | 04-25-2004 | 17:02:16 | | 172 | db084c84
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Import\testinclude.rops | 04-25-2004 | 17:02:16 | | 214 | b8fe8ebb
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Import\vartype.rops | 04-25-2004 | 17:02:16 | | 286 | d18add38
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Import\wordole.rops | 04-20-2004 | 20:57:42 | | 126 | cfeabde8
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Import\arraytest.rops | 04-20-2004 | 20:57:42 | | 313 | 308fcb11
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Import\booleantest.rops | 04-20-2004 | 20:57:42 | | 303 | 1c2a740e
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Import\bytearray.rops | 04-25-2004 | 17:02:16 | | 319 | 1a6d5b0f
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Import\casetest.rops | 04-20-2004 | 20:57:42 | | 162 | f882dc71
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Import\dlltest.rops | 04-20-2004 | 20:57:42 | | 876 | 7464642d
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Import\exittest.rops | 04-20-2004 | 20:57:42 | | 145 | 877c07ad
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Import\fortest.rops | 04-20-2004 | 20:57:42 | | 117 | 786be752
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Import\if.rops | 04-20-2004 | 20:57:42 | | 131 | 3bac7a0e
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Import\iformtest.rops | 04-20-2004 | 20:57:42 | | 2337 | 8e8ce14d
+Made Dir: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Kylix
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Kylix\Import.dpr | 04-20-2004 | 22:44:16 | | 270 | 4fa91fdc
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Kylix\fDwin.pas | 04-20-2004 | 22:44:16 | | 367 | 679c1d4e
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Kylix\fMain.pas | 08-02-2005 | 14:23:30 | | 8060 | 78685d4b
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Kylix\fDwin.dfm | 04-20-2004 | 22:44:16 | | 666 | 7202d3fa
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Kylix\fMain.dfm | 04-20-2004 | 22:44:16 | | 1775 | 22ef8cf0
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Kylix\bytearray.rops | 04-20-2004 | 20:57:42 | | 157 | bc32e18
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Kylix\casetest.rops | 04-20-2004 | 20:57:42 | | 162 | f882dc71
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Kylix\exittest.rops | 04-20-2004 | 20:57:42 | | 145 | 877c07ad
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Kylix\fortest.rops | 04-20-2004 | 20:57:42 | | 117 | 786be752
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Kylix\if.rops | 04-20-2004 | 20:57:42 | | 131 | 3bac7a0e
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Kylix\importtest.rops | 04-20-2004 | 20:57:42 | | 188 | 8ad17bd8
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Kylix\longfortest.rops | 04-20-2004 | 20:57:42 | | 132 | f2f55245
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Kylix\rectest.rops | 04-20-2004 | 20:57:42 | | 168 | 95f5d1ea
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Kylix\vartype.rops | 04-20-2004 | 22:44:16 | | 273 | 8fa661e1
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Kylix\arraytest.rops | 04-20-2004 | 20:57:42 | | 313 | 6db1db30
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\Kylix\booleantest.rops | 04-20-2004 | 20:57:42 | | 303 | 1c2a740e
+Made Dir: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\TestApp
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\TestApp\fMain.dfm | 04-20-2004 | 20:57:42 | | 1232 | 72734836
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\TestApp\fMain.pas | 04-20-2004 | 20:57:42 | | 4048 | d11eb69e
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\TestApp\TestApplication.dpr | 04-20-2004 | 20:57:42 | | 239 | 2688dabc
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\TestApp\TestApplication.res | 04-20-2004 | 20:57:42 | | 22748 | 7b82a90a
+Made Dir: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\RemObjects SDK Client
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\RemObjects SDK Client\MegaDemo.RODL | 04-25-2004 | 17:02:16 | | 5125 | 48070b2a
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\RemObjects SDK Client\MegaDemo.rops | 04-25-2004 | 17:02:16 | | 2369 | fce045d7
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\RemObjects SDK Client\TestApplication.dpr | 04-25-2004 | 17:02:16 | | 239 | 2688dabc
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\RemObjects SDK Client\TestApplication.res | 04-25-2004 | 17:02:16 | | 22748 | 7b82a90a
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\RemObjects SDK Client\fMain.dfm | 04-25-2004 | 17:41:38 | | 1923 | 2def403d
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Samples\RemObjects SDK Client\fMain.pas | 04-25-2004 | 17:41:38 | | 4816 | e4ab80f4
+Made Dir: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Help
+File Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Help\RegisterDelphiHelp.exe | 12-03-2003 | 19:26:00 | | 97280 | bd823b42
+RegDB Key: Software\RemObjects\Pascal Script
+RegDB Val: 1
+RegDB Name: Installed
+RegDB Root: 1
+RegDB Key: Software\RemObjects\Pascal Script
+RegDB Val: C:\Program Files\RemObjects Software\Pascal Script for Delphi
+RegDB Name: InstallDir
+RegDB Root: 1
+RegDB Key: Software\RemObjects\Pascal Script
+RegDB Val: 3.0.37.761
+RegDB Name: Version
+RegDB Root: 1
+Shell Link: C:\Users\David\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\RemObjects Pascal Script\Unit Importer.lnk
+Link Info: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Bin\PSUnitImporter.exe |  |  | 0 | 1 | 0 | 
+File Delete: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Launch.exe
+Backup Copy: C:\Program Files\RemObjects Software\Pascal Script for Delphi\BACKUP\Launch.exe
+RegDB Key: Software\Microsoft\Windows\CurrentVersion\Uninstall\Pascal Script
+RegDB Val: 3.0.37.761
+RegDB Name: DisplayVersion
+RegDB Root: 2
+RegDB Key: Software\Microsoft\Windows\CurrentVersion\Uninstall\Pascal Script
+RegDB Val: http://www.remobjects.com?ps
+RegDB Name: HelpLink
+RegDB Root: 2
+RegDB Key: Software\Microsoft\Windows\CurrentVersion\Uninstall\Pascal Script
+RegDB Val: RemObjects Software
+RegDB Name: Publisher
+RegDB Root: 2
+RegDB Key: Software\Microsoft\Windows\CurrentVersion\Uninstall\Pascal Script
+RegDB Val: C:\Program Files\RemObjects Software\Pascal Script for Delphi\Pascal Script.ico
+RegDB Name: DisplayIcon
+RegDB Root: 2
+RegDB Key: Software\Microsoft\Windows\CurrentVersion\Uninstall\Pascal Script
+RegDB Val: RemObjects Pascal Script
+RegDB Name: DisplayName
+RegDB Root: 2
+RegDB Old: Pascal Script
+User Rights: Admin
