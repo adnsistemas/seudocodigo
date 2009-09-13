@@ -15,6 +15,7 @@ uses
 
 begin
   Application.Initialize;
+  Application.Title := 'Seudocódigo';
   Application.HelpFile := '.\Ayuda\SEUDOCODIGO.CHM';
   Application.CreateForm(Teditor, editor);
   Application.CreateForm(Tevaluator, evaluator);
