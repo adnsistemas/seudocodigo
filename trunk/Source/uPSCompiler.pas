@@ -9966,7 +9966,8 @@ begin
       step.Free;
       exit;
     end;
-    //calcular el inicio y final del bucle, por si acaso son expresiones
+    //calcular el inicio y final del bucle, por si acaso son expresiones.
+    //por algún motivo que aún no entiendo auxi y auxf no pueden destruirse hasta el final del método ¿?
     auxi := AllocStackReg(GetTypeNo(BlockInfo,InitVal));
     if not WriteCalculation(InitVal,auxi) then
     begin
@@ -10151,39 +10152,6 @@ begin
     AfterWriteOutRec(step);
     AfterWriteOutRec(VariableVar);
 
-(*		if not PreWriteOutRec(VariableVar, nil) then
-		begin
-			TempBool.Free;
-			VariableVar.Free;
-			FBreakOffsets.Free;
-			FContinueOffsets.Free;
-			FContinueOffsets := OldCO;
-			FBreakOffsets := OldBo;
-
-			FWithCount := iOldWithCount;
-			FTryCount := iOldTryCount;
-      FExceptFinallyCount := iOldExFnlCount;
-
-      exit;
-    end;
-    BlockWriteByte(BlockInfo, cm_CA);
-
-    if not WriteOutRec(VariableVar, False) then
-    begin
-      TempBool.Free;
-      VariableVar.Free;
-      FBreakOffsets.Free;
-      FContinueOffsets.Free;
-      FContinueOffsets := OldCO;
-      FBreakOffsets := OldBo;
-
-			FWithCount := iOldWithCount;
-			FTryCount := iOldTryCount;
-      FExceptFinallyCount := iOldExFnlCount;
-
-      exit;
-    end;
-    AfterWriteOutRec(VariableVar);*)
     BlockWriteByte(BlockInfo, Cm_G);
     BlockWriteLong(BlockInfo, Longint(NPos - Length(BlockInfo.Proc.Data) - 4));
     Longint((@BlockInfo.Proc.Data[EPos + 1])^) := Length(BlockInfo.Proc.Data) - RPos;
@@ -10762,8 +10730,7 @@ begin
           vin.Free;
           exit;
         end;
-        if not WriteCalculation(vout, vin) then
-        begin
+        if not WriteCalculation(vout, vin) then begin
           vin.Free;
           vout.Free;
           exit;

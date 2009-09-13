@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, ExtCtrls;
+  StdCtrls, ExtCtrls, jpeg;
 
 resourcestring
 	RS_VERSION='Versión: %1d.%d.%d';
@@ -24,6 +24,7 @@ type
     Panel2: TPanel;
     Label9: TLabel;
     Label10: TLabel;
+    Image1: TImage;
     procedure Label7Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
   private
