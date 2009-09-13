@@ -18,7 +18,7 @@ Si pretende compilar los fuentes, en teoría, además de compilarse con Delphi5,
 
 Para poder compilar el proyecto, debe instalar primero los componentes SynEdit.
 
----
+----
 
 = Compatibility =
 
