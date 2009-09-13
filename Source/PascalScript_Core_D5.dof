@@ -1,0 +1,110 @@
+[Compiler]
+A=1
+B=0
+C=1
+D=1
+E=0
+F=0
+G=1
+H=1
+I=1
+J=0
+K=0
+L=1
+M=0
+N=1
+O=1
+P=1
+Q=0
+R=0
+S=0
+T=0
+U=0
+V=1
+W=1
+X=1
+Y=1
+Z=1
+ShowHints=1
+ShowWarnings=1
+UnitAliases=WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;
+
+[Linker]
+MapFile=0
+OutputObjs=0
+ConsoleApp=1
+DebugInfo=0
+RemoteSymbols=0
+MinStackSize=16384
+MaxStackSize=1048576
+ImageBase=4194304
+ExeDescription=RemObjects Pascal Script - Core Package
+
+[Directories]
+OutputDir=
+UnitOutputDir=..\Dcu\D5
+PackageDLLOutputDir=..\Dcu\D5
+PackageDCPOutputDir=..\Dcu\D5
+SearchPath=$(DELPHI)\Projects\SynEdit\Source
+Packages=
+Conditionals=PS_USESSUPPORT
+DebugSourceDirs=
+UsePackages=0
+
+[Parameters]
+RunParams=
+HostApplication=
+
+[Resource DLL Projects]
+Item0=Español (Argentina)*$00002C0A*ESS*ESS
+
+[Misc Files]
+Item0=C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\eDefines.inc
+Item1=C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\PascalScript.inc
+Item2=C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\powerpc.inc
+Item3=C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\x86.inc
+
+[Language]
+ActiveLang=ESS
+ProjectLang=$0000080A
+RootDir=C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source\
+
+[Version Info]
+IncludeVerInfo=1
+AutoIncBuild=1
+MajorVer=0
+MinorVer=6
+Release=1
+Build=9
+Debug=0
+PreRelease=0
+Special=0
+Private=0
+DLL=1
+Locale=11274
+CodePage=1252
+
+[Version Info Keys]
+CompanyName=UTN - FRM - RemObjects Software
+FileDescription=Intérprete de seudocódigo
+FileVersion=0.6.1.9
+InternalName=Pascal Script Engine
+LegalCopyright=UTN - FRM / REM Objects
+LegalTrademarks=REM Objects
+OriginalFilename=
+ProductName=Pascal Script
+ProductVersion=3.0.0.0
+
+[HistoryLists\hlConditionals]
+Count=2
+Item0=NOVALIDATE
+Item1=PS_USESSUPPORT
+
+[HistoryLists\hlUnitAliases]
+Count=1
+Item0=WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;
+
+[HistoryLists\hlSearchPath]
+Count=2
+Item0=$(DELPHI)\Projects\SynEdit\Source;..\..\Source
+Item1=$(DELPHI)\Projects\SynEdit\Source;C:\Program Files\RemObjects Software\Pascal Script for Delphi\Source
