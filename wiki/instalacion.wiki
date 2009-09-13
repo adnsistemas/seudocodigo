@@ -25,7 +25,7 @@ Para poder compilar el proyecto, debe instalar primero los componentes SynEdit.
 The program is compatible with Windows 95 upward.
 It has been tested on Linux using Wine.
 
-= Instalation =
+= Installation =
 
 The program doesn't require instalation, only the executable. It is distributed as an instaler in order to reduce download size, and to simplify folder and shortcuts creation.
 
