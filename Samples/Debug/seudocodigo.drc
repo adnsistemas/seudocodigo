@@ -108,86 +108,86 @@
 #define uPSRuntime_RPS_OutOfGlobalVarsRange 65213
 #define uPSRuntime_RPS_OutOfProcRange 65214
 #define uPSRuntime_RPS_OutOfRange 65215
-#define uPSCompiler_RPS_UnknownHint 65216
-#define uPSCompiler_RPS_Warning 65217
-#define uPSCompiler_RPS_CalculationAlwaysEvaluatesTo 65218
-#define uPSCompiler_RPS_IsNotNeeded 65219
-#define uPSCompiler_RPS_AbstractClass 65220
-#define uPSCompiler_RPS_UnknownWarning 65221
-#define uPSCompiler_RPS_NotArrayProperty 65222
-#define uPSCompiler_RPS_NotProperty 65223
-#define uPSCompiler_RPS_UnknownProperty 65224
-#define uPSCompiler_RPS_SalirSiExpected 65225
-#define uPSCompiler_RPS_EFCrossBlockError 65226
-#define uPSCompiler_RPS_StepExpected 65227
-#define uPSCompiler_RPS_InfiniteLoop 65228
-#define uPSCompiler_RPS_EofExpected 65229
-#define uPSCompiler_RPS_CaseCaseExpected 65230
+#define uPSCompiler_RPS_Warning 65216
+#define uPSCompiler_RPS_CalculationAlwaysEvaluatesTo 65217
+#define uPSCompiler_RPS_IsNotNeeded 65218
+#define uPSCompiler_RPS_AbstractClass 65219
+#define uPSCompiler_RPS_UnknownWarning 65220
+#define uPSCompiler_RPS_NotArrayProperty 65221
+#define uPSCompiler_RPS_NotProperty 65222
+#define uPSCompiler_RPS_UnknownProperty 65223
+#define uPSCompiler_RPS_SalirSiExpected 65224
+#define uPSCompiler_RPS_EFCrossBlockError 65225
+#define uPSCompiler_RPS_StepExpected 65226
+#define uPSCompiler_RPS_InfiniteLoop 65227
+#define uPSCompiler_RPS_EofExpected 65228
+#define uPSCompiler_RPS_CaseCaseExpected 65229
+#define uPSUtils_RPS_InvalidFloat 65230
 #define ComConst_SOleError 65231
-#define uPSCompiler_RPS_InvalidJump 65232
-#define uPSCompiler_RPS_OpenBlockExpected 65233
-#define uPSCompiler_RPS_WriteOnlyProperty 65234
-#define uPSCompiler_RPS_ReadOnlyProperty 65235
-#define uPSCompiler_RPS_ClassTypeExpected 65236
-#define uPSCompiler_RPS_DivideByZero 65237
-#define uPSCompiler_RPS_MathError 65238
-#define uPSCompiler_RPS_UnsatisfiedForward 65239
-#define uPSCompiler_RPS_ForwardParameterMismatch 65240
-#define uPSCompiler_RPS_InvalidNumberOfParameter 65241
-#define uPSCompiler_RPS_UnknownError 65242
-#define uPSCompiler_RPS_NotAllowed 65243
-#define uPSCompiler_RPS_UnitNotFound 65244
-#define uPSCompiler_RPS_Hint 65245
-#define uPSCompiler_RPS_VariableNotUsed 65246
-#define uPSCompiler_RPS_FunctionNotUsed 65247
-#define uPSCompiler_RPS_AssignmentExpected 65248
-#define uPSCompiler_RPS_ForFromExpected 65249
-#define uPSCompiler_RPS_ThenExpected 65250
-#define uPSCompiler_RPS_DoExpected 65251
-#define uPSCompiler_RPS_NoResult 65252
-#define uPSCompiler_RPS_OpenRoundExpected 65253
-#define uPSCompiler_RPS_CommaExpected 65254
-#define uPSCompiler_RPS_ToExpected 65255
-#define uPSCompiler_RPS_IsExpected 65256
-#define uPSCompiler_RPS_OfExpected 65257
-#define uPSCompiler_RPS_CloseBlockExpected 65258
-#define uPSCompiler_RPS_VariableExpected 65259
-#define uPSCompiler_RPS_StringExpected 65260
-#define uPSCompiler_RPS_EndExpected 65261
-#define uPSCompiler_RPS_UnSetLabel 65262
-#define uPSCompiler_RPS_NotInLoop 65263
-#define uPSCompiler_RPS_CommentError 65264
-#define uPSCompiler_RPS_StringError 65265
-#define uPSCompiler_RPS_CharError 65266
-#define uPSCompiler_RPS_SyntaxError 65267
-#define uPSCompiler_RPS_EOF 65268
-#define uPSCompiler_RPS_IEndExpected 65269
-#define uPSCompiler_RPS_UnexpectedIEnd 65270
-#define uPSCompiler_RPS_SemiColonExpected 65271
-#define uPSCompiler_RPS_BeginExpected 65272
-#define uPSCompiler_RPS_PeriodExpected 65273
-#define uPSCompiler_RPS_DuplicateIdent 65274
-#define uPSCompiler_RPS_ColonExpected 65275
-#define uPSCompiler_RPS_UnknownType 65276
-#define uPSCompiler_RPS_CloseRoundExpected 65277
-#define uPSCompiler_RPS_TypeMismatch 65278
-#define uPSCompiler_RPS_InternalError 65279
+#define uPSCompiler_RPS_OpenBlockExpected 65232
+#define uPSCompiler_RPS_WriteOnlyProperty 65233
+#define uPSCompiler_RPS_ReadOnlyProperty 65234
+#define uPSCompiler_RPS_ClassTypeExpected 65235
+#define uPSCompiler_RPS_DivideByZero 65236
+#define uPSCompiler_RPS_MathError 65237
+#define uPSCompiler_RPS_UnsatisfiedForward 65238
+#define uPSCompiler_RPS_ForwardParameterMismatch 65239
+#define uPSCompiler_RPS_InvalidNumberOfParameter 65240
+#define uPSCompiler_RPS_UnknownError 65241
+#define uPSCompiler_RPS_NotAllowed 65242
+#define uPSCompiler_RPS_UnitNotFound 65243
+#define uPSCompiler_RPS_Hint 65244
+#define uPSCompiler_RPS_VariableNotUsed 65245
+#define uPSCompiler_RPS_FunctionNotUsed 65246
+#define uPSCompiler_RPS_UnknownHint 65247
+#define uPSCompiler_RPS_ForFromExpected 65248
+#define uPSCompiler_RPS_ThenExpected 65249
+#define uPSCompiler_RPS_DoExpected 65250
+#define uPSCompiler_RPS_NoResult 65251
+#define uPSCompiler_RPS_OpenRoundExpected 65252
+#define uPSCompiler_RPS_CommaExpected 65253
+#define uPSCompiler_RPS_ToExpected 65254
+#define uPSCompiler_RPS_IsExpected 65255
+#define uPSCompiler_RPS_OfExpected 65256
+#define uPSCompiler_RPS_CloseBlockExpected 65257
+#define uPSCompiler_RPS_VariableExpected 65258
+#define uPSCompiler_RPS_StringExpected 65259
+#define uPSCompiler_RPS_EndExpected 65260
+#define uPSCompiler_RPS_UnSetLabel 65261
+#define uPSCompiler_RPS_NotInLoop 65262
+#define uPSCompiler_RPS_InvalidJump 65263
+#define uPSCompiler_RPS_StringError 65264
+#define uPSCompiler_RPS_CharError 65265
+#define uPSCompiler_RPS_SyntaxError 65266
+#define uPSCompiler_RPS_EOF 65267
+#define uPSCompiler_RPS_IEndExpected 65268
+#define uPSCompiler_RPS_UnexpectedIEnd 65269
+#define uPSCompiler_RPS_SemiColonExpected 65270
+#define uPSCompiler_RPS_BeginExpected 65271
+#define uPSCompiler_RPS_PeriodExpected 65272
+#define uPSCompiler_RPS_DuplicateIdent 65273
+#define uPSCompiler_RPS_ColonExpected 65274
+#define uPSCompiler_RPS_UnknownType 65275
+#define uPSCompiler_RPS_CloseRoundExpected 65276
+#define uPSCompiler_RPS_TypeMismatch 65277
+#define uPSCompiler_RPS_InternalError 65278
+#define uPSCompiler_RPS_AssignmentExpected 65279
 #define SynEditStrConst_SYNS_ScrollInfoFmtTop 65280
 #define SynEditStrConst_SYNS_EDuplicateShortcut 65281
 #define SynEditStrConst_SYNS_FilterPascal 65282
 #define SynEditStrConst_SYNS_LangPascal 65283
 #define SynEditTextBuffer_SListIndexOutOfBounds 65284
 #define SynEditTextBuffer_SInvalidCapacity 65285
-#define uPSUtils_RPS_InvalidFloat 65286
-#define uPSCompiler_RPS_OnUseEventOnly 65287
-#define uPSCompiler_RPS_UnableToRegisterFunction 65288
-#define uPSCompiler_RPS_UnableToRegisterConst 65289
-#define uPSCompiler_RPS_InvalidType 65290
-#define uPSCompiler_RPS_UnableToRegisterType 65291
-#define uPSCompiler_RPS_UnknownInterface 65292
-#define uPSCompiler_RPS_Error 65293
-#define uPSCompiler_RPS_UnknownIdentifier 65294
-#define uPSCompiler_RPS_IdentifierExpected 65295
+#define uPSCompiler_RPS_OnUseEventOnly 65286
+#define uPSCompiler_RPS_UnableToRegisterFunction 65287
+#define uPSCompiler_RPS_UnableToRegisterConst 65288
+#define uPSCompiler_RPS_InvalidType 65289
+#define uPSCompiler_RPS_UnableToRegisterType 65290
+#define uPSCompiler_RPS_UnknownInterface 65291
+#define uPSCompiler_RPS_Error 65292
+#define uPSCompiler_RPS_UnknownIdentifier 65293
+#define uPSCompiler_RPS_IdentifierExpected 65294
+#define uPSCompiler_RPS_CommentError 65295
 #define Consts_SDockZoneHasNoCtl 65296
 #define Consts_SDuplicateItem 65297
 #define SynEditStrConst_SYNS_AttrAssembler 65298
@@ -531,7 +531,6 @@ BEGIN
 	uPSRuntime_RPS_OutOfGlobalVarsRange,	"Se salió del rango de variables globales"
 	uPSRuntime_RPS_OutOfProcRange,	"Se salió del rango de procedimientos"
 	uPSRuntime_RPS_OutOfRange,	"Fuera de rango"
-	uPSCompiler_RPS_UnknownHint,	"Consejo desconocido"
 	uPSCompiler_RPS_Warning,	"Advertencia"
 	uPSCompiler_RPS_CalculationAlwaysEvaluatesTo,	"El cálculo siempre devuelve %s"
 	uPSCompiler_RPS_IsNotNeeded,	"No se necesita %s"
@@ -546,8 +545,8 @@ BEGIN
 	uPSCompiler_RPS_InfiniteLoop,	"Bucle infinito"
 	uPSCompiler_RPS_EofExpected,	"Se esperaba el fin del archivo"
 	uPSCompiler_RPS_CaseCaseExpected,	"Se esperaba \"caso\""
+	uPSUtils_RPS_InvalidFloat,	"Real no válido"
 	ComConst_SOleError,	"OLE error %.8x"
-	uPSCompiler_RPS_InvalidJump,	"Salto no válido"
 	uPSCompiler_RPS_OpenBlockExpected,	"Se esperaba apertura de corchetes"
 	uPSCompiler_RPS_WriteOnlyProperty,	"Propiedad de sólo escritura"
 	uPSCompiler_RPS_ReadOnlyProperty,	"Propiedad de sólo lectura"
@@ -563,7 +562,7 @@ BEGIN
 	uPSCompiler_RPS_Hint,	"Consejo"
 	uPSCompiler_RPS_VariableNotUsed,	"La variable '%s' no se ha utilizado"
 	uPSCompiler_RPS_FunctionNotUsed,	"La función '%s' no se ha utilizado"
-	uPSCompiler_RPS_AssignmentExpected,	"Se esperaba asignación"
+	uPSCompiler_RPS_UnknownHint,	"Consejo desconocido"
 	uPSCompiler_RPS_ForFromExpected,	"Se esperaba 'desde'"
 	uPSCompiler_RPS_ThenExpected,	"Se esperaba 'entonces'"
 	uPSCompiler_RPS_DoExpected,	"Se esperaba 'hacer'"
@@ -579,7 +578,7 @@ BEGIN
 	uPSCompiler_RPS_EndExpected,	"Se esperaba 'fin'"
 	uPSCompiler_RPS_UnSetLabel,	"El rótulo '%s' no ha sido establecido"
 	uPSCompiler_RPS_NotInLoop,	"No se encuentra en un bucle"
-	uPSCompiler_RPS_CommentError,	"Error con el comentario"
+	uPSCompiler_RPS_InvalidJump,	"Salto no válido"
 	uPSCompiler_RPS_StringError,	"Error en tbtString"
 	uPSCompiler_RPS_CharError,	"Error en carácter"
 	uPSCompiler_RPS_SyntaxError,	"Error de sintaxis"
@@ -595,13 +594,13 @@ BEGIN
 	uPSCompiler_RPS_CloseRoundExpected,	"Se esperaba cierre de paréntesis"
 	uPSCompiler_RPS_TypeMismatch,	"Incoherencia de tipos"
 	uPSCompiler_RPS_InternalError,	"Error interno (%s)"
+	uPSCompiler_RPS_AssignmentExpected,	"Se esperaba asignación"
 	SynEditStrConst_SYNS_ScrollInfoFmtTop,	"Top Line: %d"
 	SynEditStrConst_SYNS_EDuplicateShortcut,	"Shortcut already exists"
 	SynEditStrConst_SYNS_FilterPascal,	"Pascal Files (*.pas;*.pp;*.dpr;*.dpk;*.inc)|*.pas;*.pp;*.dpr;*.dpk;*.inc"
 	SynEditStrConst_SYNS_LangPascal,	"Object Pascal"
 	SynEditTextBuffer_SListIndexOutOfBounds,	"Invalid stringlist index %d"
 	SynEditTextBuffer_SInvalidCapacity,	"Stringlist capacity cannot be smaller than count"
-	uPSUtils_RPS_InvalidFloat,	"Real no válido"
 	uPSCompiler_RPS_OnUseEventOnly,	"Esta función puede utilizarse únicamente desde dentro del evento OnUses"
 	uPSCompiler_RPS_UnableToRegisterFunction,	"Imposible registrar la función %s"
 	uPSCompiler_RPS_UnableToRegisterConst,	"Imposible registrar la constante %s"
@@ -611,6 +610,7 @@ BEGIN
 	uPSCompiler_RPS_Error,	"Error"
 	uPSCompiler_RPS_UnknownIdentifier,	"Identificador '%s' desconocido"
 	uPSCompiler_RPS_IdentifierExpected,	"Se esperaba un identificador"
+	uPSCompiler_RPS_CommentError,	"Error con el comentario"
 	Consts_SDockZoneHasNoCtl,	" - Dock zone has no control"
 	Consts_SDuplicateItem,	"List does not allow duplicates ($0%x)"
 	SynEditStrConst_SYNS_AttrAssembler,	"Assembler"

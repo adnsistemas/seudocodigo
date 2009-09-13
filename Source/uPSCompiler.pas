@@ -9845,6 +9845,7 @@ begin
   var
     VariableVar: TPSValue;
       TempBool,
+      auxi,auxf,
       InitVal,
       finVal: TPSValue;
     step: TPSValue;
@@ -9965,6 +9966,30 @@ begin
       step.Free;
       exit;
     end;
+    //calcular el inicio y final del bucle, por si acaso son expresiones
+    auxi := AllocStackReg(GetTypeNo(BlockInfo,InitVal));
+    if not WriteCalculation(InitVal,auxi) then
+    begin
+      MakeError('',ecSyntaxError,'');
+      auxi.Free;
+      VariableVar.Free;
+      finVal.Free;
+      InitVal.Free;
+      step.Free;
+      exit;
+    end;
+    auxf := AllocStackReg(GetTypeNo(BlockInfo,FinVal));
+    if not WriteCalculation(FinVal,auxf) then
+    begin
+      MakeError('',ecSyntaxError,'');
+      auxi.Free;
+      auxf.Free;
+      VariableVar.Free;
+      finVal.Free;
+      InitVal.Free;
+      step.Free;
+      exit;
+    end;
     //no asignar la variable si el bucle no va a ejecutarse al menos una vez
     TempBool := AllocStackReg(at2ut(FDefaultBoolType));
     BlockWriteByte(BlockInfo, CM_CO);
@@ -9976,8 +10001,11 @@ begin
     begin
       BlockWriteByte(BlockInfo, 1); { <= }
     end;
-    if not (WriteOutRec(TempBool, False) and WriteOutRec(InitVal, True) and WriteOutRec(finVal, True)) then
+    if not (WriteOutRec(TempBool, False) and WriteOutRec(auxi, True) and WriteOutRec(auxf, True)) then
     begin
+      MakeError('',ecSyntaxError,'');
+      auxi.Free;
+      auxf.Free;
       TempBool.Free;
       VariableVar.Free;
       finVal.Free;
@@ -9985,8 +10013,8 @@ begin
       step.Free;
       exit;
     end;
-    AfterWriteOutRec(finVal);
-    AfterWriteOutRec(InitVal);
+    AfterWriteOutRec(auxi);
+    AfterWriteOutRec(auxf);
     BlockWriteByte(BlockInfo, Cm_CNG);
     VPos := Length(BlockInfo.Proc.Data);
     BlockWriteLong(BlockInfo, $12345678);
@@ -9999,18 +10027,22 @@ begin
       VariableVar.Free;
       InitVal.Free;
       finVal.Free;
+      auxi.Free;
+      auxf.Free;
       step.Free;
       exit;
     end;
     InitVal.Free;
     TempBool := AllocStackReg(at2ut(FDefaultBoolType));
     NPos := Length(BlockInfo.Proc.Data);
-    if not (PreWriteOutRec(VariableVar, nil) and PreWriteOutRec(finVal, nil)) then
+    if not (PreWriteOutRec(VariableVar, nil) and PreWriteOutRec(auxf, nil)) then
     begin
       TempBool.Free;
       VariableVar.Free;
       finVal.Free;
       step.Free;
+      auxi.Free;
+      auxf.Free;
       exit;
     end;
     BlockWriteByte(BlockInfo, CM_CO);
@@ -10022,14 +10054,16 @@ begin
     begin
       BlockWriteByte(BlockInfo, 1); { <= }
     end;
-    if not (WriteOutRec(TempBool, False) and WriteOutRec(VariableVar, True) and WriteOutRec(finVal, True)) then
+    if not (WriteOutRec(TempBool, False) and WriteOutRec(VariableVar, True) and WriteOutRec(auxf, True)) then
     begin
       TempBool.Free;
       VariableVar.Free;
       finVal.Free;
+      auxi.Free;
+      auxf.Free;
       exit;
     end;
-    AfterWriteOutRec(finVal);
+    AfterWriteOutRec(auxf);
     AfterWriteOutRec(VariableVar);
     Debug_WriteLine(BlockInfo);
     finVal.Free;
@@ -10068,6 +10102,8 @@ begin
 			FWithCount := iOldWithCount;
 			FTryCount := iOldTryCount;
       FExceptFinallyCount := iOldExFnlCount;
+      auxi.Free;
+      auxf.Free;
 
 			exit;
 		end else if Block.SubType = tSubBegin then
@@ -10077,6 +10113,8 @@ begin
 
     if not (PreWriteOutRec(VariableVar, nil) and PreWriteOutRec(step, nil)) then
     begin
+      auxi.Free;
+      auxf.Free;
       step.Free;
 			TempBool.Free;
 			VariableVar.Free;
@@ -10095,6 +10133,8 @@ begin
     BlockWriteByte(BlockInfo, 0);
     if not (WriteOutRec(VariableVar, True) and WriteOutRec(step, True)) then
     begin
+      auxi.Free;
+      auxf.Free;
       step.Free;
 			TempBool.Free;
 			VariableVar.Free;
@@ -10166,6 +10206,9 @@ begin
 		FWithCount := iOldWithCount;
     FTryCount := iOldTryCount;
     FExceptFinallyCount := iOldExFnlCount;
+    auxi.Free;
+    auxf.Free;
+    step.Free;
 
 		TempBool.Free;
 		VariableVar.Free;
