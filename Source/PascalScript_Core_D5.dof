@@ -68,7 +68,7 @@ AutoIncBuild=1
 MajorVer=0
 MinorVer=6
 Release=1
-Build=9
+Build=10
 Debug=0
 PreRelease=0
 Special=0
@@ -79,7 +79,7 @@ CodePage=1252
 [Version Info Keys]
 CompanyName=UTN - FRM - RemObjects Software
 FileDescription=Intérprete de seudocódigo
-FileVersion=0.6.1.9
+FileVersion=0.6.1.10
 InternalName=Pascal Script Engine
 LegalCopyright=UTN - FRM / REM Objects
 LegalTrademarks=REM Objects

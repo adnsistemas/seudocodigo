@@ -7,299 +7,304 @@
   produced executable.
 */
 
-#define DbConsts_SProviderSQLNotSupported 65104
-#define DbConsts_SProviderExecuteNotSupported 65105
-#define DbConsts_SRecordNotFound 65106
-#define ide_about_RS_VERSION 65107
-#define ide_editor_CS_SinNombre 65108
-#define DbConsts_SDuplicateIndexName 65120
-#define DbConsts_SNoIndexForFields 65121
-#define DbConsts_SIndexNotFound 65122
-#define DbConsts_SCircularDataLink 65123
-#define DbConsts_SLookupInfoError 65124
-#define DbConsts_SDataSetOpen 65125
-#define DbConsts_SNotEditing 65126
-#define DbConsts_SDataSetClosed 65127
-#define DbConsts_SDataSetEmpty 65128
-#define DbConsts_SDataSetReadOnly 65129
-#define DbConsts_SNestedDataSetClass 65130
-#define DbConsts_STextFalse 65131
-#define DbConsts_STextTrue 65132
-#define DbConsts_SParameterNotFound 65133
-#define DbConsts_SInvalidVersion 65134
-#define DbConsts_SBadFieldType 65135
-#define DbConsts_SFieldNameMissing 65136
-#define DbConsts_SDuplicateFieldName 65137
-#define DbConsts_SFieldNotFound 65138
-#define DbConsts_SFieldAccessError 65139
-#define DbConsts_SFieldValueError 65140
-#define DbConsts_SFieldRangeError 65141
-#define DbConsts_SInvalidIntegerValue 65142
-#define DbConsts_SInvalidBoolValue 65143
-#define DbConsts_SInvalidFloatValue 65144
-#define DbConsts_SFieldTypeMismatch 65145
-#define DbConsts_SFieldSizeMismatch 65146
-#define DbConsts_SInvalidVarByteArray 65147
-#define DbConsts_SFieldOutOfRange 65148
-#define DbConsts_SBCDOverflow 65149
-#define DbConsts_SFieldRequired 65150
-#define DbConsts_SDataSetMissing 65151
-#define uPSPreProcessor_RPS_IncludeNotFound 65152
-#define uPSPreProcessor_RPS_DefineTooManyParameters 65153
-#define uPSPreProcessor_RPS_NoIfdefForEndif 65154
-#define uPSPreProcessor_RPS_NoIfdefForElse 65155
-#define uPSPreProcessor_RPS_ElseTwice 65156
-#define uPSPreProcessor_RPS_UnknownCompilerDirective 65157
-#define uPSPreProcessor_RPs_DefineNotClosed 65158
-#define uPSComponent_RPS_UnableToReadVariant 65159
-#define uPSComponent_RPS_UnableToWriteVariant 65160
-#define uPSComponent_RPS_ScripEngineAlreadyRunning 65161
-#define uPSComponent_RPS_NotRunning 65162
-#define uPSComponent_RPS_UnknownIdentifier 65163
-#define uPSComponent_RPS_NoScript 65164
-#define DbConsts_SInvalidFieldSize 65165
-#define DbConsts_SInvalidFieldKind 65166
-#define DbConsts_SUnknownFieldType 65167
-#define uPSRuntime_RPS_CannotCastObject 65168
-#define uPSRuntime_RPS_CapacityLength 65169
-#define uPSRuntime_RPS_NILInterfaceException 65170
-#define uPSRuntime_RPS_UnknownMethod 65171
-#define ComStrs_sTabFailClear 65172
-#define ComStrs_sTabFailDelete 65173
-#define ComStrs_sTabFailRetrieve 65174
-#define ComStrs_sTabFailGetObject 65175
-#define ComStrs_sTabFailSet 65176
-#define ComStrs_sTabFailSetObject 65177
-#define ComStrs_sTabMustBeMultiLine 65178
-#define ComStrs_sPageIndexError 65179
-#define uPSDebugger_RPS_ExpectedReturnAddressStackBase 65180
-#define uPSC_dll_RPS_Invalid_External 65181
-#define uPSC_dll_RPS_InvalidCallingConvention 65182
-#define uPSPreProcessor_RPS_TooManyNestedInclude 65183
-#define uPSRuntime_RPS_OutOfStackRange 65184
-#define uPSRuntime_RPS_TypeMismatch 65185
-#define uPSRuntime_RPS_UnexpectedEof 65186
-#define uPSRuntime_RPS_VersionError 65187
-#define uPSRuntime_RPS_DivideByZero 65188
-#define uPSRuntime_RPS_MathError 65189
-#define uPSRuntime_RPS_CouldNotCallProc 65190
-#define uPSRuntime_RPS_OutofRecordRange 65191
-#define uPSRuntime_RPS_NullPointerException 65192
-#define uPSRuntime_RPS_NullVariantError 65193
-#define uPSRuntime_RPS_OutOfMemory 65194
-#define uPSRuntime_RPS_InterfaceNotSupported 65195
-#define uPSRuntime_RPS_UnknownError 65196
-#define uPSRuntime_RPS_InvalidArray 65197
-#define uPSRuntime_RPS_OutOfStringRange 65198
-#define uPSRuntime_RPS_CannotCastInterface 65199
-#define ComConst_SNoMethod 65200
-#define ComConst_SVarNotObject 65201
-#define uPSRuntime_RPS_UnknownIdentifier 65202
-#define uPSRuntime_RPS_Exception 65203
-#define uPSRuntime_RPS_Invalid 65204
-#define uPSRuntime_RPS_NoError 65205
-#define uPSRuntime_RPS_CannotImport 65206
-#define uPSRuntime_RPS_InvalidType 65207
-#define uPSRuntime_RPS_InternalError 65208
-#define uPSRuntime_RPS_InvalidHeader 65209
-#define uPSRuntime_RPS_InvalidOpcode 65210
-#define uPSRuntime_RPS_InvalidOpcodeParameter 65211
-#define uPSRuntime_RPS_NoMainProc 65212
-#define uPSRuntime_RPS_OutOfGlobalVarsRange 65213
-#define uPSRuntime_RPS_OutOfProcRange 65214
-#define uPSRuntime_RPS_OutOfRange 65215
-#define uPSCompiler_RPS_Warning 65216
-#define uPSCompiler_RPS_CalculationAlwaysEvaluatesTo 65217
-#define uPSCompiler_RPS_IsNotNeeded 65218
-#define uPSCompiler_RPS_AbstractClass 65219
-#define uPSCompiler_RPS_UnknownWarning 65220
-#define uPSCompiler_RPS_NotArrayProperty 65221
-#define uPSCompiler_RPS_NotProperty 65222
-#define uPSCompiler_RPS_UnknownProperty 65223
-#define uPSCompiler_RPS_SalirSiExpected 65224
-#define uPSCompiler_RPS_EFCrossBlockError 65225
-#define uPSCompiler_RPS_StepExpected 65226
-#define uPSCompiler_RPS_InfiniteLoop 65227
-#define uPSCompiler_RPS_EofExpected 65228
-#define uPSCompiler_RPS_CaseCaseExpected 65229
-#define uPSUtils_RPS_InvalidFloat 65230
-#define ComConst_SOleError 65231
-#define uPSCompiler_RPS_OpenBlockExpected 65232
-#define uPSCompiler_RPS_WriteOnlyProperty 65233
-#define uPSCompiler_RPS_ReadOnlyProperty 65234
-#define uPSCompiler_RPS_ClassTypeExpected 65235
-#define uPSCompiler_RPS_DivideByZero 65236
-#define uPSCompiler_RPS_MathError 65237
-#define uPSCompiler_RPS_UnsatisfiedForward 65238
-#define uPSCompiler_RPS_ForwardParameterMismatch 65239
-#define uPSCompiler_RPS_InvalidNumberOfParameter 65240
-#define uPSCompiler_RPS_UnknownError 65241
-#define uPSCompiler_RPS_NotAllowed 65242
-#define uPSCompiler_RPS_UnitNotFound 65243
-#define uPSCompiler_RPS_Hint 65244
-#define uPSCompiler_RPS_VariableNotUsed 65245
-#define uPSCompiler_RPS_FunctionNotUsed 65246
-#define uPSCompiler_RPS_UnknownHint 65247
-#define uPSCompiler_RPS_ForFromExpected 65248
-#define uPSCompiler_RPS_ThenExpected 65249
-#define uPSCompiler_RPS_DoExpected 65250
-#define uPSCompiler_RPS_NoResult 65251
-#define uPSCompiler_RPS_OpenRoundExpected 65252
-#define uPSCompiler_RPS_CommaExpected 65253
-#define uPSCompiler_RPS_ToExpected 65254
-#define uPSCompiler_RPS_IsExpected 65255
-#define uPSCompiler_RPS_OfExpected 65256
-#define uPSCompiler_RPS_CloseBlockExpected 65257
-#define uPSCompiler_RPS_VariableExpected 65258
-#define uPSCompiler_RPS_StringExpected 65259
-#define uPSCompiler_RPS_EndExpected 65260
-#define uPSCompiler_RPS_UnSetLabel 65261
-#define uPSCompiler_RPS_NotInLoop 65262
-#define uPSCompiler_RPS_InvalidJump 65263
-#define uPSCompiler_RPS_StringError 65264
-#define uPSCompiler_RPS_CharError 65265
-#define uPSCompiler_RPS_SyntaxError 65266
-#define uPSCompiler_RPS_EOF 65267
-#define uPSCompiler_RPS_IEndExpected 65268
-#define uPSCompiler_RPS_UnexpectedIEnd 65269
-#define uPSCompiler_RPS_SemiColonExpected 65270
-#define uPSCompiler_RPS_BeginExpected 65271
-#define uPSCompiler_RPS_PeriodExpected 65272
-#define uPSCompiler_RPS_DuplicateIdent 65273
-#define uPSCompiler_RPS_ColonExpected 65274
-#define uPSCompiler_RPS_UnknownType 65275
-#define uPSCompiler_RPS_CloseRoundExpected 65276
-#define uPSCompiler_RPS_TypeMismatch 65277
-#define uPSCompiler_RPS_InternalError 65278
-#define uPSCompiler_RPS_AssignmentExpected 65279
-#define SynEditStrConst_SYNS_ScrollInfoFmtTop 65280
-#define SynEditStrConst_SYNS_EDuplicateShortcut 65281
-#define SynEditStrConst_SYNS_FilterPascal 65282
-#define SynEditStrConst_SYNS_LangPascal 65283
-#define SynEditTextBuffer_SListIndexOutOfBounds 65284
-#define SynEditTextBuffer_SInvalidCapacity 65285
-#define uPSCompiler_RPS_OnUseEventOnly 65286
-#define uPSCompiler_RPS_UnableToRegisterFunction 65287
-#define uPSCompiler_RPS_UnableToRegisterConst 65288
-#define uPSCompiler_RPS_InvalidType 65289
-#define uPSCompiler_RPS_UnableToRegisterType 65290
-#define uPSCompiler_RPS_UnknownInterface 65291
-#define uPSCompiler_RPS_Error 65292
-#define uPSCompiler_RPS_UnknownIdentifier 65293
-#define uPSCompiler_RPS_IdentifierExpected 65294
-#define uPSCompiler_RPS_CommentError 65295
-#define Consts_SDockZoneHasNoCtl 65296
-#define Consts_SDuplicateItem 65297
-#define SynEditStrConst_SYNS_AttrAssembler 65298
-#define SynEditStrConst_SYNS_AttrCharacter 65299
-#define SynEditStrConst_SYNS_AttrComment 65300
-#define SynEditStrConst_SYNS_AttrFloat 65301
-#define SynEditStrConst_SYNS_AttrHexadecimal 65302
-#define SynEditStrConst_SYNS_AttrIdentifier 65303
-#define SynEditStrConst_SYNS_AttrNumber 65304
-#define SynEditStrConst_SYNS_AttrPreprocessor 65305
-#define SynEditStrConst_SYNS_AttrReservedWord 65306
-#define SynEditStrConst_SYNS_AttrSpace 65307
-#define SynEditStrConst_SYNS_AttrString 65308
-#define SynEditStrConst_SYNS_AttrSymbol 65309
-#define SynEditStrConst_SYNS_AttrSystem 65310
-#define SynEditStrConst_SYNS_ScrollInfoFmt 65311
-#define Consts_SmkcAlt 65312
-#define Consts_SInsertLineError 65313
-#define Consts_SInvalidClipFmt 65314
-#define Consts_SIconToClipboard 65315
-#define Consts_SCannotOpenClipboard 65316
-#define Consts_SDefault 65317
-#define Consts_SInvalidMemoSize 65318
-#define Consts_SNoDefaultPrinter 65319
-#define Consts_SBitsIndexError 65320
-#define Consts_SInvalidRegType 65321
-#define Consts_SRegSetDataFailed 65322
-#define Consts_SRegGetDataFailed 65323
-#define Consts_SDuplicateMenus 65324
-#define Consts_SDockedCtlNeedsName 65325
-#define Consts_SDockTreeRemoveError 65326
-#define Consts_SDockZoneNotFound 65327
-#define Consts_SmkcTab 65328
-#define Consts_SmkcEsc 65329
-#define Consts_SmkcEnter 65330
-#define Consts_SmkcSpace 65331
-#define Consts_SmkcPgUp 65332
-#define Consts_SmkcPgDn 65333
-#define Consts_SmkcEnd 65334
-#define Consts_SmkcHome 65335
-#define Consts_SmkcLeft 65336
-#define Consts_SmkcUp 65337
-#define Consts_SmkcRight 65338
-#define Consts_SmkcDown 65339
-#define Consts_SmkcIns 65340
-#define Consts_SmkcDel 65341
-#define Consts_SmkcShift 65342
-#define Consts_SmkcCtrl 65343
-#define Consts_SMsgDlgWarning 65344
-#define Consts_SMsgDlgError 65345
-#define Consts_SMsgDlgInformation 65346
-#define Consts_SMsgDlgConfirm 65347
-#define Consts_SMsgDlgYes 65348
-#define Consts_SMsgDlgNo 65349
-#define Consts_SMsgDlgOK 65350
-#define Consts_SMsgDlgCancel 65351
-#define Consts_SMsgDlgHelp 65352
-#define Consts_SMsgDlgAbort 65353
-#define Consts_SMsgDlgRetry 65354
-#define Consts_SMsgDlgIgnore 65355
-#define Consts_SMsgDlgAll 65356
-#define Consts_SMsgDlgNoToAll 65357
-#define Consts_SMsgDlgYesToAll 65358
-#define Consts_SmkcBkSp 65359
-#define Consts_SAbortButton 65360
-#define Consts_SAllButton 65361
-#define Consts_SCannotDragForm 65362
-#define Consts_SVMetafiles 65363
-#define Consts_SVEnhMetafiles 65364
-#define Consts_SVIcons 65365
-#define Consts_SVBitmaps 65366
-#define Consts_SParseError 65367
-#define Consts_SIdentifierExpected 65368
-#define Consts_SStringExpected 65369
-#define Consts_SNumberExpected 65370
-#define Consts_SCharExpected 65371
-#define Consts_SSymbolExpected 65372
-#define Consts_SInvalidString 65373
-#define Consts_SInvalidProperty 65374
-#define Consts_SInvalidBinary 65375
-#define Consts_SNotPrinting 65376
-#define Consts_SPrinting 65377
-#define Consts_SInvalidPrinter 65378
-#define Consts_SDeviceOnPort 65379
-#define Consts_SGroupIndexTooLow 65380
-#define Consts_SNoMDIForm 65381
-#define Consts_SImageCanvasNeedsBitmap 65382
-#define Consts_SControlParentSetToSelf 65383
-#define Consts_SOKButton 65384
-#define Consts_SCancelButton 65385
-#define Consts_SYesButton 65386
-#define Consts_SNoButton 65387
-#define Consts_SHelpButton 65388
-#define Consts_SCloseButton 65389
-#define Consts_SIgnoreButton 65390
-#define Consts_SRetryButton 65391
-#define Consts_SImageIndexError 65392
-#define Consts_SImageReadFail 65393
-#define Consts_SImageWriteFail 65394
-#define Consts_SWindowDCError 65395
-#define Consts_SWindowClass 65396
-#define Consts_SCannotFocus 65397
-#define Consts_SParentRequired 65398
-#define Consts_SMDIChildNotVisible 65399
-#define Consts_SVisibleChanged 65400
-#define Consts_SCannotShowModal 65401
-#define Consts_SScrollBarRange 65402
-#define Consts_SPropertyOutOfRange 65403
-#define Consts_SMenuIndexError 65404
-#define Consts_SMenuReinserted 65405
-#define Consts_SMenuNotFound 65406
-#define Consts_SNoTimers 65407
+#define DbConsts_SInvalidVersion 65104
+#define DbConsts_SBadFieldType 65105
+#define DbConsts_SProviderSQLNotSupported 65106
+#define DbConsts_SProviderExecuteNotSupported 65107
+#define DbConsts_SRecordNotFound 65108
+#define jconsts_sChangeJPGSize 65109
+#define jconsts_sJPEGError 65110
+#define jconsts_sJPEGImageFile 65111
+#define ide_about_RS_VERSION 65112
+#define ide_editor_CS_SinNombre 65113
+#define DbConsts_SFieldRequired 65120
+#define DbConsts_SDataSetMissing 65121
+#define DbConsts_SDuplicateIndexName 65122
+#define DbConsts_SNoIndexForFields 65123
+#define DbConsts_SIndexNotFound 65124
+#define DbConsts_SCircularDataLink 65125
+#define DbConsts_SLookupInfoError 65126
+#define DbConsts_SDataSetOpen 65127
+#define DbConsts_SNotEditing 65128
+#define DbConsts_SDataSetClosed 65129
+#define DbConsts_SDataSetEmpty 65130
+#define DbConsts_SDataSetReadOnly 65131
+#define DbConsts_SNestedDataSetClass 65132
+#define DbConsts_STextFalse 65133
+#define DbConsts_STextTrue 65134
+#define DbConsts_SParameterNotFound 65135
+#define DbConsts_SInvalidFieldKind 65136
+#define DbConsts_SUnknownFieldType 65137
+#define DbConsts_SFieldNameMissing 65138
+#define DbConsts_SDuplicateFieldName 65139
+#define DbConsts_SFieldNotFound 65140
+#define DbConsts_SFieldAccessError 65141
+#define DbConsts_SFieldValueError 65142
+#define DbConsts_SFieldRangeError 65143
+#define DbConsts_SInvalidIntegerValue 65144
+#define DbConsts_SInvalidBoolValue 65145
+#define DbConsts_SInvalidFloatValue 65146
+#define DbConsts_SFieldTypeMismatch 65147
+#define DbConsts_SFieldSizeMismatch 65148
+#define DbConsts_SInvalidVarByteArray 65149
+#define DbConsts_SFieldOutOfRange 65150
+#define DbConsts_SBCDOverflow 65151
+#define uPSC_dll_RPS_InvalidCallingConvention 65152
+#define uPSPreProcessor_RPS_TooManyNestedInclude 65153
+#define uPSPreProcessor_RPS_IncludeNotFound 65154
+#define uPSPreProcessor_RPS_DefineTooManyParameters 65155
+#define uPSPreProcessor_RPS_NoIfdefForEndif 65156
+#define uPSPreProcessor_RPS_NoIfdefForElse 65157
+#define uPSPreProcessor_RPS_ElseTwice 65158
+#define uPSPreProcessor_RPS_UnknownCompilerDirective 65159
+#define uPSPreProcessor_RPs_DefineNotClosed 65160
+#define uPSComponent_RPS_UnableToReadVariant 65161
+#define uPSComponent_RPS_UnableToWriteVariant 65162
+#define uPSComponent_RPS_ScripEngineAlreadyRunning 65163
+#define uPSComponent_RPS_NotRunning 65164
+#define uPSComponent_RPS_UnknownIdentifier 65165
+#define uPSComponent_RPS_NoScript 65166
+#define DbConsts_SInvalidFieldSize 65167
+#define uPSRuntime_RPS_OutOfStringRange 65168
+#define uPSRuntime_RPS_CannotCastInterface 65169
+#define uPSRuntime_RPS_CannotCastObject 65170
+#define uPSRuntime_RPS_CapacityLength 65171
+#define uPSRuntime_RPS_NILInterfaceException 65172
+#define uPSRuntime_RPS_UnknownMethod 65173
+#define ComStrs_sTabFailClear 65174
+#define ComStrs_sTabFailDelete 65175
+#define ComStrs_sTabFailRetrieve 65176
+#define ComStrs_sTabFailGetObject 65177
+#define ComStrs_sTabFailSet 65178
+#define ComStrs_sTabFailSetObject 65179
+#define ComStrs_sTabMustBeMultiLine 65180
+#define ComStrs_sPageIndexError 65181
+#define uPSDebugger_RPS_ExpectedReturnAddressStackBase 65182
+#define uPSC_dll_RPS_Invalid_External 65183
+#define uPSRuntime_RPS_OutOfProcRange 65184
+#define uPSRuntime_RPS_OutOfRange 65185
+#define uPSRuntime_RPS_OutOfStackRange 65186
+#define uPSRuntime_RPS_TypeMismatch 65187
+#define uPSRuntime_RPS_UnexpectedEof 65188
+#define uPSRuntime_RPS_VersionError 65189
+#define uPSRuntime_RPS_DivideByZero 65190
+#define uPSRuntime_RPS_MathError 65191
+#define uPSRuntime_RPS_CouldNotCallProc 65192
+#define uPSRuntime_RPS_OutofRecordRange 65193
+#define uPSRuntime_RPS_NullPointerException 65194
+#define uPSRuntime_RPS_NullVariantError 65195
+#define uPSRuntime_RPS_OutOfMemory 65196
+#define uPSRuntime_RPS_InterfaceNotSupported 65197
+#define uPSRuntime_RPS_UnknownError 65198
+#define uPSRuntime_RPS_InvalidArray 65199
+#define uPSCompiler_RPS_CaseCaseExpected 65200
+#define ComConst_SOleError 65201
+#define ComConst_SNoMethod 65202
+#define ComConst_SVarNotObject 65203
+#define uPSRuntime_RPS_UnknownIdentifier 65204
+#define uPSRuntime_RPS_Exception 65205
+#define uPSRuntime_RPS_Invalid 65206
+#define uPSRuntime_RPS_NoError 65207
+#define uPSRuntime_RPS_CannotImport 65208
+#define uPSRuntime_RPS_InvalidType 65209
+#define uPSRuntime_RPS_InternalError 65210
+#define uPSRuntime_RPS_InvalidHeader 65211
+#define uPSRuntime_RPS_InvalidOpcode 65212
+#define uPSRuntime_RPS_InvalidOpcodeParameter 65213
+#define uPSRuntime_RPS_NoMainProc 65214
+#define uPSRuntime_RPS_OutOfGlobalVarsRange 65215
+#define uPSCompiler_RPS_VariableNotUsed 65216
+#define uPSCompiler_RPS_FunctionNotUsed 65217
+#define uPSCompiler_RPS_UnknownHint 65218
+#define uPSCompiler_RPS_Warning 65219
+#define uPSCompiler_RPS_CalculationAlwaysEvaluatesTo 65220
+#define uPSCompiler_RPS_IsNotNeeded 65221
+#define uPSCompiler_RPS_AbstractClass 65222
+#define uPSCompiler_RPS_UnknownWarning 65223
+#define uPSCompiler_RPS_NotArrayProperty 65224
+#define uPSCompiler_RPS_NotProperty 65225
+#define uPSCompiler_RPS_UnknownProperty 65226
+#define uPSCompiler_RPS_SalirSiExpected 65227
+#define uPSCompiler_RPS_EFCrossBlockError 65228
+#define uPSCompiler_RPS_StepExpected 65229
+#define uPSCompiler_RPS_InfiniteLoop 65230
+#define uPSCompiler_RPS_EofExpected 65231
+#define uPSCompiler_RPS_UnSetLabel 65232
+#define uPSCompiler_RPS_NotInLoop 65233
+#define uPSCompiler_RPS_InvalidJump 65234
+#define uPSCompiler_RPS_OpenBlockExpected 65235
+#define uPSCompiler_RPS_WriteOnlyProperty 65236
+#define uPSCompiler_RPS_ReadOnlyProperty 65237
+#define uPSCompiler_RPS_ClassTypeExpected 65238
+#define uPSCompiler_RPS_DivideByZero 65239
+#define uPSCompiler_RPS_MathError 65240
+#define uPSCompiler_RPS_UnsatisfiedForward 65241
+#define uPSCompiler_RPS_ForwardParameterMismatch 65242
+#define uPSCompiler_RPS_InvalidNumberOfParameter 65243
+#define uPSCompiler_RPS_UnknownError 65244
+#define uPSCompiler_RPS_NotAllowed 65245
+#define uPSCompiler_RPS_UnitNotFound 65246
+#define uPSCompiler_RPS_Hint 65247
+#define uPSCompiler_RPS_TypeMismatch 65248
+#define uPSCompiler_RPS_InternalError 65249
+#define uPSCompiler_RPS_AssignmentExpected 65250
+#define uPSCompiler_RPS_ForFromExpected 65251
+#define uPSCompiler_RPS_ThenExpected 65252
+#define uPSCompiler_RPS_DoExpected 65253
+#define uPSCompiler_RPS_NoResult 65254
+#define uPSCompiler_RPS_OpenRoundExpected 65255
+#define uPSCompiler_RPS_CommaExpected 65256
+#define uPSCompiler_RPS_ToExpected 65257
+#define uPSCompiler_RPS_IsExpected 65258
+#define uPSCompiler_RPS_OfExpected 65259
+#define uPSCompiler_RPS_CloseBlockExpected 65260
+#define uPSCompiler_RPS_VariableExpected 65261
+#define uPSCompiler_RPS_StringExpected 65262
+#define uPSCompiler_RPS_EndExpected 65263
+#define uPSCompiler_RPS_UnknownIdentifier 65264
+#define uPSCompiler_RPS_IdentifierExpected 65265
+#define uPSCompiler_RPS_CommentError 65266
+#define uPSCompiler_RPS_StringError 65267
+#define uPSCompiler_RPS_CharError 65268
+#define uPSCompiler_RPS_SyntaxError 65269
+#define uPSCompiler_RPS_EOF 65270
+#define uPSCompiler_RPS_IEndExpected 65271
+#define uPSCompiler_RPS_UnexpectedIEnd 65272
+#define uPSCompiler_RPS_SemiColonExpected 65273
+#define uPSCompiler_RPS_BeginExpected 65274
+#define uPSCompiler_RPS_PeriodExpected 65275
+#define uPSCompiler_RPS_DuplicateIdent 65276
+#define uPSCompiler_RPS_ColonExpected 65277
+#define uPSCompiler_RPS_UnknownType 65278
+#define uPSCompiler_RPS_CloseRoundExpected 65279
+#define SynEditStrConst_SYNS_AttrSystem 65280
+#define SynEditStrConst_SYNS_ScrollInfoFmt 65281
+#define SynEditStrConst_SYNS_ScrollInfoFmtTop 65282
+#define SynEditStrConst_SYNS_EDuplicateShortcut 65283
+#define SynEditStrConst_SYNS_FilterPascal 65284
+#define SynEditStrConst_SYNS_LangPascal 65285
+#define SynEditTextBuffer_SListIndexOutOfBounds 65286
+#define SynEditTextBuffer_SInvalidCapacity 65287
+#define uPSUtils_RPS_InvalidFloat 65288
+#define uPSCompiler_RPS_OnUseEventOnly 65289
+#define uPSCompiler_RPS_UnableToRegisterFunction 65290
+#define uPSCompiler_RPS_UnableToRegisterConst 65291
+#define uPSCompiler_RPS_InvalidType 65292
+#define uPSCompiler_RPS_UnableToRegisterType 65293
+#define uPSCompiler_RPS_UnknownInterface 65294
+#define uPSCompiler_RPS_Error 65295
+#define Consts_SDockTreeRemoveError 65296
+#define Consts_SDockZoneNotFound 65297
+#define Consts_SDockZoneHasNoCtl 65298
+#define Consts_SDuplicateItem 65299
+#define SynEditStrConst_SYNS_AttrAssembler 65300
+#define SynEditStrConst_SYNS_AttrCharacter 65301
+#define SynEditStrConst_SYNS_AttrComment 65302
+#define SynEditStrConst_SYNS_AttrFloat 65303
+#define SynEditStrConst_SYNS_AttrHexadecimal 65304
+#define SynEditStrConst_SYNS_AttrIdentifier 65305
+#define SynEditStrConst_SYNS_AttrNumber 65306
+#define SynEditStrConst_SYNS_AttrPreprocessor 65307
+#define SynEditStrConst_SYNS_AttrReservedWord 65308
+#define SynEditStrConst_SYNS_AttrSpace 65309
+#define SynEditStrConst_SYNS_AttrString 65310
+#define SynEditStrConst_SYNS_AttrSymbol 65311
+#define Consts_SmkcShift 65312
+#define Consts_SmkcCtrl 65313
+#define Consts_SmkcAlt 65314
+#define Consts_SInsertLineError 65315
+#define Consts_SInvalidClipFmt 65316
+#define Consts_SIconToClipboard 65317
+#define Consts_SCannotOpenClipboard 65318
+#define Consts_SDefault 65319
+#define Consts_SInvalidMemoSize 65320
+#define Consts_SNoDefaultPrinter 65321
+#define Consts_SBitsIndexError 65322
+#define Consts_SInvalidRegType 65323
+#define Consts_SRegSetDataFailed 65324
+#define Consts_SRegGetDataFailed 65325
+#define Consts_SDuplicateMenus 65326
+#define Consts_SDockedCtlNeedsName 65327
+#define Consts_SMsgDlgYesToAll 65328
+#define Consts_SmkcBkSp 65329
+#define Consts_SmkcTab 65330
+#define Consts_SmkcEsc 65331
+#define Consts_SmkcEnter 65332
+#define Consts_SmkcSpace 65333
+#define Consts_SmkcPgUp 65334
+#define Consts_SmkcPgDn 65335
+#define Consts_SmkcEnd 65336
+#define Consts_SmkcHome 65337
+#define Consts_SmkcLeft 65338
+#define Consts_SmkcUp 65339
+#define Consts_SmkcRight 65340
+#define Consts_SmkcDown 65341
+#define Consts_SmkcIns 65342
+#define Consts_SmkcDel 65343
+#define Consts_SInvalidProperty 65344
+#define Consts_SInvalidBinary 65345
+#define Consts_SMsgDlgWarning 65346
+#define Consts_SMsgDlgError 65347
+#define Consts_SMsgDlgInformation 65348
+#define Consts_SMsgDlgConfirm 65349
+#define Consts_SMsgDlgYes 65350
+#define Consts_SMsgDlgNo 65351
+#define Consts_SMsgDlgOK 65352
+#define Consts_SMsgDlgCancel 65353
+#define Consts_SMsgDlgHelp 65354
+#define Consts_SMsgDlgAbort 65355
+#define Consts_SMsgDlgRetry 65356
+#define Consts_SMsgDlgIgnore 65357
+#define Consts_SMsgDlgAll 65358
+#define Consts_SMsgDlgNoToAll 65359
+#define Consts_SIgnoreButton 65360
+#define Consts_SRetryButton 65361
+#define Consts_SAbortButton 65362
+#define Consts_SAllButton 65363
+#define Consts_SCannotDragForm 65364
+#define Consts_SVMetafiles 65365
+#define Consts_SVEnhMetafiles 65366
+#define Consts_SVIcons 65367
+#define Consts_SVBitmaps 65368
+#define Consts_SParseError 65369
+#define Consts_SIdentifierExpected 65370
+#define Consts_SStringExpected 65371
+#define Consts_SNumberExpected 65372
+#define Consts_SCharExpected 65373
+#define Consts_SSymbolExpected 65374
+#define Consts_SInvalidString 65375
+#define Consts_SMenuNotFound 65376
+#define Consts_SNoTimers 65377
+#define Consts_SNotPrinting 65378
+#define Consts_SPrinting 65379
+#define Consts_SInvalidPrinter 65380
+#define Consts_SDeviceOnPort 65381
+#define Consts_SGroupIndexTooLow 65382
+#define Consts_SNoMDIForm 65383
+#define Consts_SImageCanvasNeedsBitmap 65384
+#define Consts_SControlParentSetToSelf 65385
+#define Consts_SOKButton 65386
+#define Consts_SCancelButton 65387
+#define Consts_SYesButton 65388
+#define Consts_SNoButton 65389
+#define Consts_SHelpButton 65390
+#define Consts_SCloseButton 65391
+#define Consts_SInvalidImageList 65392
+#define Consts_SReplaceImage 65393
+#define Consts_SImageIndexError 65394
+#define Consts_SImageReadFail 65395
+#define Consts_SImageWriteFail 65396
+#define Consts_SWindowDCError 65397
+#define Consts_SWindowClass 65398
+#define Consts_SCannotFocus 65399
+#define Consts_SParentRequired 65400
+#define Consts_SMDIChildNotVisible 65401
+#define Consts_SVisibleChanged 65402
+#define Consts_SCannotShowModal 65403
+#define Consts_SScrollBarRange 65404
+#define Consts_SPropertyOutOfRange 65405
+#define Consts_SMenuIndexError 65406
+#define Consts_SMenuReinserted 65407
 #define Consts_SInvalidPropertyValue 65408
 #define Consts_SInvalidPropertyPath 65409
 #define Consts_SUnknownProperty 65410
@@ -309,13 +314,13 @@
 #define Consts_SInvalidBitmap 65414
 #define Consts_SInvalidIcon 65415
 #define Consts_SInvalidMetafile 65416
-#define Consts_SChangeIconSize 65417
-#define Consts_SUnknownClipboardFormat 65418
-#define Consts_SOutOfResources 65419
-#define Consts_SNoCanvasHandle 65420
-#define Consts_SInvalidImageSize 65421
-#define Consts_SInvalidImageList 65422
-#define Consts_SReplaceImage 65423
+#define Consts_SInvalidPixelFormat 65417
+#define Consts_SScanLine 65418
+#define Consts_SChangeIconSize 65419
+#define Consts_SUnknownClipboardFormat 65420
+#define Consts_SOutOfResources 65421
+#define Consts_SNoCanvasHandle 65422
+#define Consts_SInvalidImageSize 65423
 #define Consts_SMemoryStreamError 65424
 #define Consts_SCantWriteResourceStreamError 65425
 #define Consts_SClassNotFound 65426
@@ -430,11 +435,18 @@
 #define SysConst_SInvalidInput 65535
 STRINGTABLE
 BEGIN
+	DbConsts_SInvalidVersion,	"Unable to load bind parameters"
+	DbConsts_SBadFieldType,	"Field '%s' is of an unsupported type"
 	DbConsts_SProviderSQLNotSupported,	"SQL not supported: %s"
 	DbConsts_SProviderExecuteNotSupported,	"Execute not supported: %s"
 	DbConsts_SRecordNotFound,	"Record not found"
+	jconsts_sChangeJPGSize,	"Cannot change the size of a JPEG image"
+	jconsts_sJPEGError,	"JPEG error #%d"
+	jconsts_sJPEGImageFile,	"JPEG Image File"
 	ide_about_RS_VERSION,	"Versión: %1d.%d.%d"
 	ide_editor_CS_SinNombre,	"Sin nombre"
+	DbConsts_SFieldRequired,	"Field '%s' must have a value"
+	DbConsts_SDataSetMissing,	"Field '%s' has no dataset"
 	DbConsts_SDuplicateIndexName,	"Duplicate index name '%s'"
 	DbConsts_SNoIndexForFields,	"No index for fields '%s'"
 	DbConsts_SIndexNotFound,	"Index '%s' not found"
@@ -449,8 +461,8 @@ BEGIN
 	DbConsts_STextFalse,	"False"
 	DbConsts_STextTrue,	"True"
 	DbConsts_SParameterNotFound,	"Parameter '%s' not found"
-	DbConsts_SInvalidVersion,	"Unable to load bind parameters"
-	DbConsts_SBadFieldType,	"Field '%s' is of an unsupported type"
+	DbConsts_SInvalidFieldKind,	"Invalid FieldKind"
+	DbConsts_SUnknownFieldType,	"Field '%s' is of an unknown type"
 	DbConsts_SFieldNameMissing,	"Field name missing"
 	DbConsts_SDuplicateFieldName,	"Duplicate field name '%s'"
 	DbConsts_SFieldNotFound,	"Field '%s' not found"
@@ -465,8 +477,8 @@ BEGIN
 	DbConsts_SInvalidVarByteArray,	"Invalid variant type or size for field '%s'"
 	DbConsts_SFieldOutOfRange,	"Value of field '%s' is out of range"
 	DbConsts_SBCDOverflow,	"(Overflow)"
-	DbConsts_SFieldRequired,	"Field '%s' must have a value"
-	DbConsts_SDataSetMissing,	"Field '%s' has no dataset"
+	uPSC_dll_RPS_InvalidCallingConvention,	"Invalid Calling Convention"
+	uPSPreProcessor_RPS_TooManyNestedInclude,	"Demasiadas inclusiones procesando '%s' incluido en '%s'"
 	uPSPreProcessor_RPS_IncludeNotFound,	"No se puede localizar el archivo '%s' utilizado en '%s'"
 	uPSPreProcessor_RPS_DefineTooManyParameters,	"Demasiados parámetros en %d:%d"
 	uPSPreProcessor_RPS_NoIfdefForEndif,	"FinSi sin SiDef en %d:%d"
@@ -481,8 +493,8 @@ BEGIN
 	uPSComponent_RPS_UnknownIdentifier,	"Identificador desconocido"
 	uPSComponent_RPS_NoScript,	"Sin algoritmo"
 	DbConsts_SInvalidFieldSize,	"Invalid field size"
-	DbConsts_SInvalidFieldKind,	"Invalid FieldKind"
-	DbConsts_SUnknownFieldType,	"Field '%s' is of an unknown type"
+	uPSRuntime_RPS_OutOfStringRange,	"Fuera de rango de la cadena"
+	uPSRuntime_RPS_CannotCastInterface,	"No se puede forzar el tipo de una interface"
 	uPSRuntime_RPS_CannotCastObject,	"No se pudo forzar el tipo de un objeto"
 	uPSRuntime_RPS_CapacityLength,	"Capacidad < Longitud"
 	uPSRuntime_RPS_NILInterfaceException,	"Interface nula"
@@ -497,8 +509,8 @@ BEGIN
 	ComStrs_sPageIndexError,	"%d is an invalid PageIndex value.  PageIndex must be between 0 and %d"
 	uPSDebugger_RPS_ExpectedReturnAddressStackBase,	"Se esperaba la dirección de retorno en la base de la pila"
 	uPSC_dll_RPS_Invalid_External,	"Invalid External"
-	uPSC_dll_RPS_InvalidCallingConvention,	"Invalid Calling Convention"
-	uPSPreProcessor_RPS_TooManyNestedInclude,	"Demasiadas inclusiones procesando '%s' incluido en '%s'"
+	uPSRuntime_RPS_OutOfProcRange,	"Se salió del rango de procedimientos"
+	uPSRuntime_RPS_OutOfRange,	"Fuera de rango"
 	uPSRuntime_RPS_OutOfStackRange,	"Fuera de rango de pila"
 	uPSRuntime_RPS_TypeMismatch,	"Incoherencia de tipos"
 	uPSRuntime_RPS_UnexpectedEof,	"Fin de archivo inesperado"
@@ -513,8 +525,8 @@ BEGIN
 	uPSRuntime_RPS_InterfaceNotSupported,	"Interface no soportada"
 	uPSRuntime_RPS_UnknownError,	"Error desconocido"
 	uPSRuntime_RPS_InvalidArray,	"Arreglo no válido"
-	uPSRuntime_RPS_OutOfStringRange,	"Fuera de rango de la cadena"
-	uPSRuntime_RPS_CannotCastInterface,	"No se puede forzar el tipo de una interface"
+	uPSCompiler_RPS_CaseCaseExpected,	"Se esperaba \"caso\""
+	ComConst_SOleError,	"OLE error %.8x"
 	ComConst_SNoMethod,	"Method '%s' not supported by automation object"
 	ComConst_SVarNotObject,	"Variant does not reference an automation object"
 	uPSRuntime_RPS_UnknownIdentifier,	"Identificador desconocido"
@@ -529,8 +541,9 @@ BEGIN
 	uPSRuntime_RPS_InvalidOpcodeParameter,	"Parámetro de operación no válido"
 	uPSRuntime_RPS_NoMainProc,	"No hay procedimiento principal"
 	uPSRuntime_RPS_OutOfGlobalVarsRange,	"Se salió del rango de variables globales"
-	uPSRuntime_RPS_OutOfProcRange,	"Se salió del rango de procedimientos"
-	uPSRuntime_RPS_OutOfRange,	"Fuera de rango"
+	uPSCompiler_RPS_VariableNotUsed,	"La variable '%s' no se ha utilizado"
+	uPSCompiler_RPS_FunctionNotUsed,	"La función '%s' no se ha utilizado"
+	uPSCompiler_RPS_UnknownHint,	"Consejo desconocido"
 	uPSCompiler_RPS_Warning,	"Advertencia"
 	uPSCompiler_RPS_CalculationAlwaysEvaluatesTo,	"El cálculo siempre devuelve %s"
 	uPSCompiler_RPS_IsNotNeeded,	"No se necesita %s"
@@ -544,9 +557,9 @@ BEGIN
 	uPSCompiler_RPS_StepExpected,	"Se esperaba \"paso\""
 	uPSCompiler_RPS_InfiniteLoop,	"Bucle infinito"
 	uPSCompiler_RPS_EofExpected,	"Se esperaba el fin del archivo"
-	uPSCompiler_RPS_CaseCaseExpected,	"Se esperaba \"caso\""
-	uPSUtils_RPS_InvalidFloat,	"Real no válido"
-	ComConst_SOleError,	"OLE error %.8x"
+	uPSCompiler_RPS_UnSetLabel,	"El rótulo '%s' no ha sido establecido"
+	uPSCompiler_RPS_NotInLoop,	"No se encuentra en un bucle"
+	uPSCompiler_RPS_InvalidJump,	"Salto no válido"
 	uPSCompiler_RPS_OpenBlockExpected,	"Se esperaba apertura de corchetes"
 	uPSCompiler_RPS_WriteOnlyProperty,	"Propiedad de sólo escritura"
 	uPSCompiler_RPS_ReadOnlyProperty,	"Propiedad de sólo lectura"
@@ -560,9 +573,9 @@ BEGIN
 	uPSCompiler_RPS_NotAllowed,	"%s no está permitido en este punto"
 	uPSCompiler_RPS_UnitNotFound,	"subprogramas '%s' no encontrado o con errores"
 	uPSCompiler_RPS_Hint,	"Consejo"
-	uPSCompiler_RPS_VariableNotUsed,	"La variable '%s' no se ha utilizado"
-	uPSCompiler_RPS_FunctionNotUsed,	"La función '%s' no se ha utilizado"
-	uPSCompiler_RPS_UnknownHint,	"Consejo desconocido"
+	uPSCompiler_RPS_TypeMismatch,	"Incoherencia de tipos"
+	uPSCompiler_RPS_InternalError,	"Error interno (%s)"
+	uPSCompiler_RPS_AssignmentExpected,	"Se esperaba asignación"
 	uPSCompiler_RPS_ForFromExpected,	"Se esperaba 'desde'"
 	uPSCompiler_RPS_ThenExpected,	"Se esperaba 'entonces'"
 	uPSCompiler_RPS_DoExpected,	"Se esperaba 'hacer'"
@@ -576,9 +589,9 @@ BEGIN
 	uPSCompiler_RPS_VariableExpected,	"Se esperaba una variable"
 	uPSCompiler_RPS_StringExpected,	"Se esperaba un valor tbtString"
 	uPSCompiler_RPS_EndExpected,	"Se esperaba 'fin'"
-	uPSCompiler_RPS_UnSetLabel,	"El rótulo '%s' no ha sido establecido"
-	uPSCompiler_RPS_NotInLoop,	"No se encuentra en un bucle"
-	uPSCompiler_RPS_InvalidJump,	"Salto no válido"
+	uPSCompiler_RPS_UnknownIdentifier,	"Identificador '%s' desconocido"
+	uPSCompiler_RPS_IdentifierExpected,	"Se esperaba un identificador"
+	uPSCompiler_RPS_CommentError,	"Error con el comentario"
 	uPSCompiler_RPS_StringError,	"Error en tbtString"
 	uPSCompiler_RPS_CharError,	"Error en carácter"
 	uPSCompiler_RPS_SyntaxError,	"Error de sintaxis"
@@ -592,15 +605,15 @@ BEGIN
 	uPSCompiler_RPS_ColonExpected,	"Se esperaban dos punto (':')"
 	uPSCompiler_RPS_UnknownType,	"Tipo '%s' desconocido"
 	uPSCompiler_RPS_CloseRoundExpected,	"Se esperaba cierre de paréntesis"
-	uPSCompiler_RPS_TypeMismatch,	"Incoherencia de tipos"
-	uPSCompiler_RPS_InternalError,	"Error interno (%s)"
-	uPSCompiler_RPS_AssignmentExpected,	"Se esperaba asignación"
+	SynEditStrConst_SYNS_AttrSystem,	"System Functions and Variables"
+	SynEditStrConst_SYNS_ScrollInfoFmt,	"%d - %d"
 	SynEditStrConst_SYNS_ScrollInfoFmtTop,	"Top Line: %d"
 	SynEditStrConst_SYNS_EDuplicateShortcut,	"Shortcut already exists"
 	SynEditStrConst_SYNS_FilterPascal,	"Pascal Files (*.pas;*.pp;*.dpr;*.dpk;*.inc)|*.pas;*.pp;*.dpr;*.dpk;*.inc"
 	SynEditStrConst_SYNS_LangPascal,	"Object Pascal"
 	SynEditTextBuffer_SListIndexOutOfBounds,	"Invalid stringlist index %d"
 	SynEditTextBuffer_SInvalidCapacity,	"Stringlist capacity cannot be smaller than count"
+	uPSUtils_RPS_InvalidFloat,	"Real no válido"
 	uPSCompiler_RPS_OnUseEventOnly,	"Esta función puede utilizarse únicamente desde dentro del evento OnUses"
 	uPSCompiler_RPS_UnableToRegisterFunction,	"Imposible registrar la función %s"
 	uPSCompiler_RPS_UnableToRegisterConst,	"Imposible registrar la constante %s"
@@ -608,9 +621,8 @@ BEGIN
 	uPSCompiler_RPS_UnableToRegisterType,	"Imposible registrar el tipo %s"
 	uPSCompiler_RPS_UnknownInterface,	"Interface desconocida: %s"
 	uPSCompiler_RPS_Error,	"Error"
-	uPSCompiler_RPS_UnknownIdentifier,	"Identificador '%s' desconocido"
-	uPSCompiler_RPS_IdentifierExpected,	"Se esperaba un identificador"
-	uPSCompiler_RPS_CommentError,	"Error con el comentario"
+	Consts_SDockTreeRemoveError,	"Error removing control from dock tree"
+	Consts_SDockZoneNotFound,	" - Dock zone not found"
 	Consts_SDockZoneHasNoCtl,	" - Dock zone has no control"
 	Consts_SDuplicateItem,	"List does not allow duplicates ($0%x)"
 	SynEditStrConst_SYNS_AttrAssembler,	"Assembler"
@@ -625,8 +637,8 @@ BEGIN
 	SynEditStrConst_SYNS_AttrSpace,	"Space"
 	SynEditStrConst_SYNS_AttrString,	"String"
 	SynEditStrConst_SYNS_AttrSymbol,	"Symbol"
-	SynEditStrConst_SYNS_AttrSystem,	"System Functions and Variables"
-	SynEditStrConst_SYNS_ScrollInfoFmt,	"%d - %d"
+	Consts_SmkcShift,	"Shift+"
+	Consts_SmkcCtrl,	"Ctrl+"
 	Consts_SmkcAlt,	"Alt+"
 	Consts_SInsertLineError,	"Unable to insert a line"
 	Consts_SInvalidClipFmt,	"Invalid clipboard format"
@@ -641,8 +653,8 @@ BEGIN
 	Consts_SRegGetDataFailed,	"Failed to get data for '%s'"
 	Consts_SDuplicateMenus,	"Menu '%s' is already being used by another form"
 	Consts_SDockedCtlNeedsName,	"Docked control must have a name"
-	Consts_SDockTreeRemoveError,	"Error removing control from dock tree"
-	Consts_SDockZoneNotFound,	" - Dock zone not found"
+	Consts_SMsgDlgYesToAll,	"Yes to &All"
+	Consts_SmkcBkSp,	"BkSp"
 	Consts_SmkcTab,	"Tab"
 	Consts_SmkcEsc,	"Esc"
 	Consts_SmkcEnter,	"Enter"
@@ -657,8 +669,8 @@ BEGIN
 	Consts_SmkcDown,	"Down"
 	Consts_SmkcIns,	"Ins"
 	Consts_SmkcDel,	"Del"
-	Consts_SmkcShift,	"Shift+"
-	Consts_SmkcCtrl,	"Ctrl+"
+	Consts_SInvalidProperty,	"Invalid property value"
+	Consts_SInvalidBinary,	"Invalid binary value"
 	Consts_SMsgDlgWarning,	"Warning"
 	Consts_SMsgDlgError,	"Error"
 	Consts_SMsgDlgInformation,	"Information"
@@ -673,8 +685,8 @@ BEGIN
 	Consts_SMsgDlgIgnore,	"&Ignore"
 	Consts_SMsgDlgAll,	"&All"
 	Consts_SMsgDlgNoToAll,	"N&o to All"
-	Consts_SMsgDlgYesToAll,	"Yes to &All"
-	Consts_SmkcBkSp,	"BkSp"
+	Consts_SIgnoreButton,	"&Ignore"
+	Consts_SRetryButton,	"&Retry"
 	Consts_SAbortButton,	"Abort"
 	Consts_SAllButton,	"&All"
 	Consts_SCannotDragForm,	"Cannot drag a form"
@@ -689,8 +701,8 @@ BEGIN
 	Consts_SCharExpected,	"''%s'' expected"
 	Consts_SSymbolExpected,	"%s expected"
 	Consts_SInvalidString,	"Invalid string constant"
-	Consts_SInvalidProperty,	"Invalid property value"
-	Consts_SInvalidBinary,	"Invalid binary value"
+	Consts_SMenuNotFound,	"Sub-menu is not in menu"
+	Consts_SNoTimers,	"Not enough timers available"
 	Consts_SNotPrinting,	"Printer is not currently printing"
 	Consts_SPrinting,	"Printing in progress"
 	Consts_SInvalidPrinter,	"Printer selected is not valid"
@@ -705,8 +717,8 @@ BEGIN
 	Consts_SNoButton,	"&No"
 	Consts_SHelpButton,	"&Help"
 	Consts_SCloseButton,	"&Close"
-	Consts_SIgnoreButton,	"&Ignore"
-	Consts_SRetryButton,	"&Retry"
+	Consts_SInvalidImageList,	"Invalid ImageList"
+	Consts_SReplaceImage,	"Unable to Replace Image"
 	Consts_SImageIndexError,	"Invalid ImageList Index"
 	Consts_SImageReadFail,	"Failed to read ImageList data from stream"
 	Consts_SImageWriteFail,	"Failed to write ImageList data to stream"
@@ -721,8 +733,6 @@ BEGIN
 	Consts_SPropertyOutOfRange,	"%s property out of range"
 	Consts_SMenuIndexError,	"Menu index out of range"
 	Consts_SMenuReinserted,	"Menu inserted twice"
-	Consts_SMenuNotFound,	"Sub-menu is not in menu"
-	Consts_SNoTimers,	"Not enough timers available"
 	Consts_SInvalidPropertyValue,	"Invalid property value"
 	Consts_SInvalidPropertyPath,	"Invalid property path"
 	Consts_SUnknownProperty,	"Property does not exist"
@@ -732,13 +742,13 @@ BEGIN
 	Consts_SInvalidBitmap,	"Bitmap image is not valid"
 	Consts_SInvalidIcon,	"Icon image is not valid"
 	Consts_SInvalidMetafile,	"Metafile is not valid"
+	Consts_SInvalidPixelFormat,	"Invalid pixel format"
+	Consts_SScanLine,	"Scan line index out of range"
 	Consts_SChangeIconSize,	"Cannot change the size of an icon"
 	Consts_SUnknownClipboardFormat,	"Unsupported clipboard format"
 	Consts_SOutOfResources,	"Out of system resources"
 	Consts_SNoCanvasHandle,	"Canvas does not allow drawing"
 	Consts_SInvalidImageSize,	"Invalid image size"
-	Consts_SInvalidImageList,	"Invalid ImageList"
-	Consts_SReplaceImage,	"Unable to Replace Image"
 	Consts_SMemoryStreamError,	"Out of memory while expanding memory stream"
 	Consts_SCantWriteResourceStreamError,	"Can't write to a read-only resource stream"
 	Consts_SClassNotFound,	"Class %s not found"
