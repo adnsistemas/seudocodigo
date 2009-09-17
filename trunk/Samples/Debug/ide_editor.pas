@@ -193,9 +193,11 @@ type
     FWatches:TStrings;
     FNextReadText:string;
     FListShow:TList;
+    FRandomized:boolean;
     function Compile: Boolean;
     function Execute: Boolean;
 
+    function Aleatorio(const e:integer = 0):real;
     procedure WriteStr(const s: string);
     procedure ReadStr(var s:string);
     procedure ReadInt(var i:integer);
@@ -430,24 +432,11 @@ end;
 procedure Teditor.ceCompile(Sender: TPSScript);
 begin
   Sender.AddMethod(Self, @TEditor.CRLF, CS_function + ' ' + CS_crlf + ':' + CS_string);
-//  Sender.AddMethod(Self, @TEditor.BoolToStr, CS_function + ' LogicoACadena('+ CS_const + 'que:' + CS_boolean + '):' + CS_string);
-  Sender.AddMethod(Self, @TEditor.TextEqual, CS_function + ' MismoTexto('+ CS_const + 'uno,dos:' + CS_string + '):' + CS_boolean);
+  Sender.AddMethod(Self, @TEditor.TextEqual, CS_function + ' ' + CS_SameText + '('+ CS_const + 'uno,dos:' + CS_string + '):' + CS_boolean);
   Sender.AddMethod(Self, @TEditor.Esperar, CS_procedure + ' ' + CS_Wait + '(' + CS_const + ' mensaje:' + CS_string + ')');
   Sender.AddMethod(Self, @TEditor.BorrarPant, CS_procedure + ' ' + CS_ClearScreen);
-{  Sender.AddMethod(Self, @TEditor.WReadStr, CS_procedure + ' MostrarYLeerCadena(' + CS_const + 'que:' + CS_string + ';' + CS_var + ' s: ' + CS_string + ')');
-  Sender.AddMethod(Self, @TEditor.WReadChar, CS_procedure + ' MostrarYLeerCaracter(' + CS_const + 'que:' + CS_string + ';' + CS_var + ' s: ' + CS_char + ')');
-  Sender.AddMethod(Self, @TEditor.WReadBool, CS_procedure + ' MostrarYLeerLogico(' + CS_const + 'que:' + CS_string + ';' + CS_var + ' s: ' + CS_boolean + ')');
-  Sender.AddMethod(Self, @TEditor.WReadInt, CS_procedure + ' MostrarYLeerEntero(' + CS_const + 'que:' + CS_string + ';' + CS_var + ' s: ' + CS_integer + ')');
-  Sender.AddMethod(Self, @TEditor.WReadReal, CS_procedure + ' MostrarYLeerReal(' + CS_const + 'que:' + CS_string + ';' + CS_var + ' s: ' + CS_real + ')');
-  Sender.AddMethod(Self, @TEditor.WReadDT, CS_procedure + ' MostrarYLeerFechaYHora(' + CS_const + 'que:' + CS_string + ';' + CS_var + ' s: ' + CS_TDateTime + ')');}
-  Sender.AddMethod(Self, @TEditor.ReadDT, CS_procedure + ' LeerFechaYHora(' + CS_var + ' s: ' + CS_TDateTime + ')');
-{  Sender.AddMethod(Self, @TEditor.ReadStr, CS_procedure + ' LeerCadena(' + CS_var + ' s: ' + CS_string + ')');
-  Sender.AddMethod(Self, @TEditor.ReadChar, CS_procedure + ' LeerCaracter(' + CS_var + ' s: ' + CS_char + ')');
-  Sender.AddMethod(Self, @TEditor.ReadBool, CS_procedure + ' LeerLogico(' + CS_var + ' s: ' + CS_boolean + ')');
-  Sender.AddMethod(Self, @TEditor.ReadInt, CS_procedure + ' LeerEntero(' + CS_var + ' s: ' + CS_integer + ')');
-  Sender.AddMethod(Self, @TEditor.ReadReal, CS_procedure + ' LeerReal(' + CS_var + ' s: ' + CS_real + ')');
-  Sender.AddRegisteredVariable(CS_Self, CS_TForm);
-  Sender.AddRegisteredVariable(CS_Application, CS_TApplication);}
+  Sender.AddMethod(Self, @TEditor.ReadDT, CS_procedure + ' ' + CS_ReadDateTime + '(' + CS_var + ' s: ' + CS_TDateTime + ')');
+  Sender.AddMethod(Self, @TEditor.Aleatorio, CS_function + ' ' + CS_Random + '(' + CS_const + ' e: ' + CS_integer + '):' + CS_real);
 end;
 
 procedure Teditor.WReadStr(const que:string;var s: string);
@@ -1763,6 +1752,13 @@ begin
     if Assigned(HostDockSite) then
       PageControl1.ActivePageIndex := 1;
   end;
+end;
+
+function Teditor.Aleatorio(const e: integer): real;
+begin
+  if not FRandomized then
+    Randomize;
+  result := Random(e);
 end;
 
 end.

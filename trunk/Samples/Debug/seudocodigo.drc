@@ -12,11 +12,12 @@
 #define DbConsts_SProviderSQLNotSupported 65106
 #define DbConsts_SProviderExecuteNotSupported 65107
 #define DbConsts_SRecordNotFound 65108
-#define jconsts_sChangeJPGSize 65109
-#define jconsts_sJPEGError 65110
-#define jconsts_sJPEGImageFile 65111
-#define ide_about_RS_VERSION 65112
-#define ide_editor_CS_SinNombre 65113
+#define SynHighlighterSeudoc_SYNS_AttrAssignment 65109
+#define jconsts_sChangeJPGSize 65110
+#define jconsts_sJPEGError 65111
+#define jconsts_sJPEGImageFile 65112
+#define ide_about_RS_VERSION 65113
+#define ide_editor_CS_SinNombre 65114
 #define DbConsts_SFieldRequired 65120
 #define DbConsts_SDataSetMissing 65121
 #define DbConsts_SDuplicateIndexName 65122
@@ -440,6 +441,7 @@ BEGIN
 	DbConsts_SProviderSQLNotSupported,	"SQL not supported: %s"
 	DbConsts_SProviderExecuteNotSupported,	"Execute not supported: %s"
 	DbConsts_SRecordNotFound,	"Record not found"
+	SynHighlighterSeudoc_SYNS_AttrAssignment,	"Asignación"
 	jconsts_sChangeJPGSize,	"Cannot change the size of a JPEG image"
 	jconsts_sJPEGError,	"JPEG error #%d"
 	jconsts_sJPEGImageFile,	"JPEG Image File"
