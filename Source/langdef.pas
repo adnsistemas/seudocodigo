@@ -759,8 +759,10 @@ const
   CS_ProcessMessages = 'ProcesarMensajes';
   CS_RaiseException = 'DispararExcepcion';
   CS_RaiseLastException = 'DispararUltimaExcepcion';
+  CS_Random = 'Aleatorio';
   CS_Read = 'Leer';
   CS_ReadBuffer = 'LeerRecipiente';
+  CS_ReadDateTime = 'LeerFechaYHora';
   CS_ReadLn = 'LeerRenglon';
   CS_Realign = 'Realinear';
   CS_Rectangle = 'Rectangulo';
@@ -785,6 +787,7 @@ const
   CS_Round = 'Redondear';
   CS_RoundRect = 'RectanguloRedondeado';
   CS_Run = 'Ejecutar';
+  CS_SameText = 'MismoTexto';
   CS_SameType = 'MismoTipo';
   CS_SaveToClipboardFormat = 'GuardarEnFormatoDePortapapeles';
   CS_ScaleBy = 'CambiarEscala';
@@ -2350,4 +2353,5 @@ begin
 end;
 
 end.
+
 

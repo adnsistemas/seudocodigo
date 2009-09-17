@@ -1,6 +1,6 @@
 object editor: Teditor
-  Left = 234
-  Top = 166
+  Left = 9
+  Top = 27
   Width = 718
   Height = 498
   Caption = 
@@ -23,8 +23,8 @@ object editor: Teditor
   TextHeight = 13
   object Splitter1: TSplitter
     Left = 0
-    Top = 309
-    Width = 702
+    Top = 319
+    Width = 710
     Height = 3
     Cursor = crVSplit
     Align = alBottom
@@ -33,13 +33,13 @@ object editor: Teditor
     Left = 137
     Top = 0
     Width = 3
-    Height = 309
+    Height = 319
     Cursor = crHSplit
   end
   object StatusBar1: TStatusBar
     Left = 0
-    Top = 423
-    Width = 702
+    Top = 433
+    Width = 710
     Height = 19
     Panels = <
       item
@@ -58,14 +58,14 @@ object editor: Teditor
     Left = 0
     Top = 0
     Width = 137
-    Height = 309
+    Height = 319
     Align = alLeft
     BevelOuter = bvNone
     Enabled = False
     TabOrder = 1
     object Splitter3: TSplitter
       Left = 0
-      Top = 201
+      Top = 211
       Width = 137
       Height = 3
       Cursor = crVSplit
@@ -73,7 +73,7 @@ object editor: Teditor
     end
     object Splitter4: TSplitter
       Left = 0
-      Top = 93
+      Top = 103
       Width = 137
       Height = 3
       Cursor = crVSplit
@@ -83,7 +83,7 @@ object editor: Teditor
       Left = 0
       Top = 49
       Width = 137
-      Height = 44
+      Height = 54
       Align = alClient
       ItemHeight = 13
       PopupMenu = PopupMenu2
@@ -110,7 +110,7 @@ object editor: Teditor
     end
     object GroupBox2: TGroupBox
       Left = 0
-      Top = 96
+      Top = 106
       Width = 137
       Height = 105
       Align = alBottom
@@ -152,7 +152,7 @@ object editor: Teditor
     end
     object GroupBox3: TGroupBox
       Left = 0
-      Top = 204
+      Top = 214
       Width = 137
       Height = 105
       Align = alBottom
@@ -195,8 +195,8 @@ object editor: Teditor
   end
   object PageControl1: TPageControl
     Left = 0
-    Top = 312
-    Width = 702
+    Top = 322
+    Width = 710
     Height = 111
     ActivePage = TabSheet1
     Align = alBottom
@@ -207,7 +207,7 @@ object editor: Teditor
       object messages: TListBox
         Left = 0
         Top = 0
-        Width = 694
+        Width = 702
         Height = 83
         TabStop = False
         Align = alClient
@@ -221,8 +221,8 @@ object editor: Teditor
   object PageControl: TPageControl
     Left = 140
     Top = 0
-    Width = 562
-    Height = 309
+    Width = 570
+    Height = 319
     ActivePage = MainTab
     Align = alClient
     PopupMenu = PopupMenu3
@@ -233,8 +233,8 @@ object editor: Teditor
       object ed: TSynEdit
         Left = 0
         Top = 0
-        Width = 554
-        Height = 281
+        Width = 562
+        Height = 291
         HelpContext = 102
         Align = alClient
         Font.Charset = DEFAULT_CHARSET
@@ -524,9 +524,10 @@ object editor: Teditor
     NumberAttri.Foreground = clMaroon
     StringAttri.Foreground = clPurple
     SymbolAttri.Foreground = clGreen
-    SymbolAttri.Style = [fsBold]
     InnerRoutineAttri.Foreground = clBlack
     InnerRoutineAttri.Style = [fsBold]
+    AssignmentAttri.Foreground = clMaroon
+    AssignmentAttri.Style = [fsBold]
     Left = 592
     Top = 64
   end

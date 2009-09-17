@@ -67,9 +67,13 @@ uses
   SysUtils,
   Classes;
 
+resourcestring
+  SYNS_AttrAssignment = 'Asignación';
+  
 type
   TtkTokenKind = (tkAsm, tkComment, tkIdentifier, tkKey, tkNull, tkNumber,
-    tkSpace, tkString, tkSymbol, tkUnknown, tkFloat, tkHex, tkDirec, tkChar, tkInner);
+    tkSpace, tkString, tkSymbol, tkUnknown, tkFloat, tkHex, tkDirec, tkChar, tkInner,
+    tkAssignment);
 
   TRangeState = (rsANil, rsAnsi, rsAnsiAsm, rsAsm, rsBor, rsBorAsm, rsProperty,
     rsExports, rsDirective, rsDirectiveAsm, rsUnKnown);
@@ -101,6 +105,7 @@ type
     fIdentifierAttri: TSynHighlighterAttributes;
     fProcAttri: TSynHighlighterAttributes;
     fSpaceAttri: TSynHighlighterAttributes;
+    fAssignAttri: TSynHighlighterAttributes;
     fPackageSource: Boolean;
     function KeyHash(ToHash: PChar): Integer;
     function KeyComp(const aKey: string): Boolean;
@@ -170,6 +175,8 @@ type
       write fSymbolAttri;
     property InnerRoutineAttri: TSynHighlighterAttributes read fProcAttri
       write fProcAttri;
+    property AssignmentAttri: TSynHighlighterAttributes read fAssignAttri
+      write fAssignAttri;
     property PackageSource: Boolean read fPackageSource write SetPackageSource default True;
   end;
 
@@ -401,9 +408,12 @@ begin
   SetInnerHash(CS_ClearScreen);
   SetInnerHash(CS_ShowAndRead);
   SetInnerHash(CS_Add);
+  SetInnerHash(CS_Random);
+  SetInnerHash(CS_ReadDateTime);
   SetInnerHash(CS_Remove);
   SetInnerHash(CS_whatType);
   SetInnerHash(CS_sameType);
+  SetInnerHash(CS_sameText);
   SetInnerHash(CS_replace);
   SetInnerHash(CS_copy);
   SetInnerHash(CS_pos);
@@ -412,7 +422,11 @@ begin
   SetInnerHash(CS_Inc);
   SetInnerHash(CS_Dec);
   SetInnerHash(CS_Count);
+  //palabras no reservadas, pero con significado específico
   SetInnerHash(CS_result);
+  SetInnerHash(CS_True);
+  SetInnerHash(CS_False);
+
   SetInnerHash(CS_length);
   SetInnerHash(CS_High);
   SetInnerHash(CS_Low);
@@ -429,7 +443,6 @@ begin
   SetInnerHash(CS_EncodeDate);
   SetInnerHash(CS_DecodeTime);
   SetInnerHash(CS_SetLength);
-//  SetInnerHash(CS_ReadDateTime);
   SetInnerHash(CS_DayOfWeek);
   SetInnerHash(CS_StrToInt);
   SetInnerHash(CS_StrToInt64);
@@ -437,7 +450,6 @@ begin
   SetInnerHash(CS_StrToDate);
   SetInnerHash(CS_EncodeTime);
   SetInnerHash(CS_Time);
-//  SetInnerHash(CS_BoolToStr);
   SetInnerHash(CS_Uppercase);
   SetInnerHash(CS_Lowercase);
   SetInnerHash(CS_Abs);
@@ -594,6 +606,8 @@ begin
   AddAttribute(fNumberAttri);
   fSpaceAttri := TSynHighlighterAttributes.Create(SYNS_AttrSpace);
   AddAttribute(fSpaceAttri);
+  fAssignAttri := TSynHighlighterAttributes.Create(SYNS_AttrAssignment);
+  AddAttribute(fAssignAttri);
   fStringAttri := TSynHighlighterAttributes.Create(SYNS_AttrString);
   AddAttribute(fStringAttri);
   fSymbolAttri := TSynHighlighterAttributes.Create(SYNS_AttrSymbol);
@@ -944,6 +958,7 @@ begin
     tkSymbol: Result := fSymbolAttri;
     tkUnknown: Result := fSymbolAttri;
     tkInner: Result := fProcAttri;
+    tkAssignment: Result := fAssignAttri;
   else
     Result := nil;
   end;
@@ -1034,7 +1049,7 @@ begin
     if CS_assignment[prun] <> fLine[Run + prun - 1] then
       exit;
   end;
-  fTokenID := tkSymbol;
+  fTokenID := tkAssignment;
   inc(Run,Length(CS_assignment));
 end;
 
