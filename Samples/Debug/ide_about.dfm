@@ -22,7 +22,7 @@ object AcercaForm: TAcercaForm
     Height = 20
     Align = alTop
     Alignment = taCenter
-    Caption = 'Programa de distribución libre, bajo licencia Mozilla'
+    Caption = 'Programa de distribución libre, bajo licencia LGPL'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -16
