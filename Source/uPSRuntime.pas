@@ -4296,7 +4296,12 @@ begin
       btPChar: pansichar(dest^) := pansichar(PSGetAnsiString(Src, srctype));
       btString:
         tbtstring(dest^) := PSGetAnsiString(Src, srctype);
-      btChar: tbtchar(dest^) := tbtchar(PSGetUInt(Src, srctype));
+      btChar: begin
+        if srctype.BaseType = btString then
+          tbtchar(dest^) := tbtchar(PSGetAnsiString(Src, srctype)[1])
+        else
+          tbtchar(dest^) := tbtchar(PSGetUInt(Src, srctype));
+        end;
       {$IFNDEF PS_NOWIDESTRING}
       btWideString: tbtwidestring(dest^) := PSGetWideString(Src, srctype);
       btWideChar: tbtwidechar(dest^) := widechar(PSGetUInt(Src, srctype));

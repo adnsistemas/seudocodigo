@@ -3050,7 +3050,12 @@ begin
   begin
     Result := TPSUndefinedClassType(p1).ExtClass.IsCompatibleWith(TPSUndefinedClassType(p2).ExtClass);
   end
-  else
+  else if {asignación con pérdida}
+    (IsIntType(p1.BaseType) and IsRealType(p2.BaseType))or
+    ((p1.BaseType = btChar) and (p2.BaseType = btString))then begin
+    Result := True;
+    MakeWarning('', ewCustomWarning, CS_LoosyAssignment);
+  end else
     Result := False;
 end;
 
@@ -10708,7 +10713,7 @@ begin
 
   function ProcessIdentifier: Boolean;
   var
-    vin, vout: TPSValue;
+    vin, vout,vaux: TPSValue;
   begin
     Result := False;
     Debug_WriteLine(BlockInfo);
@@ -10730,13 +10735,30 @@ begin
           vin.Free;
           exit;
         end;
-        if not WriteCalculation(vout, vin) then begin
+        {separa la asignación en dos partes, para implementar la
+        "asignación con pérdida", equivalente al truncado explícito
+        en pascal. Para ello almaceno el resultado en una variable
+        temporal del tipo adecuado y recién entonces hago la asignación}
+        vaux := AllocStackReg(GetTypeNo(BlockInfo,vout));
+        if vaux = nil then begin
+          vin.Free;
+          vout.Free;
+          exit;
+        end;
+        if not WriteCalculation(vout,vaux) then begin
+          vin.Free;
+          vout.Free;
+          vaux.Free;
+          exit;
+        end;
+        if not WriteCalculation(vaux,vin) then begin
           vin.Free;
           vout.Free;
           exit;
         end;
         vin.Free;
         vout.Free;
+        vaux.Free;
       end else if vin is TPSValueProc then
       begin
         Result := _ProcessFunction(TPSValueProc(vin), nil);

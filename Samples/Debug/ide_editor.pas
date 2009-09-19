@@ -197,6 +197,8 @@ type
     function Compile: Boolean;
     function Execute: Boolean;
 
+    function caracterACodigo(const c:char):integer;
+    function codigoACaracter(const c:integer):char;
     function Aleatorio(const e:integer = 0):real;
     procedure WriteStr(const s: string);
     procedure ReadStr(var s:string);
@@ -437,6 +439,8 @@ begin
   Sender.AddMethod(Self, @TEditor.BorrarPant, CS_procedure + ' ' + CS_ClearScreen);
   Sender.AddMethod(Self, @TEditor.ReadDT, CS_procedure + ' ' + CS_ReadDateTime + '(' + CS_var + ' s: ' + CS_TDateTime + ')');
   Sender.AddMethod(Self, @TEditor.Aleatorio, CS_function + ' ' + CS_Random + '(' + CS_const + ' e: ' + CS_integer + '):' + CS_real);
+  Sender.AddMethod(Self, @TEditor.codigoACaracter, CS_function + ' ' + CS_intToChar + '(' + CS_const + ' c: ' + CS_integer + '):' + CS_char);
+  Sender.AddMethod(Self, @TEditor.caracterACodigo, CS_function + ' ' + CS_charToInt + '(' + CS_const + ' c: ' + CS_char + '):' + CS_integer);
 end;
 
 procedure Teditor.WReadStr(const que:string;var s: string);
@@ -1759,6 +1763,16 @@ begin
   if not FRandomized then
     Randomize;
   result := Random(e);
+end;
+
+function Teditor.caracterACodigo(const c: char): integer;
+begin
+  result := byte(c);
+end;
+
+function Teditor.codigoACaracter(const c: integer): char;
+begin
+  result := char(c);
 end;
 
 end.
