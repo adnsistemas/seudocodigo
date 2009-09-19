@@ -69,7 +69,7 @@ AutoIncBuild=1
 MajorVer=0
 MinorVer=7
 Release=1
-Build=3
+Build=4
 Debug=0
 PreRelease=0
 Special=0
@@ -81,7 +81,7 @@ CodePage=1252
 [Version Info Keys]
 CompanyName=UTN - FRM
 FileDescription=IDE Seudocódigo
-FileVersion=0.7.1.3
+FileVersion=0.7.1.4
 InternalName=ide_editor
 LegalCopyright=UTN - FRM
 LegalTrademarks=

@@ -401,6 +401,8 @@ begin
   SetHashFunc(CS_shortint);
   SetHashFunc(CS_TDateTime);
   //funciones y procedimiento internos
+  SetInnerHash(CS_charToInt);
+  SetInnerHash(CS_intToChar);
   SetInnerHash(CS_delete);
   SetInnerHash(CS_Read);
   SetInnerHash(CS_Show);

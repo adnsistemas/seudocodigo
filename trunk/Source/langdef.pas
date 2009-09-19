@@ -521,6 +521,7 @@ const
   CS_CancelHint = 'CancelarConsejo';
   CS_CanFocus = 'PuedeEnfocarse';
   CS_Cascade = 'EnCascada';
+  CS_charToInt = 'caracterACodigo';
   CS_CheckBrowseMode = 'VerificarModoNavegacion';
   CS_CheckFieldName = 'VerificarNombreCampo';
   CS_CheckFieldNAmes = 'VerificarNombresCampos';
@@ -669,6 +670,7 @@ const
   CS_Instance = 'Instancia';
   CS_Int = 'ParteEntera';
   CS_Int64ToStr = 'EnteroLargoACadena';
+  CS_IntToChar = 'codigoACaracter';
   CS_IntToStr = 'EnteroACadena';
   CS_Invalidate = 'Invalidar';
   CS_IsEmpty = 'EstaVacio';
@@ -1385,6 +1387,7 @@ const
   CS_LookupKeyFields = 'CamposClaveDeRevision';
   CS_LookupList = 'ListaRevision';
   CS_lookupResultField = 'CampoResultadoRevision';
+  CS_LoosyAssignment = 'Asignación con pérdida';
   CS_loPartialKey = 'olClaveParcial';
   CS_maAutomatic = 'baAutomatico';
   CS_maBottomToTop = 'amAbajoAArriba';
