@@ -312,6 +312,7 @@ begin
     Special := True;
     FG := clWhite;
     bg := clBlue;
+    application.ProcessMessages;
   end else
     Special := False;
 end;
