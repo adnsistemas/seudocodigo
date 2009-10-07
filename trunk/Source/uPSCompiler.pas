@@ -766,7 +766,9 @@ type
     ecStepExpected,
     ecInfiniteLoop,
     ecEOFExpected,
-    ecCaseCaseExpected
+    ecCaseCaseExpected,
+    ecExpressionExpected,
+    ecIntegerExpected
     );
 
   TPSPascalCompilerHintType = (
@@ -1819,6 +1821,8 @@ const
   RPS_InfiniteLoop = 'Bucle infinito';
   RPS_EofExpected = 'Se esperaba el fin del archivo';
   RPS_CaseCaseExpected = 'Se esperaba "'+CS_caseCase+'"';
+  RPS_ExpressionExpected = 'Se esperaba una expresión';
+  RPS_IntegerExpected = 'Se esperaba un número entero';
 
 function DeclToBits(const Decl: TPSParametersDecl): tbtString;
 var
@@ -3996,23 +4000,37 @@ begin
     while Pos('|',ArrayDims) > 0 do begin
       l := StrToInt(Copy(ArrayDims,1,Pos('|',ArrayDims) - 1));
       Delete(ArrayDims,1,Pos('|',ArrayDims));
-      p := TPSStaticArrayType.Create;
-      TPSStaticArrayType(p).StartOffset := 1;
-      TPSStaticArrayType(p).Length := l;
-      p.BaseType := btStaticArray;
-      p.Name := '';
-      p.OriginalName := '';
-      {$IFDEF PS_USESSUPPORT}
-      p.DeclareUnit:=fModule;
-      {$ENDIF}
-      p.DeclarePos := StrToInt(Copy(ArrayDims,1,Pos('|',ArrayDims) - 1));
-      Delete(ArrayDims,1,Pos('|',ArrayDims));
-      p.DeclareRow := StrToInt(Copy(ArrayDims,1,Pos('|',ArrayDims) - 1));
-      Delete(ArrayDims,1,Pos('|',ArrayDims));
-      p.DeclareCol := StrToInt(Copy(ArrayDims,1,Pos('|',ArrayDims) - 1));
-      Delete(ArrayDims,1,Pos('|',ArrayDims));
-      TPSArrayType(p).ArrayTypeNo := TypeNo;
-      FTypes.Add(p);
+      for h := 0 to FTypes.Count -1 do
+      begin
+        p := FTypes[H];
+        if (p is TPSStaticArrayType) and (TPSArrayType(p).ArrayTypeNo = TypeNo) and (Copy(p.Name, 1, 1) <> '!') and
+          (TPSStaticArrayType(p).Length = l) then
+          break;
+        p := nil;
+      end;
+      if not Assigned(p) then begin
+        p := TPSStaticArrayType.Create;
+        TPSStaticArrayType(p).StartOffset := 1;
+        TPSStaticArrayType(p).Length := l;
+        p.BaseType := btStaticArray;
+        p.Name := '';
+        p.OriginalName := '';
+        {$IFDEF PS_USESSUPPORT}
+        p.DeclareUnit:=fModule;
+        {$ENDIF}
+        p.DeclarePos := StrToInt(Copy(ArrayDims,1,Pos('|',ArrayDims) - 1));
+        Delete(ArrayDims,1,Pos('|',ArrayDims));
+        p.DeclareRow := StrToInt(Copy(ArrayDims,1,Pos('|',ArrayDims) - 1));
+        Delete(ArrayDims,1,Pos('|',ArrayDims));
+        p.DeclareCol := StrToInt(Copy(ArrayDims,1,Pos('|',ArrayDims) - 1));
+        Delete(ArrayDims,1,Pos('|',ArrayDims));
+        TPSArrayType(p).ArrayTypeNo := TypeNo;
+        FTypes.Add(p);
+      end else begin
+        Delete(ArrayDims,1,Pos('|',ArrayDims));
+        Delete(ArrayDims,1,Pos('|',ArrayDims));
+        Delete(ArrayDims,1,Pos('|',ArrayDims));
+      end;
       TypeNo := p;
     end;
     if (Name = '') and (FArrayLength = -1) then
@@ -4032,6 +4050,15 @@ begin
     end;
     if FArrayLength <> -1 then
     begin
+      for h := 0 to FTypes.Count -1 do
+      begin
+        p := FTypes[H];
+        if (p is TPSStaticArrayType) and (TPSArrayType(p).ArrayTypeNo = TypeNo) and (Copy(p.Name, 1, 1) <> '!') and
+          (TPSStaticArrayType(p).Length = FArrayLength) then begin
+          Result := p;
+          Exit;
+        end;
+      end;
       p := TPSStaticArrayType.Create;
       TPSStaticArrayType(p).StartOffset := FArrayStart;
       TPSStaticArrayType(p).Length := FArrayLength;
@@ -4964,14 +4991,22 @@ var
           case sinPiecetype(ppiece) of
             sptRequired: begin //tipo o parámetro
               pitem := nextSinPiece(ppiece);
-              if integer(FParser.CurrTokenId) <> StrToIntDef(pitem,-1) then begin
-                if errorOnFail or (subpnum > 0) then
-                  MakeError('',pieceToError(StrToIntDef(pitem,-1)),'');
-                exit;
-              end;
-              if (ppiece = CS_type) and not DoTipo() then
-                exit
-              else if (ppiece = CS_var) then begin
+              if (ppiece = CS_type) then begin
+                if (integer(FParser.CurrTokenId) <> StrToIntDef(pitem,-1)) and
+                  ((StrToIntDef(pitem,-1) <> integer(CSTI_identifier))or
+                   not (FParser.CurrTokenId in [CSTII_set,CSTII_array]))  then begin
+                  if errorOnFail or (subpnum > 0) then
+                    MakeError('',pieceToError(StrToIntDef(pitem,-1)),'');
+                  exit;
+                end;
+                if not DoTipo() then
+                  exit;
+              end else if (ppiece = CS_var) then begin
+                if integer(FParser.CurrTokenId) <> StrToIntDef(pitem,-1) then begin
+                  if errorOnFail or (subpnum > 0) then
+                    MakeError('',pieceToError(StrToIntDef(pitem,-1)),'');
+                  exit;
+                end;
                 if not modeSet then
                   setVarMode;
                 if not DoVar() then
@@ -5762,9 +5797,13 @@ function TPSPascalCompiler.ProcessSub(BlockInfo: TPSBlockInfo): Boolean;
 
   function AllocStackReg(MType: TPSType): TPSValue;
   begin
-    Result := AllocStackReg2(MType);
-    BlockWriteByte(BlockInfo, Cm_Pt);
-    BlockWriteLong(BlockInfo, MType.FinalTypeNo);
+    if not Assigned(MType) then
+      result := nil
+    else begin
+      Result := AllocStackReg2(MType);
+      BlockWriteByte(BlockInfo, Cm_Pt);
+      BlockWriteLong(BlockInfo, MType.FinalTypeNo);
+    end;
   end;
 
   function AllocPointer(MDestType: TPSType): TPSValue;
@@ -9908,9 +9947,23 @@ begin
     else if FParser.CurrTokenId = CSTII_DownTo then
       Backwards := True
     else*)
+    //calcular el inicio y final del bucle, por si acaso son expresiones.
+    //por algún motivo que aún no entiendo auxi y auxf no pueden destruirse hasta el final del método ¿?
     if FParser.CurrTokenId <> CSTII_To then
     begin
       MakeError('', ecToExpected, '');
+      VariableVar.Free;
+      InitVal.Free;
+      exit;
+    end;
+    auxi := AllocStackReg(GetTypeNo(BlockInfo,InitVal));
+    if not Assigned(auxi) or not WriteCalculation(InitVal,auxi) then
+    begin
+      if not Assigned(auxi) then
+        MakeError('',ecExpressionExpected,'')
+      else
+        MakeError('',ecSyntaxError,'');
+      auxi.Free;
       VariableVar.Free;
       InitVal.Free;
       exit;
@@ -9929,29 +9982,53 @@ begin
       MakeError('', ecStepExpected, '');
       finVal.Free;
       InitVal.Free;
+      auxi.Free;
       VariableVar.Free;
+      exit;
+    end;
+    auxf := AllocStackReg(GetTypeNo(BlockInfo,FinVal));
+    if not Assigned(auxf) or not WriteCalculation(FinVal,auxf) then
+    begin
+      if not Assigned(auxf) then
+        MakeError('',ecExpressionExpected,'')
+      else
+        MakeError('',ecSyntaxError,'');
+      auxi.Free;
+      auxf.Free;
+      VariableVar.Free;
+      finVal.Free;
+      InitVal.Free;
       exit;
     end;
     FParser.Next;
     step := calc(CSTI_IEnd);
     if step = nil then begin
-      initVal.Free;
+      MakeError('', ecIntegerExpected, '');
+      auxi.Free;
+      auxf.Free;
       VariableVar.Free;
+      finVal.Free;
+      InitVal.Free;
       exit;
     end;
     if FParser.CurrTokenId <> CSTI_IEnd then
     begin
       MakeError('', ecIEndExpected, '');
+      step.Free;
+      auxi.Free;
+      auxf.Free;
+      VariableVar.Free;
       finVal.Free;
       InitVal.Free;
-      VariableVar.Free;
-      step.Free;
       exit;
     end;
     if not (step is TPSValueData) then begin
+      MakeError('', ecIntegerExpected, '');
+      auxi.Free;
+      auxf.Free;
+      VariableVar.Free;
       finVal.Free;
       InitVal.Free;
-      VariableVar.Free;
       step.Free;
       exit;
     end;
@@ -9964,30 +10041,10 @@ begin
       Backwards := False;
     end
     else begin
-      MakeError('',ecInfiniteLoop,'');
-      VariableVar.Free;
-      finVal.Free;
-      InitVal.Free;
-      step.Free;
-      exit;
-    end;
-    //calcular el inicio y final del bucle, por si acaso son expresiones.
-    //por algún motivo que aún no entiendo auxi y auxf no pueden destruirse hasta el final del método ¿?
-    auxi := AllocStackReg(GetTypeNo(BlockInfo,InitVal));
-    if not WriteCalculation(InitVal,auxi) then
-    begin
-      MakeError('',ecSyntaxError,'');
-      auxi.Free;
-      VariableVar.Free;
-      finVal.Free;
-      InitVal.Free;
-      step.Free;
-      exit;
-    end;
-    auxf := AllocStackReg(GetTypeNo(BlockInfo,FinVal));
-    if not WriteCalculation(FinVal,auxf) then
-    begin
-      MakeError('',ecSyntaxError,'');
+      if not b then
+        MakeError('', ecIntegerExpected, '')
+      else
+        MakeError('',ecInfiniteLoop,'');
       auxi.Free;
       auxf.Free;
       VariableVar.Free;
@@ -14757,6 +14814,8 @@ begin
     ecInfiniteLoop: Result :=tbtString(Format(RPS_InfiniteLoop,[Param]));
     ecEofExpected: Result := tbtString(RPS_EofExpected);
     ecCaseCaseExpected: Result := tbtString(RPS_CaseCaseExpected);
+    ecExpressionExpected: Result := tbtString(RPS_ExpressionExpected);
+    ecIntegerExpected: Result := tbtString(RPS_IntegerExpected);
   else
     Result := tbtstring(RPS_UnknownError);
   end;

@@ -7,113 +7,115 @@
   produced executable.
 */
 
-#define DbConsts_SInvalidVersion 65104
-#define DbConsts_SBadFieldType 65105
-#define DbConsts_SProviderSQLNotSupported 65106
-#define DbConsts_SProviderExecuteNotSupported 65107
-#define DbConsts_SRecordNotFound 65108
-#define SynHighlighterSeudoc_SYNS_AttrAssignment 65109
-#define jconsts_sChangeJPGSize 65110
-#define jconsts_sJPEGError 65111
-#define jconsts_sJPEGImageFile 65112
-#define ide_about_RS_VERSION 65113
-#define ide_editor_CS_SinNombre 65114
-#define DbConsts_SFieldRequired 65120
-#define DbConsts_SDataSetMissing 65121
-#define DbConsts_SDuplicateIndexName 65122
-#define DbConsts_SNoIndexForFields 65123
-#define DbConsts_SIndexNotFound 65124
-#define DbConsts_SCircularDataLink 65125
-#define DbConsts_SLookupInfoError 65126
-#define DbConsts_SDataSetOpen 65127
-#define DbConsts_SNotEditing 65128
-#define DbConsts_SDataSetClosed 65129
-#define DbConsts_SDataSetEmpty 65130
-#define DbConsts_SDataSetReadOnly 65131
-#define DbConsts_SNestedDataSetClass 65132
-#define DbConsts_STextFalse 65133
-#define DbConsts_STextTrue 65134
-#define DbConsts_SParameterNotFound 65135
-#define DbConsts_SInvalidFieldKind 65136
-#define DbConsts_SUnknownFieldType 65137
-#define DbConsts_SFieldNameMissing 65138
-#define DbConsts_SDuplicateFieldName 65139
-#define DbConsts_SFieldNotFound 65140
-#define DbConsts_SFieldAccessError 65141
-#define DbConsts_SFieldValueError 65142
-#define DbConsts_SFieldRangeError 65143
-#define DbConsts_SInvalidIntegerValue 65144
-#define DbConsts_SInvalidBoolValue 65145
-#define DbConsts_SInvalidFloatValue 65146
-#define DbConsts_SFieldTypeMismatch 65147
-#define DbConsts_SFieldSizeMismatch 65148
-#define DbConsts_SInvalidVarByteArray 65149
-#define DbConsts_SFieldOutOfRange 65150
-#define DbConsts_SBCDOverflow 65151
-#define uPSC_dll_RPS_InvalidCallingConvention 65152
-#define uPSPreProcessor_RPS_TooManyNestedInclude 65153
-#define uPSPreProcessor_RPS_IncludeNotFound 65154
-#define uPSPreProcessor_RPS_DefineTooManyParameters 65155
-#define uPSPreProcessor_RPS_NoIfdefForEndif 65156
-#define uPSPreProcessor_RPS_NoIfdefForElse 65157
-#define uPSPreProcessor_RPS_ElseTwice 65158
-#define uPSPreProcessor_RPS_UnknownCompilerDirective 65159
-#define uPSPreProcessor_RPs_DefineNotClosed 65160
-#define uPSComponent_RPS_UnableToReadVariant 65161
-#define uPSComponent_RPS_UnableToWriteVariant 65162
-#define uPSComponent_RPS_ScripEngineAlreadyRunning 65163
-#define uPSComponent_RPS_NotRunning 65164
-#define uPSComponent_RPS_UnknownIdentifier 65165
-#define uPSComponent_RPS_NoScript 65166
-#define DbConsts_SInvalidFieldSize 65167
-#define uPSRuntime_RPS_OutOfStringRange 65168
-#define uPSRuntime_RPS_CannotCastInterface 65169
-#define uPSRuntime_RPS_CannotCastObject 65170
-#define uPSRuntime_RPS_CapacityLength 65171
-#define uPSRuntime_RPS_NILInterfaceException 65172
-#define uPSRuntime_RPS_UnknownMethod 65173
-#define ComStrs_sTabFailClear 65174
-#define ComStrs_sTabFailDelete 65175
-#define ComStrs_sTabFailRetrieve 65176
-#define ComStrs_sTabFailGetObject 65177
-#define ComStrs_sTabFailSet 65178
-#define ComStrs_sTabFailSetObject 65179
-#define ComStrs_sTabMustBeMultiLine 65180
-#define ComStrs_sPageIndexError 65181
-#define uPSDebugger_RPS_ExpectedReturnAddressStackBase 65182
-#define uPSC_dll_RPS_Invalid_External 65183
-#define uPSRuntime_RPS_OutOfProcRange 65184
-#define uPSRuntime_RPS_OutOfRange 65185
-#define uPSRuntime_RPS_OutOfStackRange 65186
-#define uPSRuntime_RPS_TypeMismatch 65187
-#define uPSRuntime_RPS_UnexpectedEof 65188
-#define uPSRuntime_RPS_VersionError 65189
-#define uPSRuntime_RPS_DivideByZero 65190
-#define uPSRuntime_RPS_MathError 65191
-#define uPSRuntime_RPS_CouldNotCallProc 65192
-#define uPSRuntime_RPS_OutofRecordRange 65193
-#define uPSRuntime_RPS_NullPointerException 65194
-#define uPSRuntime_RPS_NullVariantError 65195
-#define uPSRuntime_RPS_OutOfMemory 65196
-#define uPSRuntime_RPS_InterfaceNotSupported 65197
-#define uPSRuntime_RPS_UnknownError 65198
-#define uPSRuntime_RPS_InvalidArray 65199
+#define DbConsts_STextTrue 65104
+#define DbConsts_SParameterNotFound 65105
+#define DbConsts_SInvalidVersion 65106
+#define DbConsts_SBadFieldType 65107
+#define DbConsts_SProviderSQLNotSupported 65108
+#define DbConsts_SProviderExecuteNotSupported 65109
+#define DbConsts_SRecordNotFound 65110
+#define SynHighlighterSeudoc_SYNS_AttrAssignment 65111
+#define jconsts_sChangeJPGSize 65112
+#define jconsts_sJPEGError 65113
+#define jconsts_sJPEGImageFile 65114
+#define ide_about_RS_VERSION 65115
+#define ide_editor_CS_SinNombre 65116
+#define DbConsts_SFieldOutOfRange 65120
+#define DbConsts_SBCDOverflow 65121
+#define DbConsts_SFieldRequired 65122
+#define DbConsts_SDataSetMissing 65123
+#define DbConsts_SDuplicateIndexName 65124
+#define DbConsts_SNoIndexForFields 65125
+#define DbConsts_SIndexNotFound 65126
+#define DbConsts_SCircularDataLink 65127
+#define DbConsts_SLookupInfoError 65128
+#define DbConsts_SDataSetOpen 65129
+#define DbConsts_SNotEditing 65130
+#define DbConsts_SDataSetClosed 65131
+#define DbConsts_SDataSetEmpty 65132
+#define DbConsts_SDataSetReadOnly 65133
+#define DbConsts_SNestedDataSetClass 65134
+#define DbConsts_STextFalse 65135
+#define uPSComponent_RPS_NoScript 65136
+#define DbConsts_SInvalidFieldSize 65137
+#define DbConsts_SInvalidFieldKind 65138
+#define DbConsts_SUnknownFieldType 65139
+#define DbConsts_SFieldNameMissing 65140
+#define DbConsts_SDuplicateFieldName 65141
+#define DbConsts_SFieldNotFound 65142
+#define DbConsts_SFieldAccessError 65143
+#define DbConsts_SFieldValueError 65144
+#define DbConsts_SFieldRangeError 65145
+#define DbConsts_SInvalidIntegerValue 65146
+#define DbConsts_SInvalidBoolValue 65147
+#define DbConsts_SInvalidFloatValue 65148
+#define DbConsts_SFieldTypeMismatch 65149
+#define DbConsts_SFieldSizeMismatch 65150
+#define DbConsts_SInvalidVarByteArray 65151
+#define uPSDebugger_RPS_ExpectedReturnAddressStackBase 65152
+#define uPSC_dll_RPS_Invalid_External 65153
+#define uPSC_dll_RPS_InvalidCallingConvention 65154
+#define uPSPreProcessor_RPS_TooManyNestedInclude 65155
+#define uPSPreProcessor_RPS_IncludeNotFound 65156
+#define uPSPreProcessor_RPS_DefineTooManyParameters 65157
+#define uPSPreProcessor_RPS_NoIfdefForEndif 65158
+#define uPSPreProcessor_RPS_NoIfdefForElse 65159
+#define uPSPreProcessor_RPS_ElseTwice 65160
+#define uPSPreProcessor_RPS_UnknownCompilerDirective 65161
+#define uPSPreProcessor_RPs_DefineNotClosed 65162
+#define uPSComponent_RPS_UnableToReadVariant 65163
+#define uPSComponent_RPS_UnableToWriteVariant 65164
+#define uPSComponent_RPS_ScripEngineAlreadyRunning 65165
+#define uPSComponent_RPS_NotRunning 65166
+#define uPSComponent_RPS_UnknownIdentifier 65167
+#define uPSRuntime_RPS_UnknownError 65168
+#define uPSRuntime_RPS_InvalidArray 65169
+#define uPSRuntime_RPS_OutOfStringRange 65170
+#define uPSRuntime_RPS_CannotCastInterface 65171
+#define uPSRuntime_RPS_CannotCastObject 65172
+#define uPSRuntime_RPS_CapacityLength 65173
+#define uPSRuntime_RPS_NILInterfaceException 65174
+#define uPSRuntime_RPS_UnknownMethod 65175
+#define ComStrs_sTabFailClear 65176
+#define ComStrs_sTabFailDelete 65177
+#define ComStrs_sTabFailRetrieve 65178
+#define ComStrs_sTabFailGetObject 65179
+#define ComStrs_sTabFailSet 65180
+#define ComStrs_sTabFailSetObject 65181
+#define ComStrs_sTabMustBeMultiLine 65182
+#define ComStrs_sPageIndexError 65183
+#define uPSRuntime_RPS_NoMainProc 65184
+#define uPSRuntime_RPS_OutOfGlobalVarsRange 65185
+#define uPSRuntime_RPS_OutOfProcRange 65186
+#define uPSRuntime_RPS_OutOfRange 65187
+#define uPSRuntime_RPS_OutOfStackRange 65188
+#define uPSRuntime_RPS_TypeMismatch 65189
+#define uPSRuntime_RPS_UnexpectedEof 65190
+#define uPSRuntime_RPS_VersionError 65191
+#define uPSRuntime_RPS_DivideByZero 65192
+#define uPSRuntime_RPS_MathError 65193
+#define uPSRuntime_RPS_CouldNotCallProc 65194
+#define uPSRuntime_RPS_OutofRecordRange 65195
+#define uPSRuntime_RPS_NullPointerException 65196
+#define uPSRuntime_RPS_NullVariantError 65197
+#define uPSRuntime_RPS_OutOfMemory 65198
+#define uPSRuntime_RPS_InterfaceNotSupported 65199
 #define uPSCompiler_RPS_CaseCaseExpected 65200
-#define ComConst_SOleError 65201
-#define ComConst_SNoMethod 65202
-#define ComConst_SVarNotObject 65203
-#define uPSRuntime_RPS_UnknownIdentifier 65204
-#define uPSRuntime_RPS_Exception 65205
-#define uPSRuntime_RPS_Invalid 65206
-#define uPSRuntime_RPS_NoError 65207
-#define uPSRuntime_RPS_CannotImport 65208
-#define uPSRuntime_RPS_InvalidType 65209
-#define uPSRuntime_RPS_InternalError 65210
-#define uPSRuntime_RPS_InvalidHeader 65211
-#define uPSRuntime_RPS_InvalidOpcode 65212
-#define uPSRuntime_RPS_InvalidOpcodeParameter 65213
-#define uPSRuntime_RPS_NoMainProc 65214
-#define uPSRuntime_RPS_OutOfGlobalVarsRange 65215
+#define uPSCompiler_RPS_ExpressionExpected 65201
+#define uPSCompiler_RPS_IntegerExpected 65202
+#define ComConst_SOleError 65203
+#define ComConst_SNoMethod 65204
+#define ComConst_SVarNotObject 65205
+#define uPSRuntime_RPS_UnknownIdentifier 65206
+#define uPSRuntime_RPS_Exception 65207
+#define uPSRuntime_RPS_Invalid 65208
+#define uPSRuntime_RPS_NoError 65209
+#define uPSRuntime_RPS_CannotImport 65210
+#define uPSRuntime_RPS_InvalidType 65211
+#define uPSRuntime_RPS_InternalError 65212
+#define uPSRuntime_RPS_InvalidHeader 65213
+#define uPSRuntime_RPS_InvalidOpcode 65214
+#define uPSRuntime_RPS_InvalidOpcodeParameter 65215
 #define uPSCompiler_RPS_VariableNotUsed 65216
 #define uPSCompiler_RPS_FunctionNotUsed 65217
 #define uPSCompiler_RPS_UnknownHint 65218
@@ -436,6 +438,8 @@
 #define SysConst_SInvalidInput 65535
 STRINGTABLE
 BEGIN
+	DbConsts_STextTrue,	"True"
+	DbConsts_SParameterNotFound,	"Parameter '%s' not found"
 	DbConsts_SInvalidVersion,	"Unable to load bind parameters"
 	DbConsts_SBadFieldType,	"Field '%s' is of an unsupported type"
 	DbConsts_SProviderSQLNotSupported,	"SQL not supported: %s"
@@ -447,6 +451,8 @@ BEGIN
 	jconsts_sJPEGImageFile,	"JPEG Image File"
 	ide_about_RS_VERSION,	"Versión: %1d.%d.%d"
 	ide_editor_CS_SinNombre,	"Sin nombre"
+	DbConsts_SFieldOutOfRange,	"Value of field '%s' is out of range"
+	DbConsts_SBCDOverflow,	"(Overflow)"
 	DbConsts_SFieldRequired,	"Field '%s' must have a value"
 	DbConsts_SDataSetMissing,	"Field '%s' has no dataset"
 	DbConsts_SDuplicateIndexName,	"Duplicate index name '%s'"
@@ -461,8 +467,8 @@ BEGIN
 	DbConsts_SDataSetReadOnly,	"Cannot modify a read-only dataset"
 	DbConsts_SNestedDataSetClass,	"Nested dataset must inherit from %s"
 	DbConsts_STextFalse,	"False"
-	DbConsts_STextTrue,	"True"
-	DbConsts_SParameterNotFound,	"Parameter '%s' not found"
+	uPSComponent_RPS_NoScript,	"Sin algoritmo"
+	DbConsts_SInvalidFieldSize,	"Invalid field size"
 	DbConsts_SInvalidFieldKind,	"Invalid FieldKind"
 	DbConsts_SUnknownFieldType,	"Field '%s' is of an unknown type"
 	DbConsts_SFieldNameMissing,	"Field name missing"
@@ -477,8 +483,8 @@ BEGIN
 	DbConsts_SFieldTypeMismatch,	"Type mismatch for field '%s', expecting: %s actual: %s"
 	DbConsts_SFieldSizeMismatch,	"Size mismatch for field '%s', expecting: %d actual: %d"
 	DbConsts_SInvalidVarByteArray,	"Invalid variant type or size for field '%s'"
-	DbConsts_SFieldOutOfRange,	"Value of field '%s' is out of range"
-	DbConsts_SBCDOverflow,	"(Overflow)"
+	uPSDebugger_RPS_ExpectedReturnAddressStackBase,	"Se esperaba la dirección de retorno en la base de la pila"
+	uPSC_dll_RPS_Invalid_External,	"Invalid External"
 	uPSC_dll_RPS_InvalidCallingConvention,	"Invalid Calling Convention"
 	uPSPreProcessor_RPS_TooManyNestedInclude,	"Demasiadas inclusiones procesando '%s' incluido en '%s'"
 	uPSPreProcessor_RPS_IncludeNotFound,	"No se puede localizar el archivo '%s' utilizado en '%s'"
@@ -493,8 +499,8 @@ BEGIN
 	uPSComponent_RPS_ScripEngineAlreadyRunning,	"El intérprete ya se encuentra funcionando"
 	uPSComponent_RPS_NotRunning,	"No se está ejecutando"
 	uPSComponent_RPS_UnknownIdentifier,	"Identificador desconocido"
-	uPSComponent_RPS_NoScript,	"Sin algoritmo"
-	DbConsts_SInvalidFieldSize,	"Invalid field size"
+	uPSRuntime_RPS_UnknownError,	"Error desconocido"
+	uPSRuntime_RPS_InvalidArray,	"Arreglo no válido"
 	uPSRuntime_RPS_OutOfStringRange,	"Fuera de rango de la cadena"
 	uPSRuntime_RPS_CannotCastInterface,	"No se puede forzar el tipo de una interface"
 	uPSRuntime_RPS_CannotCastObject,	"No se pudo forzar el tipo de un objeto"
@@ -509,8 +515,8 @@ BEGIN
 	ComStrs_sTabFailSetObject,	"Failed to set object at index %d"
 	ComStrs_sTabMustBeMultiLine,	"MultiLine must be True when TabPosition is tpLeft or tpRight"
 	ComStrs_sPageIndexError,	"%d is an invalid PageIndex value.  PageIndex must be between 0 and %d"
-	uPSDebugger_RPS_ExpectedReturnAddressStackBase,	"Se esperaba la dirección de retorno en la base de la pila"
-	uPSC_dll_RPS_Invalid_External,	"Invalid External"
+	uPSRuntime_RPS_NoMainProc,	"No hay procedimiento principal"
+	uPSRuntime_RPS_OutOfGlobalVarsRange,	"Se salió del rango de variables globales"
 	uPSRuntime_RPS_OutOfProcRange,	"Se salió del rango de procedimientos"
 	uPSRuntime_RPS_OutOfRange,	"Fuera de rango"
 	uPSRuntime_RPS_OutOfStackRange,	"Fuera de rango de pila"
@@ -525,9 +531,9 @@ BEGIN
 	uPSRuntime_RPS_NullVariantError,	"Error de variante nulo"
 	uPSRuntime_RPS_OutOfMemory,	"Sin memoria"
 	uPSRuntime_RPS_InterfaceNotSupported,	"Interface no soportada"
-	uPSRuntime_RPS_UnknownError,	"Error desconocido"
-	uPSRuntime_RPS_InvalidArray,	"Arreglo no válido"
 	uPSCompiler_RPS_CaseCaseExpected,	"Se esperaba \"caso\""
+	uPSCompiler_RPS_ExpressionExpected,	"Se esperaba una expresión"
+	uPSCompiler_RPS_IntegerExpected,	"Se esperaba un número entero"
 	ComConst_SOleError,	"OLE error %.8x"
 	ComConst_SNoMethod,	"Method '%s' not supported by automation object"
 	ComConst_SVarNotObject,	"Variant does not reference an automation object"
@@ -541,8 +547,6 @@ BEGIN
 	uPSRuntime_RPS_InvalidHeader,	"Cabecera no válida"
 	uPSRuntime_RPS_InvalidOpcode,	"Código de operación no válido"
 	uPSRuntime_RPS_InvalidOpcodeParameter,	"Parámetro de operación no válido"
-	uPSRuntime_RPS_NoMainProc,	"No hay procedimiento principal"
-	uPSRuntime_RPS_OutOfGlobalVarsRange,	"Se salió del rango de variables globales"
 	uPSCompiler_RPS_VariableNotUsed,	"La variable '%s' no se ha utilizado"
 	uPSCompiler_RPS_FunctionNotUsed,	"La función '%s' no se ha utilizado"
 	uPSCompiler_RPS_UnknownHint,	"Consejo desconocido"

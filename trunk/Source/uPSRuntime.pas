@@ -4309,7 +4309,7 @@ begin
       btStaticArray:
         begin
           if desttype <> srctype then
-            Result := False
+             Result := False
           else
             CopyArrayContents(dest, Src, TPSTypeRec_StaticArray(desttype).Size, TPSTypeRec_StaticArray(desttype).ArrayType);
         end;
