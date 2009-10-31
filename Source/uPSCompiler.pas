@@ -3918,7 +3918,7 @@ begin
         exit;
       end;
       DisposeVariant(tempf);
-      FArrayStart := 1;
+      FArrayStart := CI_ARRAY_START;
 //      FArrayLength := FArrayLength - FArrayStart + 1;
       if (FArrayLength < 0) or (FArrayLength > MaxInt div 4) then
       begin
@@ -3935,7 +3935,7 @@ begin
       FParser.Next;
     end else
     begin
-      FArrayStart := 0;
+      FArrayStart := CI_ARRAY_START;
       FArrayLength := -1;
     end;
     ArrayDims := '';
@@ -4010,7 +4010,7 @@ begin
       end;
       if not Assigned(p) then begin
         p := TPSStaticArrayType.Create;
-        TPSStaticArrayType(p).StartOffset := 1;
+        TPSStaticArrayType(p).StartOffset := CI_ARRAY_START;
         TPSStaticArrayType(p).Length := l;
         p.BaseType := btStaticArray;
         p.Name := '';
@@ -6930,6 +6930,8 @@ function TPSPascalCompiler.ProcessSub(BlockInfo: TPSBlockInfo): Boolean;
               x := nil;
               exit;
             end;
+            {Ajustar la posición según la posición de inicio del arreglo, ya
+            sea un arreglo estático o dinámico}
             if (tmp.ClassType = TPSValueData) then
             begin
               rr := TPSSubNumber.Create;
@@ -6937,21 +6939,26 @@ function TPSPascalCompiler.ProcessSub(BlockInfo: TPSBlockInfo): Boolean;
               if (u.BaseType = btStaticArray) then
                 TPSSubNumber(rr).SubNo := Cardinal(GetInt(TPSValueData(tmp).Data, tmp2) - TPSStaticArrayType(u).StartOffset)
               else
-                TPSSubNumber(rr).SubNo := GetUInt(TPSValueData(tmp).Data, tmp2);
+                TPSSubNumber(rr).SubNo := GetUInt(TPSValueData(tmp).Data, tmp2) - CI_ARRAY_START;
               tmp.Free;
               rr.aType := TPSArrayType(u).ArrayTypeNo;
               u := rr.aType;
             end
             else
             begin
-              if (u.BaseType = btStaticArray) then
+              {Si es un arreglo estático o la posición de inicio de los dinámicos no es 0, entonces
+              es necesario restar el valor de inicio del valor de posición}
+              if (u.BaseType = btStaticArray) or ((u.BaseType = btArray) and (CI_ARRAY_START <> 0)) then
               begin
                 tmpn := TPSBinValueOp.Create;
                 TPSBinValueOp(tmpn).Operator := otSub;
                 TPSBinValueOp(tmpn).Val1 := tmp;
                 tmp := TPSValueData.Create;
                 TPSValueData(tmp).Data := NewVariant(FindBaseType(btS32));
-                TPSValueData(tmp).Data.ts32 := TPSStaticArrayType(u).StartOffset;
+                if u.BaseType = btStaticArray then
+                  TPSValueData(tmp).Data.ts32 := TPSStaticArrayType(u).StartOffset
+                else
+                  TPSValueData(tmp).Data.ts32 := CI_ARRAY_START;
                 TPSBinValueOp(tmpn).Val2 := tmp;
                 TPSBinValueOp(tmpn).aType := FindBaseType(btS32);
                 tmp := tmpn;

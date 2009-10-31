@@ -417,8 +417,14 @@ begin
   if CE.Execute then
   begin
     Messages.Items.Add('Ejecución existosa');
-    if VMonitorForm.Visible and not Assigned(VMonitorForm.HostDockSite) then
-      VMonitorForm.Hide;
+    if VMonitorForm.Visible then begin
+      if FormConfiguracion.OcultarMonitor then begin
+        if not Assigned(VMonitorForm.HostDockSite) then
+          VMonitorForm.Hide
+        else
+          PageControl1.ActivePageIndex := 0;
+      end;
+    end;
     Result := True;
   end else
   begin
