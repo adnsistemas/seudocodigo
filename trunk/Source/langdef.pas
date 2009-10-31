@@ -12,6 +12,7 @@ uses uPSCompiler, uPSUtils;
 
 const
   CC_quote = #34;
+  CI_ARRAY_START = 1; //subíndice inicial de los arreglos
 
 {$IFDEF DELPHI3UP }
 resourceString

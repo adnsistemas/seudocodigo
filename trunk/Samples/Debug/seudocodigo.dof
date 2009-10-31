@@ -63,7 +63,11 @@ AutoIncBuild=1
 MajorVer=0
 MinorVer=7
 Release=1
+<<<<<<< .mine
+Build=6
+=======
 Build=5
+>>>>>>> .r16
 Debug=0
 PreRelease=0
 Special=0
@@ -74,7 +78,11 @@ CodePage=1252
 [Version Info Keys]
 CompanyName=UTN - FRM
 FileDescription=IDE Seudocódigo
+<<<<<<< .mine
+FileVersion=0.7.1.6
+=======
 FileVersion=0.7.1.5
+>>>>>>> .r16
 InternalName=ide_editor
 LegalCopyright=UTN - FRM
 LegalTrademarks=

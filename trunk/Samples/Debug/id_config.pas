@@ -15,16 +15,20 @@ type
     TabSheet1: TTabSheet;
     GroupBox1: TGroupBox;
     OrdenBusquedaMemo: TMemo;
+    TabSheet2: TTabSheet;
+    CheckBox1: TCheckBox;
     procedure Button1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
     procedure GuardarConfiguracion;
     procedure LeerConfiguracion;
+    function GetOM: boolean;
   public
     { Public declarations }
     procedure SaveConfig(groupName,itemName:string;Items:TStrings);
     procedure LoadConfig(groupName,itemName:string;Items:TStrings);
+    property OcultarMonitor:boolean read GetOM;
   end;
 
 var
@@ -40,19 +44,41 @@ begin
 end;
 
 procedure TFormConfiguracion.GuardarConfiguracion;
+var
+  dums:TStrings;
 begin
   SaveConfig('busqueda','directorio',OrdenBusquedaMemo.Lines);
+  dums := TSTringList.Create;
+  try
+    dums.Clear;
+    if CheckBox1.Checked then
+      dums.Add('si')
+    else
+      dums.Add('no');
+    SaveConfig('general','monitor',dums);
+  finally
+    dums.Free;
+  end;
 end;
 
 procedure TFormConfiguracion.LeerConfiguracion;
+var
+  dums:TStrings;
 begin
   OrdenBusquedaMemo.Clear;
   LoadConfig('busqueda','directorio',OrdenBusquedaMemo.Lines);
+  dums:=TStringList.Create;
+  try
+    LoadConfig('general','monitor',dums);
+    CheckBox1.Checked := dums[0] = 'si';
+  finally
+    dums.Free;
+  end;
 end;
 
 procedure TFormConfiguracion.FormCreate(Sender: TObject);
 begin
-  LeerConfiguracion;
+//  LeerConfiguracion;
 end;
 
 const
@@ -206,6 +232,11 @@ begin
     RenameFile(ExtractFilePath(application.ExeName)+'config.xmlt',ExtractFilePath(application.ExeName)+'config.xml');
   except
   end;
+end;
+
+function TFormConfiguracion.GetOM: boolean;
+begin
+  result := CheckBox1.Checked;
 end;
 
 end.

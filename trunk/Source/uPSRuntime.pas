@@ -3704,8 +3704,9 @@ begin
   {$ENDIF}
 end;
 
-
-function CopyArrayContents(dest, src: Pointer; Len: Longint; aType: TPSTypeRec): Boolean; forward;
+{dType se utiliza en el caso que se copie un arreglo estático a uno dinámico multimensional, ya
+que requiere una doble indirección}
+function CopyArrayContents(dest, src: Pointer; Len: Longint; aType: TPSTypeRec;dType: TPSTypeRec = nil): Boolean; forward;
 
 function CopyRecordContents(dest, src: Pointer; aType: TPSTypeRec_Record): Boolean;
 var
@@ -3739,7 +3740,7 @@ begin
   Result := true;
 end;
 
-function CopyArrayContents(dest, src: Pointer; Len: Longint; aType: TPSTypeRec): Boolean;
+function CopyArrayContents(dest, src: Pointer; Len: Longint; aType: TPSTypeRec; dType:TPSTypeRec = nil): Boolean;
 var
   elsize: Cardinal;
   i: Longint;
@@ -3834,12 +3835,15 @@ begin
           elSize := aType.RealSize;
           for i := 0 to Len -1 do
           begin
-            if not CopyArrayContents(Dest, Src, TPSTypeRec_StaticArray(aType).Size, TPSTypeRec_StaticArray(aType).ArrayType) then
-            begin
-              result := false;
-              exit;
+            if Assigned(dType) and (TPSTypeRec_Array(dType).BaseType = btArray) then begin
+              result := CopyArrayContents(Pointer(Dest^), Src, TPSTypeRec_StaticArray(aType).Size, TPSTypeRec_StaticArray(aType).ArrayType,TPSTypeRec_Array(dType).ArrayType);
+              Dest := Pointer(IPointer(Dest) + dType.RealSize);
+            end else begin
+              result := CopyArrayContents(Dest, Src, TPSTypeRec_StaticArray(aType).Size, TPSTypeRec_StaticArray(aType).ArrayType);
+              Dest := Pointer(IPointer(Dest) + elsize);
             end;
-            Dest := Pointer(IPointer(Dest) + elsize);
+            if not result then
+              exit;
             Src := Pointer(IPointer(Src) + elsize);
           end;
         end;
@@ -4124,9 +4128,25 @@ end;
 {$ENDIF}
 
 function TPSExec.SetVariantValue(dest, Src: Pointer; desttype, srctype: TPSTypeRec): Boolean;
+  {establece la longitud de todas las dimensiones de un arreglo indeterminado multidimensional}
+  procedure SetMultiDimLength(dstp:Pointer;dstt,srct:TPSTypeRec);
+  var
+    i,len:integer;
+  begin
+    PSDynArraySetLength(Pointer(dstp^), dstt, TPSTypeRec_StaticArray(srct).Size);
+    dstp := Pointer(dstp^);
+    len := dstt.FRealSize;
+    dstt := TPSTypeRec_Array(dstt).ArrayType;
+    if TPSTypeRec_Array(dstt).BaseType <> btArray then
+      exit;
+    for i:=0 to TPSTypeRec_StaticArray(srct).Size - 1 do begin
+      SetMultiDimLength(Pointer(integer(dstp) + (i*len)),dstt,TPSTypeRec_StaticArray(srct).ArrayType);
+    end;
+  end;
 var
   Tmp: TObject;
   tt: TPSVariantPointer;
+  psrc,pdst:TPSTypeRec;
 begin
   Result := True;
   try
@@ -4321,8 +4341,23 @@ begin
             CopyArrayContents(Pointer(dest^), Src, TPSTypeRec_StaticArray(srctype).Size, TPSTypeRec_StaticArray(srctype).ArrayType);
           end else if (srctype.BaseType = btvariant) and VarIsArray(Variant(src^)) then
             Result := CreateArrayFromVariant(Self, dest, Variant(src^), desttype)
-          else if (desttype <> srctype) and not ((desttype.BaseType = btarray) and (srctype.BaseType = btArray)
-            and (TPSTypeRec_Array(desttype).ArrayType = TPSTypeRec_Array(srctype).ArrayType)) then
+          //si el destino es un arreglo abierto es compatible con uno estático siempre y cuando tengan las mismas dimensiones y el mismo tipo base
+          else if (srctype.BaseType = btStaticArray) and (desttype.BaseType = btArray) then begin
+            psrc := TPSTypeRec_Array(srctype).ArrayType;
+            pdst := TPSTypeRec_Array(desttype).ArrayType;
+            while (psrc.BaseType = btStaticArray) and (pdst.BaseType = btArray) do begin
+              psrc := TPSTypeRec_Array(psrc).ArrayType;
+              pdst := TPSTypeRec_Array(pdst).ArrayType;
+            end;
+            Result := psrc.BaseType = pdst.BaseType;
+            if Result then begin
+              //tengo que establecer las longitudes de todas las dimesiones antes de copiar
+              SetMultiDimLength(Dest,desttype,srctype);
+              CopyArrayContents(Pointer(dest^), Src, TPSTypeRec_StaticArray(srctype).Size, TPSTypeRec_StaticArray(srctype).ArrayType,TPSTypeRec_Array(desttype).ArrayType);
+            end;
+          end else if (desttype <> srctype) and not ((desttype.BaseType = btarray) and
+            (srctype.BaseType = btArray)and
+             (TPSTypeRec_Array(desttype).ArrayType = TPSTypeRec_Array(srctype).ArrayType)) then
             Result := False
           else
             CopyArrayContents(dest, src, 1, desttype);
@@ -9041,7 +9076,7 @@ begin
   Result:=true;
   arr:=NewTPSVariantIFC(Stack[Stack.Count-2],false);
   case arr.aType.BaseType of
-    btArray      : Stack.SetInt(-1,0);
+    btArray      : Stack.SetInt(-1,CI_ARRAY_START);
     btStaticArray: Stack.SetInt(-1,TPSTypeRec_StaticArray(arr.aType).StartOffset);
     btString     : Stack.SetInt(-1,1);
     btU8         : Stack.SetInt(-1,Low(Byte));        //Byte: 0
@@ -9061,7 +9096,7 @@ begin
   Result:=true;
   arr:=NewTPSVariantIFC(Stack[Stack.Count-2],false);
   case arr.aType.BaseType of
-    btArray      : Stack.SetInt(-1,PSDynArrayGetLength(Pointer(arr.Dta^),arr.aType)-1);
+    btArray      : Stack.SetInt(-1,PSDynArrayGetLength(Pointer(arr.Dta^),arr.aType)-1+CI_ARRAY_START);
     btStaticArray: Stack.SetInt(-1,TPSTypeRec_StaticArray(arr.aType).StartOffset+TPSTypeRec_StaticArray(arr.aType).Size-1);
     btString     : Stack.SetInt(-1,Length(tbtstring(arr.Dta^)));
     btU8         : Stack.SetInt(-1,High(Byte));       //Byte: 255
