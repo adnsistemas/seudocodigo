@@ -551,7 +551,7 @@ begin
     end;
     btString: begin //cadena
       if Assigned(scp.FOnStringShow) then
-        scp.FOnStringShow(scp,string(data));
+        scp.FOnStringShow(scp,string(PChar(data)));
     end;
     btSingle,btDouble,btExtended:begin
       if Assigned(scp.FOnRealShow) then
@@ -571,7 +571,7 @@ begin
     end;
     else begin //?
       if Assigned(scp.FOnUnknownShow) then
-        scp.FOnUnknownShow(scp,string(data));
+        scp.FOnUnknownShow(scp,string(PChar(data)));
     end;
   end;
 end;
