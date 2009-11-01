@@ -372,6 +372,7 @@ const
   CS_dispid = 'iddesp';
   CS_dispinterface = 'interfacedesp';
   CS_div = 'dividido';
+  CS_Equal = '=';
   CS_pow = '^';
   CS_do = 'hacer';
   CS_downto = 'decrementar_hasta';
@@ -423,6 +424,7 @@ const
   CS_nil = 'nulo';
   CS_nodefault = 'quitarporomision';
   CS_not = 'no';
+  CS_NotEqual = '<>';
   CS_object = 'objeto';
   CS_on = 'cuando';
   CS_operator = 'operador';
@@ -477,6 +479,29 @@ const
   CS_with = 'con';
   CS_writeonly = 'soloescritura';
   CS_xor = 'oex';
+
+{operaciones}
+  CS_OpAdd='+';
+  CS_OpSub='-';
+  CS_OpMul='*';
+  CS_OpDiv='/';
+  CS_OpMod='modulo';
+  CS_OpShl='despi';
+  CS_Opshr='despd';
+  CS_Opand='y';
+  CS_Opor='o';
+  CS_OpXor='oex';
+  CS_OpAs='como';
+  CS_OpPow='^';
+  CS_OpIDiv='\';
+  CS_OpGreaterEqual='>=';
+  CS_OpLessEqual='<=';
+  CS_OpGreater='>';
+  CS_OpLess='<';
+  CS_OpEqual='=';
+  CS_OpNotEqual='<>';
+  CS_OpIs='es';
+  CS_OpIn='en';
 
 {funciones y procedimientos}
   CS_Abs = 'ValorAbsoluto';
@@ -1389,6 +1414,7 @@ const
   CS_LookupList = 'ListaRevision';
   CS_lookupResultField = 'CampoResultadoRevision';
   CS_LoosyAssignment = 'Asignación con pérdida';
+  CS_UnbalancedCompare = 'Operación/Comparación desigual (%1s %2s %3s)';
   CS_loPartialKey = 'olClaveParcial';
   CS_maAutomatic = 'baAutomatico';
   CS_maBottomToTop = 'amAbajoAArriba';

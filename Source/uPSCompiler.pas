@@ -8396,6 +8396,8 @@ function TPSPascalCompiler.ProcessSub(BlockInfo: TPSBlockInfo): Boolean;
     end; // ReadFactor
 
     function GetResultType(p1, P2: TPSValue; Cmd: TPSBinOperatorType): TPSType;
+    const
+      ops:array[TPSBinOperatorType] of string = (CS_OpAdd,CS_OpSub,CS_OpMul,CS_OpDiv,CS_OpMod,CS_OpShl,CS_Opshr,CS_Opand,CS_Opor,CS_OpXor,CS_OpAs,CS_OpPow,CS_OpIDiv,CS_OpGreaterEqual,CS_OpLessEqual,CS_OpGreater,CS_OpLess,CS_OpEqual,CS_OpNotEqual,CS_OpIs,CS_OpIn);
     var
       pp, t1, t2: PIFPSType;
     begin
@@ -8745,6 +8747,10 @@ function TPSPascalCompiler.ProcessSub(BlockInfo: TPSBlockInfo): Boolean;
       else
         Result := nil;
       end;
+    {generara una advertencia si se están comparando cadenas con caracteres o enteros con reales}
+    if Assigned(Result) and (t1.BaseType <> t2.BaseType) and ((t1.BaseType = btChar)or(t1.BaseType=btString)
+      or IsIntRealType(t1.BaseType)) and not(((t1.BaseType = btChar)or(t2.BaseType = btChar)) and (Cmd in [otAdd,otSub])) then
+      MakeWarning('', ewCustomWarning, Format(CS_UnbalancedCompare,[t1.OriginalName,ops[Cmd],t2.OriginalName]))
     end;
 
 
