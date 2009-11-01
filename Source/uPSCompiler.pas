@@ -2545,7 +2545,14 @@ begin
   N := TPSPascalCompilerWarning.Create;
   n.FWarning := e;
   n.SetParserPos(FParser);
+  {$IFNDEF PS_USESSUPPORT}
   n.FModuleName := Module;
+  {$ELSE} //si no se especifica el módulo, utilizar el actual
+  if Module <> '' then
+    n.FModuleName := Module
+  else
+    n.FModuleName := fModule;
+  {$ENDIF}
   n.FParam := Param;
   FMessages.Add(n);
   Result := n;

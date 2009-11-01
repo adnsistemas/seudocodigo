@@ -14,6 +14,7 @@ uses
 
 resourcestring
   CS_SinNombre = 'Sin nombre';
+  RS_CANT_FIND_HELP = 'No se puede encontrar el archivo de ayuda %s';
   
 type
   Teditor = class(TForm)
@@ -49,23 +50,9 @@ type
     PSImport_DB1: TPSImport_DB;
     SynSeudocSyn1: TSynSeudocSyn;
     Salir1: TMenuItem;
-    WatchPanel: TPanel;
     Splitter2: TSplitter;
-    ListBox1: TListBox;
-    GroupBox1: TGroupBox;
-    Edit1: TEdit;
     PopupMenu2: TPopupMenu;
     Quitar1: TMenuItem;
-    GroupBox2: TGroupBox;
-    MemoLocales: TMemo;
-    GroupBox3: TGroupBox;
-    MemoGlobales: TMemo;
-    Splitter3: TSplitter;
-    Splitter4: TSplitter;
-    Panel1: TPanel;
-    CheckBox1: TCheckBox;
-    Panel2: TPanel;
-    CheckBox2: TCheckBox;
     Ayuda1: TMenuItem;
     Seudocdigo1: TMenuItem;
     N6: TMenuItem;
@@ -84,8 +71,6 @@ type
     Q1: TMenuItem;
     Configuracin1: TMenuItem;
     PageControl: TPageControl;
-    MainTab: TTabSheet;
-    ed: TSynEdit;
     PopupMenu3: TPopupMenu;
     Cerrar1: TMenuItem;
     CerrarTodas1: TMenuItem;
@@ -102,6 +87,25 @@ type
     AEInstruccion: TAction;
     AReiniciar: TAction;
     ASalida: TAction;
+    ed: TSynEdit;
+    Panel1: TPanel;
+    WatchPanel: TPanel;
+    Splitter3: TSplitter;
+    Splitter4: TSplitter;
+    ListBox1: TListBox;
+    GroupBox1: TGroupBox;
+    Edit1: TEdit;
+    GroupBox2: TGroupBox;
+    MemoLocales: TMemo;
+    Panel2: TPanel;
+    CheckBox1: TCheckBox;
+    GroupBox3: TGroupBox;
+    MemoGlobales: TMemo;
+    Panel3: TPanel;
+    CheckBox2: TCheckBox;
+    PopupMenu4: TPopupMenu;
+    Limpiar1: TMenuItem;
+    ALimpiarMensajes: TAction;
     procedure edSpecialLineColors(Sender: TObject; Line: Integer;
       var Special: Boolean; var FG, BG: TColor);
     procedure BreakPointMenuClick(Sender: TObject);
@@ -179,6 +183,9 @@ type
     procedure ceListShow(Sender: TObject; const data: Integer);
     procedure ASalidaUpdate(Sender: TObject);
     procedure ASalidaExecute(Sender: TObject);
+    procedure WatchPanelResize(Sender: TObject);
+    procedure ALimpiarMensajesUpdate(Sender: TObject);
+    procedure ALimpiarMensajesExecute(Sender: TObject);
   private
     function getSPCount: integer;
     function GetCurrentEd: TSynEdit;
@@ -290,31 +297,35 @@ procedure Teditor.edSpecialLineColors(Sender: TObject; Line: Integer;
 var
   msg:TPSPascalCompilerMessage;
 begin
-  if FMessageLine >= 0 then begin
-    msg := ce.CompilerMessages[FMessageLine];
-    if Line = msg.Row then begin
+  try
+    if FMessageLine >= 0 then begin
+      msg := ce.CompilerMessages[FMessageLine];
+      if Assigned(msg) and (CompareText(msg.ModuleName,sFile)=0) and (Line = msg.Row) then begin
+        Special := True;
+        BG := clGreen;
+        FG := clWhite;
+        exit;
+      end;
+    end;
+    if ce.HasBreakPoint(sFile, Line) then begin
       Special := True;
-      BG := clGreen;
+      if Line = FActiveLine then begin
+        BG := clBlue;
+        FG := clRed;
+      end else begin
+        FG := clWhite;
+        BG := clRed;
+      end;
+    end else if Line = FActiveLine then begin
+      Special := True;
       FG := clWhite;
-      exit;
-    end;
-  end;
-  if ce.HasBreakPoint(sFile, Line) then begin
-    Special := True;
-    if Line = FActiveLine then begin
-      BG := clBlue;
-      FG := clRed;
-    end else begin
-      FG := clWhite;
-      BG := clRed;
-    end;
-  end else if Line = FActiveLine then begin
-    Special := True;
-    FG := clWhite;
-    bg := clBlue;
-    application.ProcessMessages;
-  end else
+      bg := clBlue;
+      application.ProcessMessages;
+    end else
+      Special := False;
+  except
     Special := False;
+  end;
 end;
 
 procedure Teditor.BreakPointMenuClick(Sender: TObject);
@@ -475,12 +486,14 @@ end;
 
 procedure Teditor.Save1Click(Sender: TObject);
 begin
-  SaveFile(PageControl.ActivePage);
+  if Assigned(PageControl.ActivePage) then
+    SaveFile(PageControl.ActivePage);
 end;
 
 procedure Teditor.Saveas1Click(Sender: TObject);
 begin
-  SaveFileAs(PageControl.ActivePage);
+  if Assigned(PageControl.ActivePage) then
+    SaveFileAs(PageControl.ActivePage);
 end;
 
 function Teditor.SaveCheck(page:TTabSheet): Boolean;
@@ -518,33 +531,37 @@ var
   i:integer;
   fd:TFileRecord;
 begin
-  FileName := FileName + '.sdc';
-  for i:=0 to PageControl.PageCount - 1 do begin
-    if CompareText(PageControl.Pages[i].Caption,FileName)=0 then begin
-      Output := TSynEdit(PageControl.Pages[i].Controls[0]).Text;
-      Result := True;
+  try
+    FileName := FileName + '.sdc';
+    for i:=0 to PageControl.PageCount - 1 do begin
+      if CompareText(PageControl.Pages[i].Caption,FileName)=0 then begin
+        Output := TSynEdit(PageControl.Pages[i].Controls[0]).Text;
+        Result := True;
+        exit;
+      end;
+    end;
+    fd := TFileRecord(FFiles.Objects[PageControl.ActivePageIndex]);
+    if aFile <> '' then
+      Path := ExtractFilePath(fd.NombreEnDisco)
+    else
+      Path := ExtractFilePath(ParamStr(0));
+    Path := Path + FileName;
+    try
+      F := TFileStream.Create(Path, fmOpenRead or fmShareDenyWrite);
+    except
+      Result := false;
       exit;
     end;
-  end;
-  fd := TFileRecord(FFiles.Objects[PageControl.ActivePageIndex]);
-  if aFile <> '' then
-    Path := ExtractFilePath(fd.NombreEnDisco)
-  else
-    Path := ExtractFilePath(ParamStr(0));
-  Path := Path + FileName;
-  try
-    F := TFileStream.Create(Path, fmOpenRead or fmShareDenyWrite);
+    try
+      SetLength(Output, f.Size);
+      f.Read(Output[1], Length(Output));
+    finally
+      f.Free;
+    end;
+    Result := True;
   except
-    Result := false;
-    exit;
+    Result := False;
   end;
-  try
-    SetLength(Output, f.Size);
-    f.Read(Output[1], Length(Output));
-  finally
-    f.Free;
-  end;
-  Result := True;
 end;
 
 procedure Teditor.ceBreakpoint(Sender: TObject; const FileName: String; Position, Row,
@@ -629,19 +646,12 @@ procedure Teditor.FormCreate(Sender: TObject);
     until i < 1;
     result := formato;
   end;
-var
-  fd:TFileRecord;
 begin
   FFirstShow := True;
-  if ShortDateFormat <> 'dd/mm/yyyy' then begin
-    //if MessageDlg('El formato de fecha actual es "' + replaceYA(ShortDateFormat) + '" y no "dd/mm/aaaa". ¿Desea cambiar el formato actual?',mtConfirmation,[mbYes,mbNo],0) = mrYes then
-      ShortDateFormat := 'dd/mm/yyyy';
-  end;
+  if ShortDateFormat <> 'dd/mm/yyyy' then
+    ShortDateFormat := 'dd/mm/yyyy';
   FWatches := TStringlist.Create;
   FFiles := TStringList.Create;
-  fd := TFileRecord.Create;
-  fd.NombreEnDisco := SinNombre;
-  FFiles.AddObject(fd.NombreReal,fd);
   with FWatches as TStringList do begin
     sorted := True;
     duplicates := dupError;
@@ -1174,49 +1184,53 @@ var
   fl:TFileStream;
   fd:TFileRecord;
 begin
-  foundpos := -1;
-  FileName := FileName + '.sdc';
-  fd := TFileRecord(FFiles.Objects[PageControl.ActivePageIndex]);
-  path := ExtractFilePath(fd.NombreEnDisco);
   try
-    //busco en los archivos abiertos
-    for i:=0 to PageControl.PageCount -1 do begin
-      fd := TFileRecord(FFiles.Objects[i]);
-      if CompareText(fd.NombreReal,FileName) = 0 then begin
-        Output := TSynEdit(PageControl.Pages[i].Controls[0]).Text;
+    foundpos := -1;
+    FileName := FileName + '.sdc';
+    fd := TFileRecord(FFiles.Objects[PageControl.ActivePageIndex]);
+    path := ExtractFilePath(fd.NombreEnDisco);
+    try
+      //busco en los archivos abiertos
+      for i:=0 to PageControl.PageCount -1 do begin
+        fd := TFileRecord(FFiles.Objects[i]);
+        if CompareText(fd.NombreReal,FileName) = 0 then begin
+          Output := TSynEdit(PageControl.Pages[i].Controls[0]).Text;
+          fd.FScriptName := OrginFileName;
+          foundpos:=i;
+          Result := True;
+          exit;
+        end;
+      end;
+      //busco en el mismo directorio y luego en los especificados como directorios de búsqueda
+      result := FileExists(path + FileName);
+      if not result then begin
+        for i:=0 to SearchPathCount - 1 do begin
+          path := SetToSearchPath(i,path);
+          result := FileExists(path + FileName);
+          if result then
+            break;
+        end;
+      end;
+      if result then try
+        fl := TFileStream.Create(path + FileName,fmOpenRead);
+        try
+          SetLength(Output,fl.Size);
+          fl.Read(Pointer(Output)^,fl.Size);
+        finally
+          fl.Free;
+        end;
+        CreateTab(path + FileName);
+        foundpos := PageControl.ActivePageIndex;
+        fd := TFileRecord(FFiles.Objects[foundpos]);
         fd.FScriptName := OrginFileName;
-        foundpos:=i;
-        Result := True;
-        exit;
+      except
+        result := False;
       end;
+    finally
+      UsarArchivo(foundpos);
     end;
-    //busco en el mismo directorio y luego en los especificados como directorios de búsqueda
-    result := FileExists(path + FileName);
-    if not result then begin
-      for i:=0 to SearchPathCount - 1 do begin
-        path := SetToSearchPath(i,path);
-        result := FileExists(path + FileName);
-        if result then
-          break;
-      end;
-    end;
-    if result then try
-      fl := TFileStream.Create(path + FileName,fmOpenRead);
-      try
-        SetLength(Output,fl.Size);
-        fl.Read(Pointer(Output)^,fl.Size);
-      finally
-        fl.Free;
-      end;
-      CreateTab(path + FileName);
-      foundpos := PageControl.ActivePageIndex;
-      fd := TFileRecord(FFiles.Objects[foundpos]);
-      fd.FScriptName := OrginFileName;
-    except
-      result := False;
-    end;
-  finally
-    UsarArchivo(foundpos);
+  except
+    result := False;
   end;
 end;
 
@@ -1262,71 +1276,58 @@ var
   edit:TSynEdit;
   fd:TFileRecord;
 begin
-  if not Assigned(MainTab.PageControl) then begin
+  page := TTabSheet.Create(PageControl);
+  try
+    page.PageControl := PageControl;
+    edit := TSynEdit.Create(page);
+    edit.PopupMenu := ed.PopupMenu;
+    edit.Parent := page;
+    edit.SearchEngine := ed.SearchEngine;
+    edit.TabWidth := ed.TabWidth;
+    edit.Align := alClient;
+    edit.Highlighter := ed.Highlighter;
+    edit.Options := ed.Options;
+    edit.OnEnter := ed.OnEnter;
+    edit.OnGutterClick := ed.OnGutterClick;
+    edit.OnSpecialLineColors := ed.OnSpecialLineColors;
+    edit.OnStatusChange := ed.OnStatusChange;
+    edit.OnKeyDown := ed.OnKeyDown;
+    edit.Gutter.Assign(ed.Gutter);
+    edit.WantReturns := ed.WantReturns;
+    edit.WantTabs := ed.WantTabs;
     if FileName = '' then begin
       FileName := SinNombre;
-      ed.Lines.Text := CS_Program + ' ' + CS_Example + CS_iend + #13#10 + CS_begin + #13#10 + CS_Program_end + '.';
-      ed.Modified := False;
+      edit.Lines.Text := CS_Program + ' ' + CS_Example + CS_iend + #13#10 + CS_begin + #13#10 + CS_Program_end + '.';
+      edit.Modified := False;
     end else begin
-      ed.Lines.LoadFromFile(FileName);
-      ed.Modified := False;
+      edit.Lines.LoadFromFile(FileName);
+      edit.Modified := False;
     end;
-    MainTab.PageControl := PageControl;
-    MainTab.Caption := ExtractFileName(FileName);
+    page.Caption := ExtractFileName(FileName);
     fd := TFileRecord.Create;
     fd.NombreEnDisco := FileName;
     FFiles.AddObject(fd.NombreReal,fd);
-    PageControl.ActivePage := MainTab;
+    PageControl.ActivePage := page;
     ShowFileName;
-    exit;
+  except // si algo sale mal, eliminar la página
+    page.Free;
   end;
-  page := TTabSheet.Create(PageControl);
-  page.PageControl := PageControl;
-  edit := TSynEdit.Create(page);
-  edit.PopupMenu := ed.PopupMenu;
-  edit.Parent := page;
-  edit.SearchEngine := ed.SearchEngine;
-  edit.TabWidth := ed.TabWidth;
-  edit.Align := alClient;
-  edit.Highlighter := ed.Highlighter;
-  edit.Options := ed.Options;
-  edit.OnEnter := ed.OnEnter;
-  edit.OnGutterClick := ed.OnGutterClick;
-  edit.OnSpecialLineColors := ed.OnSpecialLineColors;
-  edit.OnStatusChange := ed.OnStatusChange;
-  edit.OnKeyDown := ed.OnKeyDown;
-  edit.Gutter.Assign(ed.Gutter);
-  edit.WantReturns := ed.WantReturns;
-  edit.WantTabs := ed.WantTabs;
-  if FileName = '' then begin
-    FileName := SinNombre;
-    edit.Lines.Text := CS_Program + ' ' + CS_Example + CS_iend + #13#10 + CS_begin + #13#10 + CS_Program_end + '.';
-    edit.Modified := False;
-  end else begin
-    edit.Lines.LoadFromFile(FileName);
-    edit.Modified := False;
-  end;
-  page.Caption := ExtractFileName(FileName);
-  fd := TFileRecord.Create;
-  fd.NombreEnDisco := FileName;
-  FFiles.AddObject(fd.NombreReal,fd);
-  PageControl.ActivePage := page;
-  ShowFileName;
 end;
 
 procedure Teditor.DestroyTab(PageIndex:integer;SavedChecked:boolean=False);
 var
   page:TTabSheet;
 begin
-  page := PageControl.Pages[PageIndex];
-  if SavedChecked or SaveCheck(page) then begin //no verificar si ya se hizo
-    page.PageControl := nil;
-    TFileRecord(FFiles.Objects[PageIndex]).Free;
-    FFiles.Delete(PageIndex);
-    if page = MainTab then begin
-      page.Visible := False;
-    end else
+  try
+    page := PageControl.Pages[PageIndex];
+    if SavedChecked or SaveCheck(page) then try //no verificar si ya se hizo
+      page.PageControl := nil;
+      TFileRecord(FFiles.Objects[PageIndex]).Free;
+      FFiles.Delete(PageIndex);
+    finally
       page.Free;
+    end;
+  except
   end;
 end;
 
@@ -1361,23 +1362,23 @@ end;
 
 procedure Teditor.Cerrar1Click(Sender: TObject);
 begin
-  DestroyTab(PageControl.ActivePageIndex);
+  if PageControl.ActivePageIndex >= 0 then
+    DestroyTab(PageControl.ActivePageIndex);
   ShowFileName;
 end;
 
 procedure Teditor.CerrarTodas1Click(Sender: TObject);
 begin
-  while PageControl.PageCount > 1 do
+  while PageControl.PageCount > 0 do
     DestroyTab(PageControl.ActivePageIndex);
-  DestroyTab(PageControl.ActivePageIndex);
 end;
 
 function Teditor.GetCurrentEd: TSynEdit;
 begin
-  if PageControl.PageCount = 0 then
-    result := nil
+  if Assigned(PageControl.ActivePage) then
+    result := TSynEdit(PageControl.ActivePage.Controls[0])
   else
-    result := TSynEdit(PageControl.ActivePage.Controls[0]);
+    result := nil;
 end;
 
 procedure Teditor.SetActivePage(FileName: string);
@@ -1457,34 +1458,37 @@ var
   nombre:string;
   i,s:integer;
 begin
-  fd := TFileRecord(FFiles.Objects[PageControl.ActivePageIndex]);
-  if fd.NombreUtiliza = '' then begin
-    i:=0;
-    while nombre = '' do begin
-      nombre := TSynEdit(PageControl.ActivePage.Controls[0]).Lines[i];
-      Inc(i);
+  try
+    fd := TFileRecord(FFiles.Objects[PageControl.ActivePageIndex]);
+    if fd.NombreUtiliza = '' then begin
+      i:=0;
+      while nombre = '' do begin
+        nombre := TSynEdit(PageControl.ActivePage.Controls[0]).Lines[i];
+        Inc(i);
+      end;
+      i := Pos(CS_program,nombre);
+      s := Pos(CS_unit,nombre);
+      if (i>0)and(s>0)and(i>s)then
+        i := s;
+      Delete(nombre,1,i+1);
+      i := Pos(' ',nombre);
+      Delete(nombre,1,i);
+      nombre := Trim(nombre);
+      i := Pos(' ',nombre);
+      if i = 0 then begin
+        i := Pos('//',nombre);
+        if i=0 then
+          i:= Pos('{',nombre);
+        if i=0 then
+          i := Pos('(*',nombre);
+      end;
+      if i> 0 then
+        Delete(nombre,i,length(nombre));
+      fd.FScriptName := Trim(nombre);
     end;
-    i := Pos(CS_program,nombre);
-    s := Pos(CS_unit,nombre);
-    if (i>0)and(s>0)and(i>s)then
-      i := s;
-    Delete(nombre,1,i+1);
-    i := Pos(' ',nombre);
-    Delete(nombre,1,i);
-    nombre := Trim(nombre);
-    i := Pos(' ',nombre);
-    if i = 0 then begin
-      i := Pos('//',nombre);
-      if i=0 then
-        i:= Pos('{',nombre);
-      if i=0 then
-        i := Pos('(*',nombre);
-    end;
-    if i> 0 then
-      Delete(nombre,i,length(nombre));
-    fd.FScriptName := Trim(nombre);
+    result := fd.NombreUtiliza;
+  except
   end;
-  result := fd.NombreUtiliza;
 end;
 
 procedure Teditor.Localizar1Click(Sender: TObject);
@@ -1502,7 +1506,7 @@ begin
     arcs:=TStringList.Create;
     try
       FormConfiguracion.LoadConfig('edicion','archivo',arcs);
-      if (arcs.Count > 0)or(ParamCount > 1) then
+      if (arcs.Count > 0)or(ParamCount > 1) then while PageControl.PageCount > 0 do
         DestroyTab(0);
       for i:=0 to arcs.Count - 1 do begin
         if FileExists(arcs[i]) then
@@ -1533,7 +1537,10 @@ end;
 
 procedure Teditor.Seudocdigo1Click(Sender: TObject);
 begin
-  application.HelpCommand(HELP_FINDER,0);
+  if FileExists(application.HelpFile) then
+    application.HelpCommand(HELP_FINDER,0)
+  else
+    MessageDlg(Format(RS_CANT_FIND_HELP,[application.HelpFile]),mtError,[mbOk],0);
 end;
 
 procedure Teditor.AWordWrapUpdate(Sender: TObject);
@@ -1780,6 +1787,22 @@ end;
 function Teditor.codigoACaracter(const c: integer): char;
 begin
   result := char(c);
+end;
+
+procedure Teditor.WatchPanelResize(Sender: TObject);
+begin
+  Edit1.Width := GroupBox1.ClientWidth - Edit1.Left * 2;
+end;
+
+procedure Teditor.ALimpiarMensajesUpdate(Sender: TObject);
+begin
+  with Sender as TAction do
+    Enabled := messages.Items.Count > 0;
+end;
+
+procedure Teditor.ALimpiarMensajesExecute(Sender: TObject);
+begin
+  messages.Clear;
 end;
 
 end.

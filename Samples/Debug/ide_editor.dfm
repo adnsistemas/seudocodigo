@@ -23,23 +23,23 @@ object editor: Teditor
   TextHeight = 13
   object Splitter1: TSplitter
     Left = 0
-    Top = 319
-    Width = 710
+    Top = 309
+    Width = 702
     Height = 3
     Cursor = crVSplit
     Align = alBottom
   end
   object Splitter2: TSplitter
-    Left = 137
+    Left = 185
     Top = 0
     Width = 3
-    Height = 319
+    Height = 309
     Cursor = crHSplit
   end
   object StatusBar1: TStatusBar
     Left = 0
-    Top = 433
-    Width = 710
+    Top = 423
+    Width = 702
     Height = 19
     Panels = <
       item
@@ -54,164 +54,26 @@ object editor: Teditor
     SimplePanel = False
     OnResize = StatusBar1Resize
   end
-  object WatchPanel: TPanel
-    Left = 0
-    Top = 0
-    Width = 137
-    Height = 319
-    Align = alLeft
-    BevelOuter = bvNone
-    Enabled = False
-    TabOrder = 1
-    object Splitter3: TSplitter
-      Left = 0
-      Top = 211
-      Width = 137
-      Height = 3
-      Cursor = crVSplit
-      Align = alBottom
-    end
-    object Splitter4: TSplitter
-      Left = 0
-      Top = 103
-      Width = 137
-      Height = 3
-      Cursor = crVSplit
-      Align = alBottom
-    end
-    object ListBox1: TListBox
-      Left = 0
-      Top = 49
-      Width = 137
-      Height = 54
-      Align = alClient
-      ItemHeight = 13
-      PopupMenu = PopupMenu2
-      TabOrder = 0
-      OnDblClick = ListBox1DblClick
-      OnKeyDown = ListBox1KeyDown
-    end
-    object GroupBox1: TGroupBox
-      Left = 0
-      Top = 0
-      Width = 137
-      Height = 49
-      Align = alTop
-      Caption = 'Inspección'
-      TabOrder = 1
-      object Edit1: TEdit
-        Left = 8
-        Top = 16
-        Width = 121
-        Height = 21
-        TabOrder = 0
-        OnKeyDown = Edit1KeyDown
-      end
-    end
-    object GroupBox2: TGroupBox
-      Left = 0
-      Top = 106
-      Width = 137
-      Height = 105
-      Align = alBottom
-      Caption = 'Variables locales'
-      TabOrder = 2
-      object MemoLocales: TMemo
-        Left = 2
-        Top = 33
-        Width = 133
-        Height = 70
-        Align = alClient
-        BorderStyle = bsNone
-        Lines.Strings = (
-          'No disponibles')
-        ParentColor = True
-        ReadOnly = True
-        TabOrder = 0
-        WordWrap = False
-        OnDblClick = MemoLocalesDblClick
-      end
-      object Panel1: TPanel
-        Left = 2
-        Top = 15
-        Width = 133
-        Height = 18
-        Align = alTop
-        BevelOuter = bvNone
-        TabOrder = 1
-        object CheckBox1: TCheckBox
-          Left = 8
-          Top = 1
-          Width = 97
-          Height = 17
-          Action = MLocales
-          Caption = 'Mostrar'
-          TabOrder = 0
-        end
-      end
-    end
-    object GroupBox3: TGroupBox
-      Left = 0
-      Top = 214
-      Width = 137
-      Height = 105
-      Align = alBottom
-      Caption = 'Variables globales'
-      TabOrder = 3
-      object MemoGlobales: TMemo
-        Left = 2
-        Top = 33
-        Width = 133
-        Height = 70
-        Align = alClient
-        BorderStyle = bsNone
-        Lines.Strings = (
-          'No disponibles')
-        ParentColor = True
-        ReadOnly = True
-        TabOrder = 0
-        WordWrap = False
-        OnDblClick = MemoGlobalesDblClick
-      end
-      object Panel2: TPanel
-        Left = 2
-        Top = 15
-        Width = 133
-        Height = 18
-        Align = alTop
-        BevelOuter = bvNone
-        TabOrder = 1
-        object CheckBox2: TCheckBox
-          Left = 8
-          Top = 1
-          Width = 97
-          Height = 17
-          Action = MGlobales
-          Caption = 'Mostrar'
-          TabOrder = 0
-        end
-      end
-    end
-  end
   object PageControl1: TPageControl
     Left = 0
-    Top = 322
-    Width = 710
+    Top = 312
+    Width = 702
     Height = 111
     ActivePage = TabSheet1
     Align = alBottom
     DockSite = True
-    TabOrder = 2
+    TabOrder = 1
     object TabSheet1: TTabSheet
       Caption = 'Información'
       object messages: TListBox
         Left = 0
         Top = 0
-        Width = 702
+        Width = 694
         Height = 83
         TabStop = False
         Align = alClient
         ItemHeight = 13
+        PopupMenu = PopupMenu4
         TabOrder = 0
         OnDblClick = messagesDblClick
         OnKeyDown = messagesKeyDown
@@ -219,62 +81,206 @@ object editor: Teditor
     end
   end
   object PageControl: TPageControl
-    Left = 140
+    Left = 188
     Top = 0
-    Width = 570
-    Height = 319
-    ActivePage = MainTab
+    Width = 514
+    Height = 309
     Align = alClient
     PopupMenu = PopupMenu3
-    TabOrder = 3
+    TabOrder = 2
     OnChange = PageControlChange
-    object MainTab: TTabSheet
-      Caption = 'Sin Nombre'
-      object ed: TSynEdit
+  end
+  object ed: TSynEdit
+    Left = 236
+    Top = 72
+    Width = 349
+    Height = 209
+    HelpContext = 102
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Courier New'
+    Font.Style = []
+    PopupMenu = PopupMenu1
+    TabOrder = 3
+    Visible = False
+    OnEnter = edEnter
+    OnKeyDown = edKeyDown
+    Gutter.Font.Charset = DEFAULT_CHARSET
+    Gutter.Font.Color = clWindowText
+    Gutter.Font.Height = -11
+    Gutter.Font.Name = 'Terminal'
+    Gutter.Font.Style = []
+    Gutter.LeftOffset = 8
+    Gutter.ShowLineNumbers = True
+    Highlighter = SynSeudocSyn1
+    Lines.Strings = (
+      'programa Ejemplo'
+      'inicio'
+      'fin_programa.')
+    Options = [eoAutoIndent, eoDragDropEditing, eoEnhanceEndKey, eoGroupUndo, eoScrollPastEol, eoShowScrollHint, eoSmartTabDelete, eoTabIndent, eoTabsToSpaces, eoTrimTrailingSpaces]
+    SearchEngine = SynEditSearch1
+    TabWidth = 2
+    WantTabs = True
+    OnGutterClick = edGutterClick
+    OnSpecialLineColors = edSpecialLineColors
+    OnStatusChange = edStatusChange
+    RemovedKeystrokes = <
+      item
+        Command = ecContextHelp
+        ShortCut = 112
+      end>
+    AddedKeystrokes = <
+      item
+        Command = ecContextHelp
+        ShortCut = 16496
+      end>
+  end
+  object Panel1: TPanel
+    Left = 0
+    Top = 0
+    Width = 185
+    Height = 309
+    Align = alLeft
+    BevelOuter = bvNone
+    Caption = 'Panel1'
+    TabOrder = 4
+    object WatchPanel: TPanel
+      Left = 0
+      Top = 0
+      Width = 185
+      Height = 309
+      Align = alClient
+      BevelOuter = bvNone
+      Enabled = False
+      TabOrder = 0
+      OnResize = WatchPanelResize
+      object Splitter3: TSplitter
+        Left = 0
+        Top = 201
+        Width = 185
+        Height = 3
+        Cursor = crVSplit
+        Align = alBottom
+      end
+      object Splitter4: TSplitter
+        Left = 0
+        Top = 93
+        Width = 185
+        Height = 3
+        Cursor = crVSplit
+        Align = alBottom
+      end
+      object ListBox1: TListBox
+        Left = 0
+        Top = 49
+        Width = 185
+        Height = 44
+        Align = alClient
+        ItemHeight = 13
+        PopupMenu = PopupMenu2
+        TabOrder = 0
+        OnDblClick = ListBox1DblClick
+        OnKeyDown = ListBox1KeyDown
+      end
+      object GroupBox1: TGroupBox
         Left = 0
         Top = 0
-        Width = 562
-        Height = 291
-        HelpContext = 102
-        Align = alClient
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = 'Courier New'
-        Font.Style = []
-        PopupMenu = PopupMenu1
-        TabOrder = 0
-        OnEnter = edEnter
-        OnKeyDown = edKeyDown
-        Gutter.Font.Charset = DEFAULT_CHARSET
-        Gutter.Font.Color = clWindowText
-        Gutter.Font.Height = -11
-        Gutter.Font.Name = 'Terminal'
-        Gutter.Font.Style = []
-        Gutter.LeftOffset = 8
-        Gutter.ShowLineNumbers = True
-        Highlighter = SynSeudocSyn1
-        Lines.Strings = (
-          'programa Ejemplo'
-          'inicio'
-          'fin_programa.')
-        Options = [eoAutoIndent, eoDragDropEditing, eoEnhanceEndKey, eoGroupUndo, eoScrollPastEol, eoShowScrollHint, eoSmartTabDelete, eoTabIndent, eoTabsToSpaces, eoTrimTrailingSpaces]
-        SearchEngine = SynEditSearch1
-        TabWidth = 2
-        WantTabs = True
-        OnGutterClick = edGutterClick
-        OnSpecialLineColors = edSpecialLineColors
-        OnStatusChange = edStatusChange
-        RemovedKeystrokes = <
-          item
-            Command = ecContextHelp
-            ShortCut = 112
-          end>
-        AddedKeystrokes = <
-          item
-            Command = ecContextHelp
-            ShortCut = 16496
-          end>
+        Width = 185
+        Height = 49
+        Align = alTop
+        Caption = 'Inspección'
+        TabOrder = 1
+        object Edit1: TEdit
+          Left = 8
+          Top = 16
+          Width = 121
+          Height = 21
+          TabOrder = 0
+          OnKeyDown = Edit1KeyDown
+        end
+      end
+      object GroupBox2: TGroupBox
+        Left = 0
+        Top = 96
+        Width = 185
+        Height = 105
+        Align = alBottom
+        Caption = 'Variables locales'
+        TabOrder = 2
+        object MemoLocales: TMemo
+          Left = 2
+          Top = 33
+          Width = 181
+          Height = 70
+          Align = alClient
+          BorderStyle = bsNone
+          Lines.Strings = (
+            'No disponibles')
+          ParentColor = True
+          ReadOnly = True
+          TabOrder = 0
+          WordWrap = False
+          OnDblClick = MemoLocalesDblClick
+        end
+        object Panel2: TPanel
+          Left = 2
+          Top = 15
+          Width = 181
+          Height = 18
+          Align = alTop
+          BevelOuter = bvNone
+          TabOrder = 1
+          object CheckBox1: TCheckBox
+            Left = 8
+            Top = 1
+            Width = 97
+            Height = 17
+            Action = MLocales
+            TabOrder = 0
+          end
+        end
+      end
+      object GroupBox3: TGroupBox
+        Left = 0
+        Top = 204
+        Width = 185
+        Height = 105
+        Align = alBottom
+        Caption = 'Variables globales'
+        TabOrder = 3
+        object MemoGlobales: TMemo
+          Left = 2
+          Top = 33
+          Width = 181
+          Height = 70
+          Align = alClient
+          BorderStyle = bsNone
+          Lines.Strings = (
+            'No disponibles')
+          ParentColor = True
+          ReadOnly = True
+          TabOrder = 0
+          WordWrap = False
+          OnDblClick = MemoGlobalesDblClick
+        end
+        object Panel3: TPanel
+          Left = 2
+          Top = 15
+          Width = 181
+          Height = 18
+          Align = alTop
+          BevelOuter = bvNone
+          TabOrder = 1
+          object CheckBox2: TCheckBox
+            Left = 8
+            Top = 1
+            Width = 97
+            Height = 17
+            Action = MGlobales
+            TabOrder = 0
+          end
+        end
       end
     end
   end
@@ -595,6 +601,13 @@ object editor: Teditor
       OnExecute = ASalidaExecute
       OnUpdate = ASalidaUpdate
     end
+    object ALimpiarMensajes: TAction
+      Category = 'Mensajes'
+      Caption = '&Limpiar'
+      Enabled = False
+      OnExecute = ALimpiarMensajesExecute
+      OnUpdate = ALimpiarMensajesUpdate
+    end
   end
   object PopupMenu3: TPopupMenu
     Left = 248
@@ -631,5 +644,12 @@ object editor: Teditor
     ShortCut = 16416
     Left = 432
     Top = 104
+  end
+  object PopupMenu4: TPopupMenu
+    Left = 180
+    Top = 360
+    object Limpiar1: TMenuItem
+      Action = ALimpiarMensajes
+    end
   end
 end
