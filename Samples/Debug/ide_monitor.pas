@@ -4,12 +4,12 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls,syncobjs;
+  StdCtrls,syncobjs, SynEdit, SynMemo;
 
 type
   TVMonitorForm = class(TForm)
-    Memo1: TMemo;
     Edit1: TEdit;
+    Memo: TSynMemo;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure Edit1KeyDown(Sender: TObject; var Key: Word;
@@ -65,9 +65,9 @@ begin
     sts.Text:=data+chr(13)+chr(10);
     if sts.Count = 0 then
       exit;
-    if Memo1.Lines.Count > 0 then begin
-      sts[0] := Memo1.Lines[Memo1.Lines.Count - 1] + sts[0];
-      Memo1.Lines.Delete(Memo1.Lines.Count -1);
+    if Memo.Lines.Count > 0 then begin
+      sts[0] := Memo.Lines[Memo.Lines.Count - 1] + sts[0];
+      Memo.Lines.Delete(Memo.Lines.Count -1);
     end;
     i:=0;
     while i<sts.Count do begin
@@ -78,8 +78,8 @@ begin
       end;
       Inc(i);
     end;
-    Memo1.Lines.AddStrings(sts);
-    Memo1.SelStart := Length(Memo1.Lines.text)-1;
+    Memo.Lines.AddStrings(sts);
+    Memo.SelStart := Length(Memo.Lines.text)-1;
   finally
     sts.Free;
   end;
@@ -88,11 +88,12 @@ end;
 procedure TVMonitorForm.FormCreate(Sender: TObject);
 begin
   FWidth := 80;
+  Memo.RightEdge := FWidth * 2;
   FReading:=TSimpleEvent.Create;
-  Edit1.Color := Memo1.Color;
-  Edit1.Font := Memo1.Font;
+  Edit1.Color := Memo.Color;
+  Edit1.Font := Memo.Font;
   Edit1.Height := Trunc(- Edit1.Font.Height * 1.5);
-  Edit1.Width := Memo1.ClientWidth;
+  Edit1.Width := Memo.ClientWidth;
   Edit1.Visible := False;
 end;
 
@@ -109,10 +110,10 @@ begin
     BeforeInput(Self);
   FInRead := True;
   try
-    Memo1.SelStart := Length(Memo1.Lines.Text)- 1;
+    Memo.SelStart := Length(Memo.Lines.Text)- 1;
     FReaded := '';
     Edit1.Clear;
-    Edit1.MaxLength := FWidth - Length(Memo1.Lines[Memo1.Lines.Count - 1]);
+    Edit1.MaxLength := FWidth - Length(Memo.Lines[Memo.Lines.Count - 1]);
     SetEditPos;
     Edit1.Visible := True;
     try
@@ -137,7 +138,7 @@ end;
 
 procedure TVMonitorForm.Clear;
 begin
-  Memo1.Lines.Clear;
+  Memo.Lines.Clear;
   FStop := False;
 end;
 
@@ -152,6 +153,7 @@ end;
 procedure TVMonitorForm.setMaxWidth(const Value: integer);
 begin
   FWidth := Value;
+  Memo.RightEdge := FWidth * 2;
   Edit1.MaxLength := FWidth;
 end;
 
@@ -183,7 +185,7 @@ begin
   with Sender as TEdit do begin
     if (GetTextLen = MaxLength) and not(Key in [char(VK_DELETE),char(VK_BACK)]) then begin
       Output(Text);
-      Memo1.Lines.Add('');
+      Memo.Lines.Add('');
       FReaded := FReaded + Text;
       Clear;
       MaxLength := FWidth;
@@ -200,15 +202,15 @@ begin
   pv := Edit1.Visible;
   try
     Edit1.Visible := False;
-    Memo1.SelStart := Length(Memo1.Lines.Text)-1;
+    Memo.SelStart := Length(Memo.Lines.Text);
     try
-      Memo1.SetFocus;
+      Memo.SetFocus;
     except
     end;
     GetCaretPos(cpos);
-    cpos := Self.ScreenToClient(Memo1.ClientToScreen(cpos));
+    cpos := Self.ScreenToClient(Memo.ClientToScreen(cpos));
     Edit1.Left := cpos.x;
-    Edit1.Width := Memo1.ClientWidth - Edit1.Left;
+    Edit1.Width := Memo.ClientWidth - Edit1.Left;
     Edit1.Top := cpos.y;
   finally
     Edit1.Visible := pv;
@@ -225,16 +227,16 @@ var
   lt:string;
 begin
   if (Key = VK_BACK) and (TEdit(Sender).Text = '') and (FReaded <> '') then with Sender as TEdit do begin
-    Memo1.Lines.Delete(Memo1.Lines.Count-1);
+    Memo.Lines.Delete(Memo.Lines.Count-1);
     if Length(FReaded) > FWidth then begin
       Edit1.Text := Copy(FReaded,Length(FReaded) - FWidth + 1,FWidth);
       Delete(FReaded,Length(FReaded) - FWidth + 1,FWidth);
-      Memo1.Lines[Memo1.Lines.Count -1] := '';
+      Memo.Lines[Memo.Lines.Count -1] := '';
     end else begin
       Edit1.Text := FReaded;
       FReaded := '';
-      lt := Memo1.Lines[Memo1.Lines.Count-1];
-      Memo1.Lines[Memo1.Lines.Count-1] := Copy(lt,1,Length(lt) - Edit1.GetTextLen);
+      lt := Memo.Lines[Memo.Lines.Count-1];
+      Memo.Lines[Memo.Lines.Count-1] := Copy(lt,1,Length(lt) - Edit1.GetTextLen);
     end;
     SetEditPos;
     Edit1.SelStart := Edit1.GetTextLen;
@@ -243,12 +245,12 @@ end;
 
 procedure TVMonitorForm.FormResize(Sender: TObject);
 begin
-  Edit1.Width := Memo1.ClientWidth - Edit1.Left;
+  Edit1.Width := Memo.ClientWidth - Edit1.Left;
 end;
 
 procedure TVMonitorForm.FormShow(Sender: TObject);
 begin
-  if not Assigned(HostDockSite) and (Memo1.Lines.Text = '') then begin
+  if not Assigned(HostDockSite) and (Memo.Lines.Text = '') then begin
     Left := screen.Width - Width;
     Top := 0;
   end;
@@ -262,16 +264,16 @@ begin
     Show;
   FInRead := True;
   try
-    Memo1.OnKeyPress := Memo1KeyPress;
+    Memo.OnKeyPress := Memo1KeyPress;
     try
-      Memo1.SetFocus;
+      Memo.SetFocus;
     except
     end;
     while (FReading.WaitFor(50) <> wrSignaled) and not FStop do
       application.processMessages;
     FReading.ResetEvent;
   finally
-    Memo1.OnKeyPress := nil;
+    Memo.OnKeyPress := nil;
     FInRead:=False;
   end;
 end;

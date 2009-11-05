@@ -1,11 +1,10 @@
 object VMonitorForm: TVMonitorForm
   Left = 555
   Top = 38
-  Width = 601
-  Height = 483
-  ActiveControl = Memo1
-  BorderIcons = []
+  AutoScroll = False
   Caption = 'Monitor'
+  ClientHeight = 447
+  ClientWidth = 585
   Color = clBtnFace
   DragKind = dkDock
   DragMode = dmAutomatic
@@ -23,13 +22,12 @@ object VMonitorForm: TVMonitorForm
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
-  object Memo1: TMemo
+  object Memo: TSynMemo
     Left = 0
     Top = 0
     Width = 585
     Height = 447
     Align = alClient
-    BorderStyle = bsNone
     Color = clBlack
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWhite
@@ -37,12 +35,23 @@ object VMonitorForm: TVMonitorForm
     Font.Name = 'Courier'
     Font.Pitch = fpFixed
     Font.Style = []
-    ParentFont = False
-    ReadOnly = True
-    ScrollBars = ssVertical
-    TabOrder = 0
-    WordWrap = False
+    TabOrder = 1
     OnEnter = Memo1Enter
+    BookMarkOptions.DrawBookmarksFirst = False
+    BookMarkOptions.EnableKeys = False
+    BookMarkOptions.GlyphsVisible = False
+    BorderStyle = bsNone
+    Gutter.Font.Charset = DEFAULT_CHARSET
+    Gutter.Font.Color = clWindowText
+    Gutter.Font.Height = -11
+    Gutter.Font.Name = 'Courier New'
+    Gutter.Font.Style = []
+    Gutter.Visible = False
+    Options = [eoEnhanceEndKey, eoGroupUndo, eoScrollPastEol]
+    ReadOnly = True
+    RightEdgeColor = clNone
+    ScrollBars = ssVertical
+    WantReturns = False
   end
   object Edit1: TEdit
     Left = 32
@@ -58,7 +67,7 @@ object VMonitorForm: TVMonitorForm
     Font.Style = [fsBold]
     MaxLength = 75
     ParentFont = False
-    TabOrder = 1
+    TabOrder = 0
     Text = 'Edit1'
     OnKeyDown = Edit1KeyDown
     OnKeyPress = Edit1KeyPress

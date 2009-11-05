@@ -996,7 +996,7 @@ type
     procedure DefineStandardTypes;
 
     procedure DefineStandardProcedures;
-    procedure DefineAditionalTypes; // declaración de tipo y subprogramas para listas
+    procedure DefineAditionalTypes; // declaración de tipo y subprogramas para listas y Archivos
 
     function ReadReal(const s: tbtString): PIfRVariant;
     function ReadString: PIfRVariant;
@@ -14246,7 +14246,8 @@ begin
 end;
 
 {Definición del tipo lista y los subprogramas necesarios para su manipulación.
-La implementación real se encuentra en uPSRuntime.}
+La implementación real se encuentra en uPSRuntime.
+Definición del tipo archivo y subprogramas para su manipulación.}
 procedure TPSPascalCompiler.DefineAditionalTypes;
 begin
   (* listas *)
@@ -14413,6 +14414,115 @@ begin
     begin
       OrgName:='lst';
       aType := FindType(CS_list);
+      Mode:=pmInOut;
+    end;
+  end;
+  (* archivos
+  los archivos se trabajan a un nivel de abstracción bien elevado, en donde se considera que un archivo
+  es una secuencia de registros. Para ello el archivo va a contener al comienzo la longitud del registro
+  la cual va a estar dada por la primera grabación que se haga en el mismo.
+  Todos los subprogramas de manipulación de archivos trabajan con el concepto de registro.
+   *)
+  AddTypeS(CS_file,CS_TFileStream); // los archivos se implementan con un TFileStream, que se ha agregado en uPSC_classes y uPSR_classes
+  {Crear un archivo. devuelve el archivo
+  función CrearArchivo(cadena nombre)archivo resultado }
+  AddFunction(CS_function + ' ' + CS_CreateFile + '(name:' + CS_string + '):' + CS_file + CS_iend);
+  {Escribe un registro en el archivo y devuelve la nueva posición
+  funcion EscribirArchivo(archivo porRef arch; constante x)entero resultado }
+  with AddFunction(CS_function + ' ' + CS_WriteFile + ':' + CS_integer).Decl do begin
+    with AddParam do
+    begin
+      OrgName:='arch';
+      aType := FindType(CS_file);
+      Mode:=pmInOut;
+    end;
+    with AddParam do
+    begin
+      OrgName:='x';
+      Mode:=pmIn;
+    end;
+  end;
+  {Lee un registro del archivo y devuelve la nueva posicion
+  funcion LeerArchivo(archivo porRef arch;variable x)entero resultado }
+  with AddFunction(CS_function + ' ' + CS_ReadFile + ':' + CS_integer + CS_iend).Decl do begin
+    with AddParam do
+    begin
+      OrgName:='arch';
+      aType := FindType(CS_file);
+      Mode:=pmInOut;
+    end;
+    with AddParam do
+    begin
+      OrgName:='x';
+      Mode:=pmOut;
+    end;
+  end;
+  {cantidad de registros en el archivo
+  funcion Tamaño(archivo arch)entero resultado }
+  with AddFunction(CS_function + ' ' + CS_FileSize + ':' + CS_integer + CS_iend).Decl do begin
+    with AddParam do
+    begin
+      OrgName:='lst';
+      aType := FindType(CS_file);
+      Mode:=pmInOut;
+    end;
+  end;
+  {abre un archivo existente
+  funcion AbrirArchivo(inmutable nombre)archivo resultado }
+  AddFunction(CS_function + ' ' + CS_OpenFile + '(name:' + CS_string + '):' + CS_file + CS_iend);
+  {determina si un archivo es válido o no, es decir si se puede utilizar o no
+  funcion ValidoArchivo(archivo porRef arch)logico resultado}
+  with AddFunction(CS_function + ' ' + CS_ValidFile + ':' + CS_boolean + CS_iend).Decl do begin
+    with AddParam do
+    begin
+      OrgName:='arch';
+      aType := FindType(CS_file);
+      Mode:=pmInOut;
+    end;
+  end;
+  {elimina el contenido del archivo, dejándolo como si acabara de crearse
+  procedimiento VaciarArchivo(archivo porRef arch)}
+  with AddFunction(CS_procedure + ' ' + CS_EmptyFile + CS_iend).Decl do begin
+    with AddParam do
+    begin
+      OrgName:='arch';
+      aType := FindType(CS_file);
+      Mode:=pmInOut;
+    end;
+  end;
+  {cierra un archivo
+  procedimiento CerrarArchivo(archivo porRef arch)}
+  with AddFunction(CS_procedure + ' ' + CS_CloseFile + CS_iend).Decl do begin
+    with AddParam do
+    begin
+      OrgName:='arch';
+      aType := FindType(CS_file);
+      Mode:=pmInOut;
+    end;
+  end;
+  {coloca el archivo en la posición deseada, medida en registros. Devuelve la posición actual del archivo
+  funcion PosicionarArchivo(archivo porRef arch;entero posicion)entero resultado }
+  with AddFunction(CS_function + ' ' + CS_SeekFile + ':' + CS_integer).Decl do begin
+    with AddParam do
+    begin
+      OrgName:='arch';
+      aType := FindType(CS_file);
+      Mode:=pmInOut;
+    end;
+    with AddParam do
+    begin
+      OrgName:='index';
+      aType := FindType(CS_integer);
+      Mode:=pmIn;
+    end;
+  end;
+  {devuelve la posición actual del archivo (medida en registros)
+  funcion PosicionArchivo(archivo porRef arch)entero resultado }
+  with AddFunction(CS_function + ' ' + CS_FilePos +  ':' + CS_integer).Decl do begin
+    with AddParam do
+    begin
+      OrgName:='arch';
+      aType := FindType(CS_file);
       Mode:=pmInOut;
     end;
   end;

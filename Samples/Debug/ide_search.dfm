@@ -3,6 +3,7 @@ object LocalizarForm: TLocalizarForm
   Top = 122
   Width = 321
   Height = 155
+  ActiveControl = Edit1
   Caption = 'Localizar'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -33,7 +34,7 @@ object LocalizarForm: TLocalizarForm
       Height = 91
       Align = alClient
       BevelOuter = bvNone
-      TabOrder = 1
+      TabOrder = 0
       object RadioGroup1: TRadioGroup
         Left = 0
         Top = 40
@@ -46,7 +47,7 @@ object LocalizarForm: TLocalizarForm
         Items.Strings = (
           'Arriba'
           'Abajo')
-        TabOrder = 0
+        TabOrder = 1
       end
       object Edit1: TEdit
         Left = 8
@@ -54,7 +55,7 @@ object LocalizarForm: TLocalizarForm
         Width = 159
         Height = 21
         Anchors = [akLeft, akTop, akRight]
-        TabOrder = 1
+        TabOrder = 0
       end
     end
     object Panel1: TPanel
@@ -64,7 +65,7 @@ object LocalizarForm: TLocalizarForm
       Height = 91
       Align = alRight
       BevelOuter = bvNone
-      TabOrder = 0
+      TabOrder = 1
       object Button2: TButton
         Left = 24
         Top = 8

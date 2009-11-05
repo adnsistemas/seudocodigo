@@ -1,6 +1,6 @@
 object editor: Teditor
-  Left = 9
-  Top = 27
+  Left = 150
+  Top = 98
   Width = 718
   Height = 498
   Caption = 
@@ -234,9 +234,10 @@ object editor: Teditor
           object CheckBox1: TCheckBox
             Left = 8
             Top = 1
-            Width = 97
+            Width = 161
             Height = 17
             Action = MLocales
+            Anchors = [akLeft, akTop, akRight]
             TabOrder = 0
           end
         end
@@ -275,9 +276,10 @@ object editor: Teditor
           object CheckBox2: TCheckBox
             Left = 8
             Top = 1
-            Width = 97
+            Width = 161
             Height = 17
             Action = MGlobales
+            Anchors = [akLeft, akTop, akRight]
             TabOrder = 0
           end
         end
@@ -356,9 +358,7 @@ object editor: Teditor
       Caption = '-'
     end
     object Localizar1: TMenuItem
-      Caption = '&Localizar'
-      ShortCut = 16460
-      OnClick = Localizar1Click
+      Action = ABuscar
     end
   end
   object MainMenu1: TMainMenu
@@ -405,6 +405,9 @@ object editor: Teditor
       HelpContext = 101
       object Run2: TMenuItem
         Action = AETodo
+      end
+      object Detener1: TMenuItem
+        Action = ADetener
       end
       object N2: TMenuItem
         Caption = '-'
@@ -479,8 +482,8 @@ object editor: Teditor
   end
   object OpenDialog1: TOpenDialog
     DefaultExt = 'sdc'
-    Filter = 'Seudocódigo|*.sdc'
-    Options = [ofHideReadOnly, ofPathMustExist, ofFileMustExist, ofEnableSizing]
+    Filter = 'Seudocódigo|*.sdc|Cualquiera|*.*'
+    Options = [ofHideReadOnly, ofAllowMultiSelect, ofPathMustExist, ofFileMustExist, ofEnableSizing]
     Left = 168
     Top = 104
   end
@@ -608,6 +611,17 @@ object editor: Teditor
       OnExecute = ALimpiarMensajesExecute
       OnUpdate = ALimpiarMensajesUpdate
     end
+    object ABuscar: TAction
+      Caption = '&Localizar'
+      ShortCut = 114
+      OnExecute = ABuscarExecute
+    end
+    object ADetener: TAction
+      Category = 'Ejecutar'
+      Caption = '&Detener'
+      OnExecute = ADetenerExecute
+      OnUpdate = AReiniciarUpdate
+    end
   end
   object PopupMenu3: TPopupMenu
     Left = 248
@@ -625,25 +639,6 @@ object editor: Teditor
   object SynEditSearch1: TSynEditSearch
     Left = 408
     Top = 144
-  end
-  object SynCompletionProposal1: TSynCompletionProposal
-    Options = [scoLimitToMatchedText, scoEndCharCompletion, scoCompleteWithTab]
-    EndOfTokenChr = '()[]. '
-    TriggerChars = '.'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'MS Sans Serif'
-    Font.Style = []
-    TitleFont.Charset = DEFAULT_CHARSET
-    TitleFont.Color = clBtnText
-    TitleFont.Height = -11
-    TitleFont.Name = 'MS Sans Serif'
-    TitleFont.Style = [fsBold]
-    Columns = <>
-    ShortCut = 16416
-    Left = 432
-    Top = 104
   end
   object PopupMenu4: TPopupMenu
     Left = 180

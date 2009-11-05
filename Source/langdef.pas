@@ -562,6 +562,7 @@ const
   CS_Click = 'Apretar';
   CS_ClientToScreen = 'InternoAEscritorio';
   CS_Close = 'Cerrar';
+  CS_CloseFile = 'CerrarArchivo';
   CS_CloseQuery = 'AceptarCierre';
   CS_ContainsControl = 'ContieneControl';
   CS_ControlDestroyed = 'ControlDestruido';
@@ -573,6 +574,7 @@ const
   CS_Create = 'Crear';
   CS_CreateBlobStream = 'CrearFlujoBlob';
   CS_CreateField = 'CrearCampo';
+  CS_CreateFile = 'CrearArchivo';
   CS_CreateFromId = 'CrearEnBaseAID';
   CS_CreateHandle = 'CrearIdentificador';
   CS_CreateNew = 'CrearNuevo';
@@ -607,6 +609,7 @@ const
   CS_dupIgnore = 'dupIgnorar';
   CS_Edit = 'Editar';
   CS_Ellipse = 'Elipse';
+  CS_EmptyFile = 'VaciarArchivo';
   CS_EnableAlign = 'HabilitarAlineamiento';
   CS_EnableControls = 'HabilitarControles';
   CS_EncodeDate = 'CodificarFecha';
@@ -624,6 +627,8 @@ const
   CS_Exchange = 'Intercambiar';
   CS_FieldByName = 'CampoPorNombre';
   CS_FieldByNumber = 'CampoPorNumero';
+  CS_FilePos = 'PosicionArchivo';
+  CS_FileSize = 'TamañoArchivo';
   CS_FillRect = 'RellenarRectangulo';
   CS_Find = 'Buscar';
   CS_FindComponent = 'EncontrarComponente';
@@ -761,6 +766,7 @@ const
   CS_odSelected = 'edSeleccionado';
   CS_Open = 'Abrir';
   CS_OpenBit = 'AbrirBit';
+  CS_OpenFile = 'AbrirArchivo';
   CS_opInsert = 'opInsertar';
   CS_opRemove = 'opQuitar';
   CS_Padl = 'RellenoIzq';
@@ -791,6 +797,7 @@ const
   CS_Read = 'Leer';
   CS_ReadBuffer = 'LeerRecipiente';
   CS_ReadDateTime = 'LeerFechaYHora';
+  CS_ReadFile = 'LeerArchivo';
   CS_ReadLn = 'LeerRenglon';
   CS_Realign = 'Realinear';
   CS_Rectangle = 'Rectangulo';
@@ -823,6 +830,7 @@ const
   CS_ScrollBy = 'Desplazar';
   CS_ScrollInView = 'DesplazarHastaVisible';
   CS_Seek = 'Posicionar';
+  CS_SeekFile = 'PosicionarArchivo';
   CS_SelectAll = 'SeleccionarTodo';
   CS_SendCancelMode = 'EnviarModoDeCancelacion';
   CS_SendToBack = 'EnviarAlFondo';
@@ -893,6 +901,7 @@ const
   CS_UpdateStatus = 'EstadoActualizacion';
   CS_Uppercase = 'Mayusculas';
   CS_Usucc = 'Sucesor';
+  CS_ValidFile = 'ValidoArchivo';
   CS_Value = 'Valor';
   CS_ValueOfKey = 'ValorDeClave';
   CS_VarIsEmpty = 'varEsVacio';
@@ -902,6 +911,7 @@ const
   CS_whatType = 'queTipo';
   CS_Write = 'Escribir';
   CS_WriteBuffer = 'EscribirRecipiente';
+  CS_WriteFile = 'EscribirArchivo';
   CS_Writeln = 'EscribirRenglon';
   CS_WStrGet = 'ObtenerCadenaLarga';
   CS_WStrSet = 'EstablecerCadenaLarga';

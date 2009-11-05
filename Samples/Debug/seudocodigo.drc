@@ -7,6 +7,15 @@
   produced executable.
 */
 
+#define ide_editor_RS_EXEC_ERROR 65088
+#define ide_editor_RS_STEP_INTO 65089
+#define ide_editor_RS_STEP_OVER 65090
+#define ide_editor_RS_STOPPING 65091
+#define ide_editor_RS_COMPILE_SUCCESS 65092
+#define ide_editor_RS_CONFIRM_SAVE 65093
+#define ide_editor_RS_DATE_FORMAT 65094
+#define ide_editor_RS_UNAVAILABLE 65095
+#define ide_editor_RS_EXAMPLE_CODE 65096
 #define DbConsts_STextTrue 65104
 #define DbConsts_SParameterNotFound 65105
 #define DbConsts_SInvalidVersion 65106
@@ -21,6 +30,8 @@
 #define ide_about_RS_VERSION 65115
 #define ide_editor_CS_SinNombre 65116
 #define ide_editor_RS_CANT_FIND_HELP 65117
+#define ide_editor_RS_EXECUTING 65118
+#define ide_editor_RS_EXEC_SUCCESS 65119
 #define DbConsts_SFieldOutOfRange 65120
 #define DbConsts_SBCDOverflow 65121
 #define DbConsts_SFieldRequired 65122
@@ -439,6 +450,15 @@
 #define SysConst_SInvalidInput 65535
 STRINGTABLE
 BEGIN
+	ide_editor_RS_EXEC_ERROR,	"Error de ejecución: %1s en [%2d:%3d]"
+	ide_editor_RS_STEP_INTO,	"Ejecutando línea"
+	ide_editor_RS_STEP_OVER,	"Ejecutando instrucción"
+	ide_editor_RS_STOPPING,	"Deteniendo.."
+	ide_editor_RS_COMPILE_SUCCESS,	"Compilación exitosa"
+	ide_editor_RS_CONFIRM_SAVE,	"No ha guardado el archivo \"%s\", ¿guardar ahora?"
+	ide_editor_RS_DATE_FORMAT,	"dd/mm/yyyy"
+	ide_editor_RS_UNAVAILABLE,	"No disponibles"
+	ide_editor_RS_EXAMPLE_CODE,	"programa Ejemplo\r\r\ninicio\r\nfin_programa"
 	DbConsts_STextTrue,	"True"
 	DbConsts_SParameterNotFound,	"Parameter '%s' not found"
 	DbConsts_SInvalidVersion,	"Unable to load bind parameters"
@@ -453,6 +473,8 @@ BEGIN
 	ide_about_RS_VERSION,	"Versión: %1d.%d.%d"
 	ide_editor_CS_SinNombre,	"Sin nombre"
 	ide_editor_RS_CANT_FIND_HELP,	"No se puede encontrar el archivo de ayuda %s"
+	ide_editor_RS_EXECUTING,	"Ejecutando.."
+	ide_editor_RS_EXEC_SUCCESS,	"Ejecución existosa"
 	DbConsts_SFieldOutOfRange,	"Value of field '%s' is out of range"
 	DbConsts_SBCDOverflow,	"(Overflow)"
 	DbConsts_SFieldRequired,	"Field '%s' must have a value"
