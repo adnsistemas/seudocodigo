@@ -1102,9 +1102,17 @@ type
       btSingle,btDouble,btExtended,btCurrency:(vreal:real);//real o moneda
       btChar:(vcaracter:char);//caracter
       btString:(vcadena:PChar);//cadena
+      btRecord:(vestructura:Pointer);//estructura
       btClass:(vlista:TList);//lista
   end;
   PElementoLista = ^ElementoLista;
+
+{estructura de cabecera de los archivos, que permite utilizarlos como secuencia de registros en forma transparente}
+  CabeceraArchivo = record
+    tamreg:cardinal;//tamaño de registro, 0 si no es fijo
+    cantidad:word;//cantidad de registros en el archivo
+    tipo:TPSBaseType;//tipo de cada registro, generalmente btRecord
+  end;
   
 function CopiarLista_(lista:TList):TList;
 procedure EliminarLista(lst:TList);
@@ -1260,6 +1268,7 @@ procedure P_CM_INC; begin end;
 procedure P_CM_DEC; begin end;
 
 procedure LimpiarListas;forward; //limpieza de la información que hace transparentes las listas
+procedure LimpiarArchivos;forward; //limpieza de archivos que quedaron abiertos
 
 function IntPIFVariantToVariant(Src: pointer; aType: TPSTypeRec; var Dest: Variant): Boolean; forward;
 
@@ -1967,6 +1976,8 @@ begin
   end;
   //eliminar la información de listas
   LimpiarListas;
+  //eliminar la información de archivos
+  LimpiarArchivos;
 end;
 
 procedure TPSExec.Clear;
@@ -8684,6 +8695,7 @@ begin
     Result := ExEx = erNoError;
   finally
     LimpiarListas;
+    LimpiarArchivos;
   end;
 end;
 
@@ -9690,6 +9702,422 @@ begin
   end;
 end;
 
+(* manipulación de listas *)
+{para que no haya pérdidas innecesarias de memoria se guardan referencias a los archivos abiertos para cerrarlos
+al finalizar la ejecución, si el algoritmo no es adecuado}
+var
+  Archivos:TList;
+
+{realiza la liberación de todos los archivos}
+procedure LimpiarArchivos;
+var
+  i:integer;
+begin
+  if Assigned(Archivos) then begin
+    for i:=0 to Archivos.Count - 1 do
+      TFileStream(Archivos[i]).Free;
+    Archivos.Free;
+    Archivos:=nil;
+  end;
+end;
+
+{subprogramas auxiliares para la manipulación de archivos}
+
+//hace la instanciación real de un FileStream en base al modo indicado
+function cArchivo_(archivo:string;modo:word):TFileStream;
+begin
+  try
+    result := TFileStream.Create(archivo,modo);
+    if not Assigned(Archivos) then
+      Archivos := Tlist.Create;
+    Archivos.Add(result);
+  except
+    result := nil;
+  end;
+end;
+//obtener la cabecera
+function gcArchivo_(f:TFileStream):CabeceraArchivo;
+var
+  ppos:integer;
+begin
+  ppos := f.Position;
+  try
+    if ppos < sizeof(result) then //nunca dejar el archivo al comienzo real
+      ppos := sizeof(result);
+    f.Seek(0,soFromBeginning);
+    f.Read(result,sizeof(result));
+  finally
+    f.Seek(ppos,soFromBeginning);
+  end;
+end;
+//escribir la cabecera
+procedure scArchivo_(f:TFileStream;cabecera:CabeceraArchivo);
+var
+  ppos:integer;
+begin
+  ppos := f.Position;
+  try
+    f.Seek(0,soFromBeginning);
+    f.Write(cabecera,sizeof(cabecera));
+  finally
+    f.Seek(ppos,soFromBeginning);
+  end;
+end;
+//obtener la posición dentro del archivo, medida en registros
+function posArchivo_(f:TFileStream):integer;
+var
+  cabecera:CabeceraArchivo;
+  ppos,len:integer;
+begin
+  cabecera := gcArchivo_(f);
+  if cabecera.tamreg = 0 then begin //dado que los registros no tienen tamaño fijo, tengo que recorrer el archivo para determinar la posición
+    ppos := f.Position;
+    try
+      f.Seek(sizeof(cabecera),soFromBeginning);
+      result := 1;
+      while f.Position <> ppos do begin
+        f.Read(len,sizeof(len));
+        f.Seek(len,soFromCurrent);
+        Inc(result);
+      end;
+    finally
+      f.Seek(ppos,soFromBeginning);
+    end;
+  end else
+   result := (f.Position - sizeof(cabecera)) div cabecera.tamreg;
+end;
+//calcular longitud real de una estructura
+function calcTamReg_(P:Pointer;aType:TPSTypeRec;actual:boolean = True):integer;
+var
+  i,len: Longint;
+begin
+  try
+    //una estructura no debería contener un arreglo indeterminado ni una lista, por lo cual el único caso especial es otra estructura
+    if aType.BaseType = btRecord then with TPSTypeRec_Record(aType) do begin
+      result := 0;
+      for i := 0 to FieldTypes.Count -1 do begin
+        len := calcTamReg_(Pointer(IPointer(P) + integer(RealFieldOffsets[i])),FieldTypes[i],actual);
+        if (len=0) and not actual then
+          raise Exception.Create('tamaño variable');
+        result := result + len;
+      end;
+    end else if aType.BaseType = btString then begin
+      if not actual then
+        raise Exception.Create('tamaño variable');
+      result := Length(tbtString(P^)) + sizeof(integer);
+    end else
+      result := aType.RealSize;
+  except //la única excepción que es  manejable es la disparada cuando se está determinando el tamaño teórico
+    if not actual then
+      result := 0
+    else
+      raise;
+  end;
+end;
+//copia un registro a un buffer lineal
+function copiarEstBuf_(buffer:Pointer;P:Pointer;aType:TPSTypeRec):integer;
+var
+  len, i: Longint;
+begin
+  result := 0;
+  //una estructura no debería contener un arreglo indeterminado ni una lista, por lo cual el único caso especial es otra estructura
+  if aType.BaseType = btRecord then with TPSTypeRec_Record(aType) do begin
+    for i := 0 to FieldTypes.Count -1 do begin
+      len := copiarEstBuf_(buffer,Pointer(integer(P) + integer(RealFieldOffsets[i])),FieldTypes[i]);
+      buffer := Pointer(integer(buffer) + len);
+      result := result + len;
+    end;
+  end else if aType.BaseType = btString then begin
+    result := Length(tbtString(P^));
+    Move(result,buffer^,sizeof(result));
+    Move(Pointer(tbtString(P^))^,Pointer(integer(buffer)+sizeof(result))^,result);
+  end else begin
+    result := aType.RealSize;
+    Move(P^,buffer^,result);
+  end;
+end;
+//copia un buffer lineal a un registro
+function copiarBufEst_(buffer:Pointer;P:Pointer;aType:TPSTypeRec):integer;
+var
+  len, i: Longint;
+begin
+  result := 0;
+  //una estructura no debería contener un arreglo indeterminado ni una lista, por lo cual el único caso especial es otra estructura
+  if aType.BaseType = btRecord then with TPSTypeRec_Record(aType) do begin
+    for i := 0 to FieldTypes.Count -1 do begin
+      len := copiarBufEst_(buffer,Pointer(integer(P) + integer(RealFieldOffsets[i])),FieldTypes[i]);
+      buffer := Pointer(integer(buffer) + len);
+      result := result + len;
+    end;
+  end else if aType.BaseType = btString then begin
+    Move(buffer^,result,sizeof(result));
+    SetLength(tbtString(P^),result);
+    Move(Pointer(integer(buffer)+sizeof(result))^,Pointer(tbtString(P^))^,result);
+  end else begin
+    result := aType.RealSize;
+    Move(buffer^,P^,result);
+  end;
+end;
+
+//funcion CrearArchivo(cadena nombre)archivo resultado
+function crearArchivo_(Caller: TPSExec; p: TPSExternalProcRec; Global, Stack: TPSStack): Boolean;
+var
+  nm:string;
+  arr: TPSVariantIFC;
+begin
+  arr:=NewTPSVariantIFC(Stack[Stack.Count-1],true);
+  Result := arr.aType.BaseType = btClass;
+  if Result then begin
+    nm:=Stack.GetString(-2);
+    if not FileExists(nm) then try
+      Stack.SetClass(-1,cArchivo_(nm,fmCreate));
+    except
+      Result := False;
+    end else
+      Stack.SetClass(-1,nil);
+  end;
+end;
+
+//funcion EscribirArchivo(archivo porRef arch; constante x)entero resultado
+function escribirArchivo_(Caller: TPSExec; p: TPSExternalProcRec; Global, Stack: TPSStack): Boolean;
+var
+  f:TFileStream;
+  data:string;
+  len:integer;
+  arr: TPSVariantIFC;
+  cabecera:CabeceraArchivo;
+begin
+  //-1 resultado, -2 archivo, -3 x
+  arr:=NewTPSVariantIFC(Stack[Stack.Count-2],true);
+  Result := arr.aType.BaseType = btClass;
+  if Result then begin
+    f := TFileStream(Stack.GetClass(-2));
+    if not Assigned(f) then
+      Stack.SetInt(-1,0)
+    else begin
+      arr:=NewTPSVariantIFC(Stack[Stack.Count-3],true);
+      if f.Size = 0 then begin //primera escritura en el archivo determina el tamaño de registro y escribe la cabecera
+        cabecera.cantidad := 0;
+        cabecera.tipo := arr.aType.BaseType;
+        cabecera.tamreg := 0;
+        case cabecera.tipo of
+          btChar,btU8,btS8:cabecera.tamreg := 1;
+          btU16,btS16:cabecera.tamreg := 2;
+          btU32,btS32:cabecera.tamreg := 4;
+          btSingle,btDouble,btExtended,btCurrency: cabecera.tamreg := 8;
+          btRecord: cabecera.tamreg := calcTamReg_(arr.Dta,arr.aType,false);
+        end;
+        scArchivo_(f,cabecera);//crear la cabecera
+        f.Seek(sizeof(cabecera),soFromBeginning);
+      end else
+        cabecera := gcArchivo_(f);
+      Inc(cabecera.cantidad);
+      if cabecera.tamreg > 0 then begin
+        if cabecera.tipo = btRecord then begin
+          SetLength(data,cabecera.tamreg);
+          copiarEstBuf_(Pointer(data),arr.Dta,arr.aType);
+          f.Write(Pointer(data)^,cabecera.tamreg);
+        end else
+          f.Write(arr.Dta^,cabecera.tamreg);
+      end else if cabecera.tipo = btString then begin
+        data := Stack.GetString(-3);
+        len := Length(data);
+        f.Write(len,sizeof(len));
+        f.Write(Pointer(data)^,len);
+      end else if cabecera.tipo = btRecord then begin
+        len := calcTamReg_(arr.Dta,arr.aType);
+        f.Write(len,sizeof(len));
+        SetLength(data,len);
+        copiarEstBuf_(Pointer(data),arr.Dta,arr.aType);
+        f.Write(Pointer(data)^,len);
+      end else
+        Result:=false;
+      scArchivo_(f,cabecera);
+      Stack.SetInt(-1,posArchivo_(f));
+    end;
+  end;
+end;
+
+//funcion LeerArchivo(archivo porRef arch;variable x)entero resultado
+function leerArchivo_(Caller: TPSExec; p: TPSExternalProcRec; Global, Stack: TPSStack): Boolean;
+var
+  f:TFileStream;
+  data:string;
+  len:integer;
+  arr: TPSVariantIFC;
+  cabecera:CabeceraArchivo;
+begin
+  //-1 resultado, -2 archivo, -3 x
+  arr:=NewTPSVariantIFC(Stack[Stack.Count-2],true);
+  Result := arr.aType.BaseType = btClass;
+  if Result then begin
+    f := TFileStream(Stack.GetClass(-2));
+    if not Assigned(f) or (f.Position = f.Size) then
+      Stack.SetInt(-1,0)
+    else begin
+      arr:=NewTPSVariantIFC(Stack[Stack.Count-3],true);
+      cabecera := gcArchivo_(f);
+      if cabecera.tamreg > 0 then begin
+        if cabecera.tipo = btRecord then begin
+          SetLength(data,cabecera.tamreg);
+          f.REad(Pointer(data)^,cabecera.tamreg);
+          copiarBufEst_(Pointer(data),arr.Dta,arr.aType);
+        end else
+          f.Read(arr.Dta^,cabecera.tamreg);
+      end else if cabecera.tipo = btString then begin
+        f.Read(len,sizeof(len));
+        SetLength(tbtString(arr.Dta^),len);
+        f.Read(Pointer(tbtString(arr.Dta^))^,len);
+      end else if cabecera.tipo = btRecord then begin
+        f.Read(len,sizeof(len));
+        SetLength(data,len);
+        f.Read(Pointer(data)^,len);
+        copiarBufEst_(Pointer(data),arr.Dta,arr.aType);
+      end else
+        Result:=false;
+      Stack.SetInt(-1,posArchivo_(f));
+    end;
+  end;
+end;
+
+//funcion TamañoArchivo(archivo arch)entero resultado
+function tamArchivo_(Caller: TPSExec; p: TPSExternalProcRec; Global, Stack: TPSStack): Boolean;
+var
+  f:TFileStream;
+  ppos:integer;
+  arr: TPSVariantIFC;
+begin
+  arr:=NewTPSVariantIFC(Stack[Stack.Count-2],true);
+  Result := arr.aType.BaseType = btClass;
+  if Result then begin
+    f := TFileStream(Stack.GetClass(-2));
+    if not Assigned(f) or (f.Size = 0) then
+      Stack.SetInt(-1,-1)
+    else begin
+      ppos := f.Position;
+      try
+        f.Seek(0,soFromEnd);
+        Stack.SetInt(-1,posArchivo_(f) - 1);//al final se encuentra en la posición de lo que se va a escribir, y el tamaño es uno menos
+      finally
+        f.Seek(ppos,soFromBeginning);
+      end;
+    end;
+  end;
+end;
+
+//funcion AbrirArchivo(inmutable nombre)archivo resultado
+function abrirArchivo_(Caller: TPSExec; p: TPSExternalProcRec; Global, Stack: TPSStack): Boolean;
+var
+  nm:string;
+  arr: TPSVariantIFC;
+begin
+  arr:=NewTPSVariantIFC(Stack[Stack.Count-1],true);
+  Result := arr.aType.BaseType = btClass;
+  if Result then begin
+    nm:=Stack.GetString(-2);
+    if FileExists(nm) then try
+      Stack.SetClass(-1,cArchivo_(nm,fmOpenReadWrite));
+    except
+      Result := False;
+    end else
+      Stack.SetClass(-1,nil);
+  end;
+end;
+
+//funcion ValidoArchivo(archivo porRef arch)logico resultado
+function validoArchivo_(Caller: TPSExec; p: TPSExternalProcRec; Global, Stack: TPSStack): Boolean;
+var
+  f:TFileStream;
+  arr: TPSVariantIFC;
+begin
+  arr:=NewTPSVariantIFC(Stack[Stack.Count-2],true);
+  Result := arr.aType.BaseType = btClass;
+  if Result then begin
+    f := TFileStream(Stack.GetClass(-2));
+    Stack.SetBool(-1,Assigned(f));
+  end;
+end;
+
+//procedimiento VaciarArchivo(archivo porRef arch)
+function vaciarArchivo_(Caller: TPSExec; p: TPSExternalProcRec; Global, Stack: TPSStack): Boolean;
+var
+  f:TFileStream;
+  arr: TPSVariantIFC;
+begin
+  arr:=NewTPSVariantIFC(Stack[Stack.Count-1],true);
+  Result := arr.aType.BaseType = btClass;
+  if Result then begin
+    f := TFileStream(Stack.GetClass(-1));
+    if Assigned(f) and (f.Size > 0) then
+      f.Size := 0;
+  end;
+end;
+
+//procedimiento CerrarArchivo(archivo porRef arch)
+function cerrarArchivo_(Caller: TPSExec; p: TPSExternalProcRec; Global, Stack: TPSStack): Boolean;
+var
+  f:TFileStream;
+  arr: TPSVariantIFC;
+begin
+  arr:=NewTPSVariantIFC(Stack[Stack.Count-1],true);
+  Result := arr.aType.BaseType = btClass;
+  if Result then begin
+    f := TFileStream(Stack.GetClass(-1));
+    if Assigned(f) then begin
+      Archivos.Remove(f);
+      f.free;
+      f := nil;
+    end;
+    Stack.SetClass(-1,f);
+  end;
+end;
+
+//funcion PosicionarArchivo(archivo porRef arch;entero posicion)entero resultado
+function posicionarArchivo_(Caller: TPSExec; p: TPSExternalProcRec; Global, Stack: TPSStack): Boolean;
+var
+  f:TFileStream;
+  arr: TPSVariantIFC;
+  cabecera:CabeceraArchivo;
+  npos,dpos,len:integer;
+begin
+  arr:=NewTPSVariantIFC(Stack[Stack.Count-2],true);
+  Result := arr.aType.BaseType = btClass;
+  if Result then begin
+    f := TFileStream(Stack.GetClass(-2));
+    dpos := Stack.GetInt(-3);
+    //coloco el archivo lo más cerca posible de la posición deseada
+    if Assigned(f) and (f.Size > 0) then begin
+      cabecera := gcArchivo_(f);
+      if cabecera.tamreg = 0 then begin //dado que los registros no tienen tamaño fijo, tengo que recorrer el archivo para determinar la posición
+        f.Seek(sizeof(cabecera),soFromBeginning);
+        npos := 1;
+        while (npos < dpos) and (f.Position < f.Size) do begin
+          f.Read(len,sizeof(len));
+          f.Seek(len,soFromCurrent);
+          npos := npos + 1;
+        end;
+      end else
+        npos := (f.Seek(sizeof(cabecera) + dpos * cabecera.tamreg,soFromBeginning) - sizeof(cabecera)) div cabecera.tamreg;
+      Stack.SetInt(-1,npos);
+    end else
+      Stack.SetInt(-1,0);
+  end;
+end;
+
+//funcion PosicionArchivo(archivo porRef arch)entero resultado
+function posicionArchivo_(Caller: TPSExec; p: TPSExternalProcRec; Global, Stack: TPSStack): Boolean;
+var
+  f:TFileStream;
+  arr: TPSVariantIFC;
+begin
+  arr:=NewTPSVariantIFC(Stack[Stack.Count-2],true);
+  Result := arr.aType.BaseType = btClass;
+  if Result then begin
+    f := TFileStream(Stack.GetClass(-2));
+    Stack.SetInt(-1,posArchivo_(f));
+  end;
+end;
+
 procedure TPSExec.RegisterStandardProcs;
 begin
   RegisterFunctionName('!' + Uppercase(CS_NOTIFICATIONVARIANTSET), NVarProc, Pointer(0), nil);
@@ -9785,6 +10213,17 @@ begin
   RegisterFunctionName(Uppercase(CS_Last),Ultimo_,nil,nil);
   RegisterFunctionName(Uppercase(CS_RemoveFirst),menosPrimero_,nil,nil);
   RegisterFunctionName(Uppercase(CS_RemoveLast),menosUltimo_,nil,nil);
+  (* implementación de los subprogramas para manipulación de archivos *)
+  RegisterFunctionName(Uppercase(CS_CreateFile),crearArchivo_,nil,nil);
+  RegisterFunctionName(Uppercase(CS_WriteFile),escribirArchivo_,nil,nil);
+  RegisterFunctionName(Uppercase(CS_ReadFile),leerArchivo_,nil,nil);
+  RegisterFunctionName(Uppercase(CS_FileSize),tamArchivo_,nil,nil);
+  RegisterFunctionName(UpperCase(CS_OpenFile),abrirArchivo_,nil,nil);
+  RegisterFunctionName(Uppercase(CS_ValidFile),validoArchivo_,nil,nil);
+  RegisterFunctionName(Uppercase(CS_EmptyFile),vaciarArchivo_,nil,nil);
+  RegisterFunctionName(Uppercase(CS_CloseFile),cerrarArchivo_,nil,nil);
+  RegisterFunctionName(Uppercase(CS_SeekFile),posicionarArchivo_,nil,nil);
+  RegisterFunctionName(Uppercase(CS_FilePos),posicionArchivo_,nil,nil);
 end;
 
 

@@ -94,7 +94,7 @@ type
     Run: LongInt;
     fStringLen: Integer;
     fToIdent: PChar;
-    fIdentFuncTable: array[0..255] of TIdentFuncTableFunc;
+    fIdentFuncTable: array[0..1023] of TIdentFuncTableFunc;
     fTokenPos: Integer;
     FTokenID: TtkTokenKind;
     fStringAttri: TSynHighlighterAttributes;
@@ -201,7 +201,7 @@ end;
 var
   Identifiers: array[#0..#255] of ByteBool;
   mHashTable: array[#0..#255] of Integer;
-  ResWords:array[0..255] of string;
+  ResWords:array[0..1023] of string;
 
 procedure MakeIdentTable;
 var
@@ -465,6 +465,17 @@ begin
   SetInnerHash(CS_Int);
   SetInnerHash(CS_TryEncodeDate);
   SetInnerHash(CS_TryEncodeTime);
+  {archivos}
+  SetInnerHash(CS_OpenFile);
+  SetInnerHash(CS_CreateFile);
+  SetInnerHash(CS_CloseFile);
+  SetInnerHash(CS_WriteFile);
+  SetInnerHash(CS_ReadFile);
+  SetInnerHash(CS_FileSize);
+  SetInnerHash(CS_ValidFile);
+  SetInnerHash(CS_EmptyFile);
+  SetInnerHash(CS_SeekFile);
+  SetInnerHash(CS_FilePos);
 end;
 
 function TSynSeudocSyn.KeyHash(ToHash: PChar): Integer;
@@ -477,7 +488,7 @@ begin
   end;
   if ToHash^ in ['0'..'9'] then inc(ToHash);
   fStringLen := ToHash - fToIdent;
-  if result > 255 then
+  if result > 1023 then
     result := 0;
 end; { KeyHash }
 

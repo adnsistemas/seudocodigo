@@ -10,12 +10,23 @@ uses
   uPSComponent_Forms, uPSComponent_Default, uPSComponent_Controls, uPSComponent,
   uPSDebugger, uPSComponent_DB, StdActns, ActnList,
   ImgList, SynHighlighterSeudoc, SynEditMiscClasses, SynEditSearch,
-  SynCompletionProposal, UseHTMLHelp;
+  SynCompletionProposal, langdef, UseHTMLHelp;
 
 resourcestring
   CS_SinNombre = 'Sin nombre';
   RS_CANT_FIND_HELP = 'No se puede encontrar el archivo de ayuda %s';
-  
+  RS_EXECUTING = 'Ejecutando..';
+  RS_EXEC_SUCCESS = 'Ejecución existosa';
+  RS_EXEC_ERROR = 'Error de ejecución: %1s en [%2d:%3d]';
+  RS_STEP_INTO = 'Ejecutando línea';
+  RS_STEP_OVER = 'Ejecutando instrucción';
+  RS_STOPPING = 'Deteniendo..';
+  RS_COMPILE_SUCCESS = 'Compilación exitosa';
+  RS_CONFIRM_SAVE = 'No ha guardado el archivo "%s", ¿guardar ahora?';
+  RS_DATE_FORMAT = 'dd/mm/yyyy';
+  RS_UNAVAILABLE = 'No disponibles';
+  RS_EXAMPLE_CODE = CS_Program + ' ' + CS_Example + CS_iend + #13#10 + CS_begin + #13#10 + CS_Program_end ;
+
 type
   Teditor = class(TForm)
     ce: TPSScriptDebugger;
@@ -79,7 +90,6 @@ type
     SynEditSearch1: TSynEditSearch;
     N5: TMenuItem;
     Localizar1: TMenuItem;
-    SynCompletionProposal1: TSynCompletionProposal;
     Cortarlneaslargas1: TMenuItem;
     AWordWrap: TAction;
     AETodo: TAction;
@@ -106,6 +116,9 @@ type
     PopupMenu4: TPopupMenu;
     Limpiar1: TMenuItem;
     ALimpiarMensajes: TAction;
+    ABuscar: TAction;
+    ADetener: TAction;
+    Detener1: TMenuItem;
     procedure edSpecialLineColors(Sender: TObject; Line: Integer;
       var Special: Boolean; var FG, BG: TColor);
     procedure BreakPointMenuClick(Sender: TObject);
@@ -158,7 +171,6 @@ type
     procedure MostrarOcultarnmerosdelnea1Click(Sender: TObject);
     procedure edKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
-    procedure Localizar1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure Seudocdigo1Click(Sender: TObject);
     procedure AWordWrapUpdate(Sender: TObject);
@@ -186,6 +198,8 @@ type
     procedure WatchPanelResize(Sender: TObject);
     procedure ALimpiarMensajesUpdate(Sender: TObject);
     procedure ALimpiarMensajesExecute(Sender: TObject);
+    procedure ABuscarExecute(Sender: TObject);
+    procedure ADetenerExecute(Sender: TObject);
   private
     function getSPCount: integer;
     function GetCurrentEd: TSynEdit;
@@ -261,7 +275,7 @@ var
 
 implementation
 
-uses langdef, ide_evaluador, SynEditTypes, ide_about,
+uses ide_evaluador, SynEditTypes, ide_about,
   id_config, ide_search, ide_monitor;
 
 type
@@ -384,7 +398,7 @@ begin
     Messages.Items.Add(ce.CompilerMessages[i].MessageToString);
   end;
   if Result then
-    Messages.Items.Add('Compilación exitosa');
+    Messages.Items.Add(RS_COMPILE_SUCCESS);
 end;
 
 procedure Teditor.ceIdle(Sender: TObject);
@@ -406,7 +420,7 @@ begin
   VMonitorForm.BeforeInput := ShowDockedMonitor;
   ce.SetVarToInstance(CS_SELF, Self);
   ce.SetVarToInstance(CS_APPLICATION, Application);
-  StatusBar1.Panels[1].Text := 'Ejecutando..';
+  StatusBar1.Panels[1].Text := RS_EXECUTING;
 end;
 
 procedure Teditor.ceAfterExecute(Sender: TPSScript);
@@ -427,7 +441,7 @@ begin
   VMonitorForm.BeforeInput := ShowDockedMonitor;
   if CE.Execute then
   begin
-    Messages.Items.Add('Ejecución existosa');
+    Messages.Items.Add(RS_EXEC_SUCCESS);
     if VMonitorForm.Visible then begin
       if FormConfiguracion.OcultarMonitor then begin
         if not Assigned(VMonitorForm.HostDockSite) then
@@ -439,7 +453,7 @@ begin
     Result := True;
   end else
   begin
-    messages.Items.Add('Error de ejecución: '+ce.ExecErrorToString + ' en ['+IntToStr(ce.ExecErrorRow)+':'+IntToStr(ce.ExecErrorCol)+']');//bytecode pos:'+inttostr(ce.ExecErrorProcNo)+':'+inttostr(ce.ExecErrorByteCodePosition));
+    messages.Items.Add(Format(RS_EXEC_ERROR,[ce.ExecErrorToString,ce.ExecErrorRow,ce.ExecErrorCol]));//bytecode pos:'+inttostr(ce.ExecErrorProcNo)+':'+inttostr(ce.ExecErrorByteCodePosition));
     Result := False;
   end;
 end;
@@ -479,9 +493,13 @@ begin
 end;
 
 procedure Teditor.Open1Click(Sender: TObject);
+var
+  i:integer;
 begin
-  if OpenDialog1.Execute then
-    CreateTab(OpenDialog1.FileName);
+  if OpenDialog1.Execute then begin
+    for i:=0 to OpenDialog1.Files.Count -1 do
+      CreateTab(OpenDialog1.Files[i]);
+  end;
 end;
 
 procedure Teditor.Save1Click(Sender: TObject);
@@ -503,7 +521,7 @@ begin
   if TSynEdit(page.Controls[0]).Modified then
   begin
     fd := TFileRecord(FFiles.Objects[page.TabIndex]);
-    case MessageDlg('No ha guardado el archivo "' + fd.NombreReal + '", ¿guardar ahora?', mtConfirmation, mbYesNoCancel, 0) of
+    case MessageDlg(Format(RS_CONFIRM_SAVE,[fd.NombreReal]), mtConfirmation, mbYesNoCancel, 0) of
       idYes:
         begin
           SaveFile(page);
@@ -606,7 +624,7 @@ begin
   else
     ce.SetBreakPoint(sFile, Line);
   if Assigned(CurrentEd) then
-    Currented.Refresh;          
+    Currented.Refresh;
   if Assigned(Mark) then
     Mark.Visible := ce.HasBreakPoint(sFile, Line);
 end;
@@ -630,26 +648,10 @@ begin
 end;
 
 procedure Teditor.FormCreate(Sender: TObject);
-  function replaceYA(formato:string):string;
-  var
-    i:integer;
-  begin
-    repeat
-      i := Pos('y',formato);
-      if i>0 then
-        formato[i] := 'a'
-      else begin
-        i := Pos('Y',formato);
-        if i>0 then
-          formato[i] := 'A';
-      end;
-    until i < 1;
-    result := formato;
-  end;
 begin
   FFirstShow := True;
-  if ShortDateFormat <> 'dd/mm/yyyy' then
-    ShortDateFormat := 'dd/mm/yyyy';
+  if ShortDateFormat <> RS_DATE_FORMAT then
+    ShortDateFormat := RS_DATE_FORMAT;
   FWatches := TStringlist.Create;
   FFiles := TStringList.Create;
   with FWatches as TStringList do begin
@@ -780,7 +782,7 @@ begin
       MemoLocales.Lines.Add(pv[i] + ': ' + GetInspectData(ce.Exec.GetProcVar(i)));
   end;
   if MemoLocales.Lines.Count = 0 then
-    MemoLocales.Lines.Add('No disponibles');
+    MemoLocales.Lines.Add(RS_UNAVAILABLE);
 end;
 
 function Teditor.GetInspectData(pv:PIfVariant):string;
@@ -824,7 +826,7 @@ begin
       MemoGlobales.Lines.Add(pv[i] + ': ' + GetInspectData(ce.Exec.GetGlobalVar(i)));
   end;
   if MemoGlobales.Lines.Count = 0 then
-    MemoGlobales.Lines.Add('No disponibles');
+    MemoGlobales.Lines.Add(RS_UNAVAILABLE);
 end;
 
 procedure Teditor.ListBox1DblClick(Sender: TObject);
@@ -872,7 +874,7 @@ begin
       SetActivePage(msg.ModuleName)
     else
       SetActivePage(ce.MainFileName);
-    lpos := msg.Row;//Currented.LineToRow(msg.Row);
+    lpos := msg.Row;
     Currented.InvalidateLine(lpos);
   end;
   i := Messages.ItemIndex;
@@ -886,7 +888,7 @@ begin
       SetActivePage(msg.ModuleName)
     else
       SetActivePage(ce.MainFileName);
-    lpos := msg.Row;//Currented.LineToRow(msg.Row);
+    lpos := msg.Row;
     if oldml = lpos then begin
       Currented.SetFocus;
     end else begin
@@ -1297,7 +1299,7 @@ begin
     edit.WantTabs := ed.WantTabs;
     if FileName = '' then begin
       FileName := SinNombre;
-      edit.Lines.Text := CS_Program + ' ' + CS_Example + CS_iend + #13#10 + CS_begin + #13#10 + CS_Program_end + '.';
+      edit.Lines.Text := RS_EXAMPLE_CODE;
       edit.Modified := False;
     end else begin
       edit.Lines.LoadFromFile(FileName);
@@ -1309,6 +1311,7 @@ begin
     FFiles.AddObject(fd.NombreReal,fd);
     PageControl.ActivePage := page;
     ShowFileName;
+    edit.SetFocus;
   except // si algo sale mal, eliminar la página
     page.Free;
   end;
@@ -1491,11 +1494,6 @@ begin
   end;
 end;
 
-procedure Teditor.Localizar1Click(Sender: TObject);
-begin
-  LocalizarForm.Show;
-end;
-
 procedure Teditor.FormShow(Sender: TObject);
 var
   i:integer;
@@ -1515,8 +1513,8 @@ begin
     finally
       arcs.Free;
     end;
-    if ParamCount > 1 then begin
-      for i:=1 to ParamCount - 1 do
+    if ParamCount > 0 then begin
+      for i:=1 to ParamCount do
         CreateTab(ParamStr(i));
     end;
   end;
@@ -1664,15 +1662,16 @@ begin
     FResume := True
   else if Compile then
     Execute;
+  StatusBar1.Panels[1].Text := RS_EXECUTING;
 end;
 
 procedure Teditor.AELineaExecute(Sender: TObject);
 begin
   with Sender as TAction do begin
     if Tag = 0 then
-      StatusBar1.Panels[1].Text := 'Ejecutando línea'
+      StatusBar1.Panels[1].Text := RS_STEP_INTO
     else
-      StatusBar1.Panels[1].Text := 'Ejecutando instrucción';
+      StatusBar1.Panels[1].Text := RS_STEP_OVER;
     if ce.Exec.Status = isRunning then begin
       if Tag = 0 then
         ce.StepOver
@@ -1803,6 +1802,18 @@ end;
 procedure Teditor.ALimpiarMensajesExecute(Sender: TObject);
 begin
   messages.Clear;
+end;
+
+procedure Teditor.ABuscarExecute(Sender: TObject);
+begin
+  LocalizarForm.Show;
+end;
+
+procedure Teditor.ADetenerExecute(Sender: TObject);
+begin
+  ce.Pause;
+  ce.StepOver;
+  StatusBar1.Panels[1].Text := RS_STOPPING;
 end;
 
 end.
