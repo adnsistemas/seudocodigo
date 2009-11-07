@@ -1102,7 +1102,7 @@ type
       btSingle,btDouble,btExtended,btCurrency:(vreal:real);//real o moneda
       btChar:(vcaracter:char);//caracter
       btString:(vcadena:PChar);//cadena
-      btRecord:(vestructura:Pointer);//estructura
+      btRecord:(ename:PChar;vtam:integer;vestructura:Pointer);//estructura
       btClass:(vlista:TList);//lista
   end;
   PElementoLista = ^ElementoLista;
@@ -9226,566 +9226,7 @@ begin
     Result := DoRead_(Caller,Stack,-1);
 end;
 
-(* manipulación de listas
-  Dado que las listas se implementan como instancias de TList, en forma transparente, en
-  casi todos los subprogramas de manipulación se verifica que se haya instanciado ya la
-  lista, sino se la instancia.
-  Dado que este manejo es transparente, se guardan todas las instancias de listas para su
-  destrucción al finalizar la ejecución del algoritmo.
-*)
-var
-  Listas:TList; //lista para almacenar las instancias de listas creadas durante la ejecución y que deben destruirse al finalizar
-
-{verifica que la lista esté instanciada y de no ser así la instancia y guarda una referencia
-en Listas, para su posterior destrucción }
-procedure VerificarLista(Stack:TPSStack;posicion:integer);
-var
-  l:TList;
-begin
-  l := TList(Stack.GetClass(posicion));
-  if not Assigned(l) then begin
-    l:= TList.Create;
-    if not Assigned(Listas) then
-      Listas := TList.Create;
-    Listas.Add(l);
-    Stack.SetClass(posicion,l);
-  end;
-end;
-
-function doShow_(Caller:TPSExec;e:ElementoLista):boolean;
-var
-  i:integer;
-begin
-  result := True;
-  case e.tipo of
-    btU8         : Caller.OnShow(Caller,e.tipo,e.vlogico);     //Boolean
-    btS8,btU16,btS16,btU32,btS32: Caller.OnShow(Caller,e.tipo,e.ventero);
-    btString     : Caller.OnShow(Caller,e.tipo,e.vcadena);
-    btSingle,btDouble,btExtended,btCurrency: Caller.OnShow(Caller,e.tipo,e.vreal);
-    btChar       : Caller.OnShow(Caller,e.tipo,e.vcaracter);
-    btClass: begin
-        if Assigned(e.vlista) then
-          i := e.vlista.Count
-        else
-          i := 0;
-        Caller.OnShow(Caller,e.tipo,i);
-        if Assigned(e.vlista) then begin
-          for i:=0 to e.vlista.Count-1 do begin
-            doShow_(Caller,PElementoLista(e.vlista[i])^);
-          end;
-        end;
-      end;
-    else Result:=false;
-  end;
-end;
-
-function Show_(Caller: TPSExec; p: TPSExternalProcRec; Global, Stack: TPSStack): Boolean;
-var
-  arr: TPSVariantIFC;
-  e:ElementoLista;
-begin
-  if not Assigned(Caller.OnShow) then
-    Result := False
-  else begin
-    Result:=true;
-    arr:=NewTPSVariantIFC(Stack[Stack.Count-1],true);
-    e.tipo:=arr.aType.BaseType;
-    case arr.aType.BaseType of
-      btU8         : e.vlogico := Stack.GetBool(-1);
-      btS8,btU16,btS16,btU32,btS32: e.ventero := Stack.GetInt(-1);
-      btString     : e.vcadena := PChar(Stack.GetString(-1));
-      btSingle,btDouble,btExtended,btCurrency: e.vreal := Stack.GetReal(-1);
-      btChar       : e.vcaracter := Stack.GetString(-1)[1];
-      btClass: begin //lista
-          VerificarLista(Stack,-1);
-          e.vlista := TList(Stack.GetClass(-1));
-        end;
-      else Result:=false;
-    end;
-    if Result then
-      Result := DoShow_(Caller,e);
-  end;
-end;
-
-function ShowAndRead_(Caller: TPSExec; p: TPSExternalProcRec; Global, Stack: TPSStack): Boolean;
-begin
-  if Assigned(Caller.FOnShowRead) then
-    Caller.FOnShowRead(Caller,Stack.GetString(-1));
-  result := DoRead_(Caller,Stack,-2);
-end;
-
-
-function toString_(Caller: TPSExec; p: TPSExternalProcRec; Global, Stack: TPSStack): Boolean;
-var
-  arr: TPSVariantIFC;
-  s:string;
-begin
-  Result:=true;
-  arr:=NewTPSVariantIFC(Stack[Stack.Count-2],true);
-  case arr.aType.BaseType of
-    btU8         : begin
-      if Stack.GetBool(-2) then
-        s := CS_True
-      else
-        s := CS_False;     //Boolean
-      end;
-    btS8,btU16,btS16,btU32,btS32: s := IntToStr(Stack.GetInt(-2));//ShortInt
-    btString:s := Stack.GetString(-2);
-    btSingle,btDouble,btExtended: s := FloatToStr(Stack.GetReal(-2));
-    btChar       :  s := Stack.GetString(-2);
-    btCurrency   : s := FloatToStrF(Stack.GetCurrency(-2),ffCurrency,8,2);
-    else Result:=false;
-  end;
-  if Result then
-    Stack.SetString(-1,s);
-end;
-
-{libera todos los elementos de una lista (y la lista misma)}
-procedure EliminarLista(lst:TList);
-var
-  i:integer;
-  e:PElementoLista;
-begin
-  for i:=0 to lst.Count - 1 do begin
-      e := lst[i];
-      if e^.tipo = btString then
-        StrDispose(e^.vcadena)
-      else if e^.tipo = btClass then //liberar también
-        EliminarLista(e^.vlista);
-      Dispose(e);
-  end;
-  Listas.Remove(lst);
-  lst.Free;
-end;
-
-{realiza la liberación de todos los elementos de lista, y listas, almacenados en Listas}
-procedure LimpiarListas;
-begin
-  if Assigned(Listas) then begin
-    while Listas.Count > 0 do begin
-      EliminarLista(Listas.First); //tengo que hacerlo desde el principio, para no eliminar una lista que esté contenida en otra
-    end;
-    Listas.Free;
-    Listas:=nil;
-  end;
-end;
-
-{hace una copia exacta de una lista, incluidas las listas que esta incluye (valga la redundancia)}
-function CopiarLista_(lista:TList):TList;
-var
-  i:integer;
-  o,e:PElementoLista;
-begin
-  result := TList.Create;
-  Listas.Add(result);//si Listas no existe, algo está muy mal, ya que debería contener al menos la referencia a la lista que voy a copiar
-  for i:=0 to lista.Count - 1 do begin
-    o := lista[i];
-    new(e);
-    result.add(e);
-    e^.tipo := o^.tipo;
-    case e^.tipo of
-      btString: e^.vcadena := StrNew(o^.vcadena); //copio la cadena
-      btClass: begin//copio la lista
-        e^.vlista := o^.vlista;
-        if Assigned(e^.vlista) then
-          e^.vlista := CopiarLista_(e^.vlista);
-        end;
-      else //vreal es el de mayor tamaño físico
-        e^.vreal := o^.vreal;
-    end;
-  end;
-end;
-
-{funcion Agregar(lista porRef lst;inmutable x)entero resultado}
-function Agregar_(Caller: TPSExec; p: TPSExternalProcRec; Global, Stack: TPSStack): Boolean;
-var
-  arr: TPSVariantIFC;
-  l:TList;
-  s:string;
-  e:PElementoLista;
-begin
-  arr:=NewTPSVariantIFC(Stack[Stack.Count-2],true); //lista
-  Result := arr.aType.BaseType = btClass;
-  if Result then begin
-    verificarLista(Stack,-2); //asegurarse que la lista está instanciada
-    l := TList(Stack.GetClass(-2));
-    arr:=NewTPSVariantIFC(Stack[Stack.Count-3],true);
-    new(e);
-    e^.tipo := arr.aType.BaseType; //tipo del nuevo elemento
-    case arr.aType.BaseType of
-      btU8         : e^.vlogico:=Stack.GetBool(-3);
-      btS8,btU16,btS16,btU32,btS32 : e^.ventero:=Stack.GetInt(-3);
-      btString: begin //copio la cadena
-        s := Stack.GetString(-3);
-        e^.vcadena := StrNew(PChar(s));
-        end;
-      btChar     : begin
-        s := Stack.GetString(-3);
-        e^.vcaracter := s[1];
-        end;
-      btSingle,btDouble,btExtended,btCurrency   : e^.vreal:=Stack.GetReal(-3);
-      btClass: begin
-        {OJO!, si la lista que se está agregando, ya existe, debe copiarse, no agregarse
-        una referencia}
-        e^.vlista := TList(Stack.GetClass(-3));
-        if Assigned(e^.vlista) then
-          e^.vlista := CopiarLista_(e^.vlista);
-        end;
-      else Result:=false;
-    end;
-    Stack.SetInt(-1,l.Add(e) + 1); //las listas cuentan desde 1 a n, TList lo hace desde 0 a n-1
-  end;
-end;
-
-{ procedimiento Borrar(lista porRef lst;entero posicion) }
-function Borrar_(Caller: TPSExec; p: TPSExternalProcRec; Global, Stack: TPSStack): Boolean;
-var
-  arr: TPSVariantIFC;
-  l:TList;
-  index:integer;
-  e:PElementoLista;
-begin
-  arr:=NewTPSVariantIFC(Stack[Stack.Count-1],true);
-  Result := arr.aType.BaseType = btClass;
-  if Result then begin
-    VerificarLista(Stack,-1);
-    l := TList(Stack.GetClass(-1));
-    index := Stack.GetInt(-2) - 1; //posición a borrar, en TList va desde 0
-    if (index >= 0) and (index < l.Count) then begin
-      e := l.Items[index];
-      {si es una cadena, tengo que liberar la memoria previamente reservada. Si es una
-      lista, la elimino ahora por eficiencia, si no lo hago va a eliminarse al final
-      de la ejecución, pero si el algoritmo hace un uso intensivo de las listas, esto
-      puede hacerlo explotar}
-      if e^.tipo = btString then
-        StrDispose(e^.vcadena)
-      else if e^.tipo = btClass then
-        EliminarLista(e^.vlista);
-      Dispose(e);
-      l.Delete(index);
-    end;
-  end;
-end;
-
-{funcion Cantidad(lista lst)entero resultado}
-function Cantidad_(Caller: TPSExec; p: TPSExternalProcRec; Global, Stack: TPSStack): Boolean;
-var
-  arr: TPSVariantIFC;
-  l:TList;
-begin
-  arr:=NewTPSVariantIFC(Stack[Stack.Count-2],true);
-  Result := arr.aType.BaseType = btClass;
-  if Result then begin
-    l := TList(Stack.GetClass(-2));
-    {no necesito crear la lista, si no está creada tiene 0 elementos}
-    if not Assigned(l) then
-      Stack.SetInt(-1,0)
-    else
-      Stack.SetInt(-1,l.Count);
-  end;
-end;
-
-{ funcion MismoTipo(lista lst;inmutable x;entero posicion)logico resultado }
-function MismoTipo_(Caller: TPSExec; p: TPSExternalProcRec; Global, Stack: TPSStack): Boolean;
-var
-  arr: TPSVariantIFC;
-  l:TList;
-  index:integer;
-  e:PElementoLista;
-begin
-  arr:=NewTPSVariantIFC(Stack[Stack.Count-2],true);
-  Result := arr.aType.BaseType = btClass;
-  if Result then begin
-    Stack.SetBool(-1,False); //supongo que no son del mismo tipo, de serlo cambio el resultado
-    l := TList(Stack.GetClass(-2));
-    if Assigned(l) then begin // no necesito que esté creada, si no lo está, no son del mismo tipo
-      index := Stack.GetInt(-4) - 1; //TList cuenta desde 0 y lista desde 1
-      if (index >= 0)and(index <l.Count) then begin
-        e := l[index];
-        arr:=NewTPSVariantIFC(Stack[Stack.Count-3],true);
-        if arr.aType.BaseType = e^.tipo then //lo hago de esta forma para evitar una invocación costosa innecesaria
-          Stack.SetBool(-1,True);
-      end;
-    end;
-  end;
-end;
-
-{ funcion queTipo(inmutable x)cadena resultado }
-function queTipo_(Caller: TPSExec; p: TPSExternalProcRec; Global, Stack: TPSStack): Boolean;
-var
-  arr: TPSVariantIFC;
-begin
-  arr:=NewTPSVariantIFC(Stack[Stack.Count-2],true);
-  Result := true;
-  case arr.aType.BaseType of
-    btU8: Stack.SetString(-1,CS_boolean);
-    btU16,btU32: Stack.SetString(-1,CS_cardinal);
-    btS8,btS16,btS32: Stack.SetString(-1,CS_integer);
-    btSingle,btDouble,btExtended: Stack.SetString(-1,CS_real);
-    btCurrency: Stack.SetString(-1,CS_currency);
-    btClass: Stack.SetString(-1,CS_list);
-    btString: Stack.SetString(-1,CS_string);
-    btChar: Stack.SetString(-1,CS_char);
-    else
-      Stack.SetString(-1,CS_unknown);
-  end;
-end;
-
-{ procedimiento Reemplazar(lista lst;inmutable x;entero posicion) }
-function Reemplazar_(Caller: TPSExec; p: TPSExternalProcRec; Global, Stack: TPSStack): Boolean;
-var
-  arr: TPSVariantIFC;
-  l:TList;
-  s:string;
-  index:integer;
-  e:PElementoLista;
-begin
-  arr:=NewTPSVariantIFC(Stack[Stack.Count-2],true);
-  Result := arr.aType.BaseType = btClass;
-  if Result then begin
-    l := TList(Stack.GetClass(-2));
-    if Assigned(l) then begin // no necesito que esté creada, si no lo está, no tengo nada que reemplazar
-      index := Stack.GetInt(-4) - 1; //TList cuenta desde 0 y lista desde 1
-      if (index >= 0)and(index <l.Count) then begin
-        e := l[index];
-        //antes de reemplazar, liberar el contenido, si corresponde
-        if e^.tipo = btString then
-          StrDispose(e^.vcadena)
-        else if e^.tipo = btClass then
-          EliminarLista(e^.vlista);
-        arr:=NewTPSVariantIFC(Stack[Stack.Count-3],true);
-        e^.tipo := arr.aType.BaseType; //tipo del nuevo elemento
-        case arr.aType.BaseType of
-          btU8         : e^.vlogico:=Stack.GetBool(-3);
-          btS8,btU16,btS16,btU32,btS32 : e^.ventero:=Stack.GetInt(-3);
-          btString: begin //copio la cadena
-            s := Stack.GetString(-3);
-            e^.vcadena := StrNew(PChar(s));
-            end;
-          btChar     : begin
-            s := Stack.GetString(-3);
-            e^.vcaracter := s[1];
-            end;
-          btSingle,btDouble,btExtended,btCurrency   : e^.vreal:=Stack.GetReal(-3);
-          btClass: begin
-            {OJO!, si la lista que se está agregando, ya existe, debe copiarse, no agregarse
-            una referencia}
-            e^.vlista := TList(Stack.GetClass(-3));
-            if Assigned(e^.vlista) then
-              e^.vlista := CopiarLista_(e^.vlista);
-            end;
-          else Result:=false;
-        end;
-      end;
-    end;
-  end;
-end;
-
-function DoGetElem_(Stack:TPSStack;Lista:TList;stackpos,lstpos:integer):boolean;
-var
-  arr: TPSVariantIFC;
-  e:PElementoLista;
-begin
-  result := True;
-  if Assigned(lista) and (lstpos >= 0)and(lstpos <lista.Count) then begin
-    e := lista[lstpos];
-    arr:=NewTPSVariantIFC(Stack[Stack.Count+stackpos],true);
-    if arr.aType.BaseType = e^.tipo then begin
-      case arr.aType.BaseType of
-        btU8         : Stack.SetBool(stackpos,e^.vlogico);
-        btS8,btU16,btS16,btU32,btS32 : Stack.SetInt(stackpos,e^.ventero);
-        btString: Stack.SetString(stackpos,e^.vcadena);
-        btChar     : Stack.SetString(stackpos,e^.vcaracter);
-        btSingle,btDouble,btExtended,btCurrency   : Stack.SetReal(stackpos,e^.vreal);
-        btClass: begin //copiar la lista, de forma que no se modifique el contenido de la lista 'por fuera'
-          if Assigned(e^.vlista) then
-            Stack.SetClass(stackpos,CopiarLista_(e^.vlista))
-          else
-            Stack.SetClass(stackpos,e^.vlista);
-          end;
-        else Result:=false;
-      end;
-    end;
-  end;
-end;
-
-{ procedimiento Elemento(lista porRef lst;porRef x;entero posicion) }
-function Elemento_(Caller: TPSExec; p: TPSExternalProcRec; Global, Stack: TPSStack): Boolean;
-var
-  arr: TPSVariantIFC;
-begin
-  arr:=NewTPSVariantIFC(Stack[Stack.Count-1],true);
-  Result := arr.aType.BaseType = btClass;
-  if Result then
-    result := DoGetElem_(Stack,TList(Stack.GetClass(-1)),-2,Stack.GetInt(-3) - 1);
-end;
-
-{ procedimiento Primero(lista lst;porRef x) }
-function Primero_(Caller: TPSExec; p: TPSExternalProcRec; Global, Stack: TPSStack): Boolean;
-var
-  arr: TPSVariantIFC;
-begin
-  arr:=NewTPSVariantIFC(Stack[Stack.Count-1],true);
-  Result := arr.aType.BaseType = btClass;
-  if Result then
-    result := DoGetElem_(Stack,TList(Stack.GetClass(-1)),-2,0);
-end;
-
-{ procedimiento Ultimo(lista lst;porRef x) }
-function Ultimo_(Caller: TPSExec; p: TPSExternalProcRec; Global, Stack: TPSStack): Boolean;
-var
-  arr: TPSVariantIFC;
-  l:TList;
-begin
-  arr:=NewTPSVariantIFC(Stack[Stack.Count-1],true);
-  Result := arr.aType.BaseType = btClass;
-  if Result then begin
-    l := TList(Stack.GetClass(-1));
-    if Assigned(l) then
-      result := DoGetElem_(Stack,l,-2,l.Count - 1);
-  end;
-end;
-
-{ funcion menosUltimo(lista lst)lista resultado }
-function menosUltimo_(Caller: TPSExec; p: TPSExternalProcRec; Global, Stack: TPSStack): Boolean;
-var
-  arr: TPSVariantIFC;
-  e:PElementoLista;
-  l:TList;
-begin
-  arr:=NewTPSVariantIFC(Stack[Stack.Count-1],true);
-  Result := arr.aType.BaseType = btClass;
-  if Result then begin
-    l := TList(Stack.GetClass(-2));
-    if Assigned(l) and (l.Count > 0) then begin
-      e := l.Last;
-      {si es una cadena, tengo que liberar la memoria previamente reservada. Si es una
-      lista, la elimino ahora por eficiencia, si no lo hago va a eliminarse al final
-      de la ejecución, pero si el algoritmo hace un uso intensivo de las listas, esto
-      puede hacerlo explotar}
-      if e^.tipo = btString then
-        StrDispose(e^.vcadena)
-      else if e^.tipo = btClass then
-        EliminarLista(e^.vlista);
-      Dispose(e);
-      l.Delete(l.Count-1);
-    end;
-    Stack.SetClass(-1,l);
-  end;
-end;
-
-{ funcion menosPrimero(lista lst)lista resultado }
-function menosPrimero_(Caller: TPSExec; p: TPSExternalProcRec; Global, Stack: TPSStack): Boolean;
-var
-  arr: TPSVariantIFC;
-  e:PElementoLista;
-  l:TList;
-begin
-  arr:=NewTPSVariantIFC(Stack[Stack.Count-1],true);
-  Result := arr.aType.BaseType = btClass;
-  if Result then begin
-    l := TList(Stack.GetClass(-2));
-    if Assigned(l) and (l.Count > 0) then begin
-      e := l.First;
-      {si es una cadena, tengo que liberar la memoria previamente reservada. Si es una
-      lista, la elimino ahora por eficiencia, si no lo hago va a eliminarse al final
-      de la ejecución, pero si el algoritmo hace un uso intensivo de las listas, esto
-      puede hacerlo explotar}
-      if e^.tipo = btString then
-        StrDispose(e^.vcadena)
-      else if e^.tipo = btClass then
-        EliminarLista(e^.vlista);
-      Dispose(e);
-      l.Delete(0);
-    end;
-    Stack.SetClass(-1,l);
-  end;
-end;
-
-(* manipulación de listas *)
-{para que no haya pérdidas innecesarias de memoria se guardan referencias a los archivos abiertos para cerrarlos
-al finalizar la ejecución, si el algoritmo no es adecuado}
-var
-  Archivos:TList;
-
-{realiza la liberación de todos los archivos}
-procedure LimpiarArchivos;
-var
-  i:integer;
-begin
-  if Assigned(Archivos) then begin
-    for i:=0 to Archivos.Count - 1 do
-      TFileStream(Archivos[i]).Free;
-    Archivos.Free;
-    Archivos:=nil;
-  end;
-end;
-
-{subprogramas auxiliares para la manipulación de archivos}
-
-//hace la instanciación real de un FileStream en base al modo indicado
-function cArchivo_(archivo:string;modo:word):TFileStream;
-begin
-  try
-    result := TFileStream.Create(archivo,modo);
-    if not Assigned(Archivos) then
-      Archivos := Tlist.Create;
-    Archivos.Add(result);
-  except
-    result := nil;
-  end;
-end;
-//obtener la cabecera
-function gcArchivo_(f:TFileStream):CabeceraArchivo;
-var
-  ppos:integer;
-begin
-  ppos := f.Position;
-  try
-    if ppos < sizeof(result) then //nunca dejar el archivo al comienzo real
-      ppos := sizeof(result);
-    f.Seek(0,soFromBeginning);
-    f.Read(result,sizeof(result));
-  finally
-    f.Seek(ppos,soFromBeginning);
-  end;
-end;
-//escribir la cabecera
-procedure scArchivo_(f:TFileStream;cabecera:CabeceraArchivo);
-var
-  ppos:integer;
-begin
-  ppos := f.Position;
-  try
-    f.Seek(0,soFromBeginning);
-    f.Write(cabecera,sizeof(cabecera));
-  finally
-    f.Seek(ppos,soFromBeginning);
-  end;
-end;
-//obtener la posición dentro del archivo, medida en registros
-function posArchivo_(f:TFileStream):integer;
-var
-  cabecera:CabeceraArchivo;
-  ppos,len:integer;
-begin
-  cabecera := gcArchivo_(f);
-  if cabecera.tamreg = 0 then begin //dado que los registros no tienen tamaño fijo, tengo que recorrer el archivo para determinar la posición
-    ppos := f.Position;
-    try
-      f.Seek(sizeof(cabecera),soFromBeginning);
-      result := 1;
-      while f.Position <> ppos do begin
-        f.Read(len,sizeof(len));
-        f.Seek(len,soFromCurrent);
-        Inc(result);
-      end;
-    finally
-      f.Seek(ppos,soFromBeginning);
-    end;
-  end else
-   result := (f.Position - sizeof(cabecera)) div cabecera.tamreg;
-end;
+(* manipulación de estructuras *)
 //calcular longitud real de una estructura
 function calcTamReg_(P:Pointer;aType:TPSTypeRec;actual:boolean = True):integer;
 var
@@ -9859,6 +9300,604 @@ begin
   end;
 end;
 
+(* manipulación de listas
+  Dado que las listas se implementan como instancias de TList, en forma transparente, en
+  casi todos los subprogramas de manipulación se verifica que se haya instanciado ya la
+  lista, sino se la instancia.
+  Dado que este manejo es transparente, se guardan todas las instancias de listas para su
+  destrucción al finalizar la ejecución del algoritmo.
+*)
+var
+  Listas:TList; //lista para almacenar las instancias de listas creadas durante la ejecución y que deben destruirse al finalizar
+
+{verifica que la lista esté instanciada y de no ser así la instancia y guarda una referencia
+en Listas, para su posterior destrucción }
+procedure VerificarLista(Stack:TPSStack;posicion:integer);
+var
+  l:TList;
+begin
+  l := TList(Stack.GetClass(posicion));
+  if not Assigned(l) then begin
+    l:= TList.Create;
+    if not Assigned(Listas) then
+      Listas := TList.Create;
+    Listas.Add(l);
+    Stack.SetClass(posicion,l);
+  end;
+end;
+
+function doShow_(Caller:TPSExec;e:ElementoLista):boolean;
+var
+  i:integer;
+begin
+  result := True;
+  case e.tipo of
+    btU8         : Caller.OnShow(Caller,e.tipo,e.vlogico);     //Boolean
+    btS8,btU16,btS16,btU32,btS32: Caller.OnShow(Caller,e.tipo,e.ventero);
+    btString     : Caller.OnShow(Caller,e.tipo,e.vcadena);
+    btSingle,btDouble,btExtended,btCurrency: Caller.OnShow(Caller,e.tipo,e.vreal);
+    btChar       : Caller.OnShow(Caller,e.tipo,e.vcaracter);
+{    btRecord: No hay forma de mostrar un registro } 
+    btClass: begin
+        if Assigned(e.vlista) then
+          i := e.vlista.Count
+        else
+          i := 0;
+        Caller.OnShow(Caller,e.tipo,i);
+        if Assigned(e.vlista) then begin
+          for i:=0 to e.vlista.Count-1 do begin
+            doShow_(Caller,PElementoLista(e.vlista[i])^);
+          end;
+        end;
+      end;
+    else Result:=false;
+  end;
+end;
+
+function Show_(Caller: TPSExec; p: TPSExternalProcRec; Global, Stack: TPSStack): Boolean;
+var
+  arr: TPSVariantIFC;
+  e:ElementoLista;
+begin
+  if not Assigned(Caller.OnShow) then
+    Result := False
+  else begin
+    Result:=true;
+    arr:=NewTPSVariantIFC(Stack[Stack.Count-1],true);
+    e.tipo:=arr.aType.BaseType;
+    case arr.aType.BaseType of
+      btU8         : e.vlogico := Stack.GetBool(-1);
+      btS8,btU16,btS16,btU32,btS32: e.ventero := Stack.GetInt(-1);
+      btString     : e.vcadena := PChar(Stack.GetString(-1));
+      btSingle,btDouble,btExtended,btCurrency: e.vreal := Stack.GetReal(-1);
+      btChar       : e.vcaracter := Stack.GetString(-1)[1];
+      btRecord: begin
+        e.vtam := calcTamReg_(arr.Dta,arr.aType);
+        GetMem(e.vestructura,e.vtam);
+        copiarEstBuf_(arr.Dta,e.vestructura,arr.aType);
+        end;
+      btClass: begin //lista
+          VerificarLista(Stack,-1);
+          e.vlista := TList(Stack.GetClass(-1));
+        end;
+      else Result:=false;
+    end;
+    if Result then try
+      Result := DoShow_(Caller,e);
+    finally
+      if e.tipo = btRecord then
+        FreeMem(e.vestructura,e.vtam);
+    end;
+  end;
+end;
+
+function ShowAndRead_(Caller: TPSExec; p: TPSExternalProcRec; Global, Stack: TPSStack): Boolean;
+begin
+  if Assigned(Caller.FOnShowRead) then
+    Caller.FOnShowRead(Caller,Stack.GetString(-1));
+  result := DoRead_(Caller,Stack,-2);
+end;
+
+
+function toString_(Caller: TPSExec; p: TPSExternalProcRec; Global, Stack: TPSStack): Boolean;
+var
+  arr: TPSVariantIFC;
+  s:string;
+begin
+  Result:=true;
+  arr:=NewTPSVariantIFC(Stack[Stack.Count-2],true);
+  case arr.aType.BaseType of
+    btU8         : begin
+      if Stack.GetBool(-2) then
+        s := CS_True
+      else
+        s := CS_False;     //Boolean
+      end;
+    btS8,btU16,btS16,btU32,btS32: s := IntToStr(Stack.GetInt(-2));//ShortInt
+    btString:s := Stack.GetString(-2);
+    btSingle,btDouble,btExtended: s := FloatToStr(Stack.GetReal(-2));
+    btChar       :  s := Stack.GetString(-2);
+    btCurrency   : s := FloatToStrF(Stack.GetCurrency(-2),ffCurrency,8,2);
+    else Result:=false;
+  end;
+  if Result then
+    Stack.SetString(-1,s);
+end;
+
+//se encarga de eliminar el contenido de un PElementoLista
+procedure FreePElemento(e:PElementoLista);
+begin
+  if e^.tipo = btString then
+    StrDispose(e^.vcadena)
+  else if e^.tipo = btRecord then begin
+    StrDispose(e^.ename);
+    FreeMem(e^.vestructura,e^.vtam);
+  end else if e^.tipo = btClass then //liberar también
+    EliminarLista(e^.vlista);
+end;
+
+{libera todos los elementos de una lista (y la lista misma)}
+procedure EliminarLista(lst:TList);
+var
+  i:integer;
+  e:PElementoLista;
+begin
+  for i:=0 to lst.Count - 1 do begin
+      e := lst[i];
+      FreePElemento(e);
+      Dispose(e);
+  end;
+  Listas.Remove(lst);
+  lst.Free;
+end;
+
+{realiza la liberación de todos los elementos de lista, y listas, almacenados en Listas}
+procedure LimpiarListas;
+begin
+  if Assigned(Listas) then begin
+    while Listas.Count > 0 do begin
+      EliminarLista(Listas.First); //tengo que hacerlo desde el principio, para no eliminar una lista que esté contenida en otra
+    end;
+    Listas.Free;
+    Listas:=nil;
+  end;
+end;
+
+{hace una copia exacta de una lista, incluidas las listas que esta incluye (valga la redundancia)}
+function CopiarLista_(lista:TList):TList;
+var
+  i:integer;
+  o,e:PElementoLista;
+begin
+  result := TList.Create;
+  Listas.Add(result);//si Listas no existe, algo está muy mal, ya que debería contener al menos la referencia a la lista que voy a copiar
+  for i:=0 to lista.Count - 1 do begin
+    o := lista[i];
+    new(e);
+    result.add(e);
+    e^.tipo := o^.tipo;
+    case e^.tipo of
+      btString: e^.vcadena := StrNew(o^.vcadena); //copio la cadena
+      btRecord: begin
+        e^.ename := StrNew(o^.ename);//nombre del tipo
+        e^.vtam := o^.vtam;
+        GetMem(e^.vestructura,e^.vtam);
+        Move(o^.vestructura^,e^.vestructura^,e^.vtam);
+        end;
+      btClass: begin//copio la lista
+        e^.vlista := o^.vlista;
+        if Assigned(e^.vlista) then
+          e^.vlista := CopiarLista_(e^.vlista);
+        end;
+      else //vreal es el de mayor tamaño físico
+        e^.vreal := o^.vreal;
+    end;
+  end;
+end;
+
+{funcion Agregar(lista porRef lst;inmutable x)entero resultado}
+function Agregar_(Caller: TPSExec; p: TPSExternalProcRec; Global, Stack: TPSStack): Boolean;
+var
+  arr: TPSVariantIFC;
+  l:TList;
+  s:string;
+  e:PElementoLista;
+begin
+  arr:=NewTPSVariantIFC(Stack[Stack.Count-2],true); //lista
+  Result := arr.aType.BaseType = btClass;
+  if Result then begin
+    verificarLista(Stack,-2); //asegurarse que la lista está instanciada
+    l := TList(Stack.GetClass(-2));
+    arr:=NewTPSVariantIFC(Stack[Stack.Count-3],true);
+    new(e);
+    e^.tipo := arr.aType.BaseType; //tipo del nuevo elemento
+    case arr.aType.BaseType of
+      btU8         : e^.vlogico:=Stack.GetBool(-3);
+      btS8,btU16,btS16,btU32,btS32 : e^.ventero:=Stack.GetInt(-3);
+      btString: begin //copio la cadena
+        s := Stack.GetString(-3);
+        e^.vcadena := StrNew(PChar(s));
+        end;
+      btRecord: begin
+        e^.ename := StrNew(PChar(arr.aType.ExportName));
+        e^.vtam := calcTamReg_(arr.Dta,arr.aType);
+        GetMem(e^.vestructura,e^.vtam);
+        copiarEstBuf_(arr.Dta,e^.vestructura,arr.aType);
+        end;
+      btChar     : begin
+        s := Stack.GetString(-3);
+        e^.vcaracter := s[1];
+        end;
+      btSingle,btDouble,btExtended,btCurrency   : e^.vreal:=Stack.GetReal(-3);
+      btClass: begin
+        {OJO!, si la lista que se está agregando, ya existe, debe copiarse, no agregarse
+        una referencia}
+        e^.vlista := TList(Stack.GetClass(-3));
+        if Assigned(e^.vlista) then
+          e^.vlista := CopiarLista_(e^.vlista);
+        end;
+      else Result:=false;
+    end;
+    Stack.SetInt(-1,l.Add(e) + 1); //las listas cuentan desde 1 a n, TList lo hace desde 0 a n-1
+  end;
+end;
+
+{ procedimiento Borrar(lista porRef lst;entero posicion) }
+function Borrar_(Caller: TPSExec; p: TPSExternalProcRec; Global, Stack: TPSStack): Boolean;
+var
+  arr: TPSVariantIFC;
+  l:TList;
+  index:integer;
+  e:PElementoLista;
+begin
+  arr:=NewTPSVariantIFC(Stack[Stack.Count-1],true);
+  Result := arr.aType.BaseType = btClass;
+  if Result then begin
+    VerificarLista(Stack,-1);
+    l := TList(Stack.GetClass(-1));
+    index := Stack.GetInt(-2) - 1; //posición a borrar, en TList va desde 0
+    if (index >= 0) and (index < l.Count) then begin
+      e := l.Items[index];
+      {si es una cadena, tengo que liberar la memoria previamente reservada. Si es una
+      lista, la elimino ahora por eficiencia, si no lo hago va a eliminarse al final
+      de la ejecución, pero si el algoritmo hace un uso intensivo de las listas, esto
+      puede hacerlo explotar}
+      FreePElemento(e);
+      Dispose(e);
+      l.Delete(index);
+    end;
+  end;
+end;
+
+{funcion Cantidad(lista lst)entero resultado}
+function Cantidad_(Caller: TPSExec; p: TPSExternalProcRec; Global, Stack: TPSStack): Boolean;
+var
+  arr: TPSVariantIFC;
+  l:TList;
+begin
+  arr:=NewTPSVariantIFC(Stack[Stack.Count-2],true);
+  Result := arr.aType.BaseType = btClass;
+  if Result then begin
+    l := TList(Stack.GetClass(-2));
+    {no necesito crear la lista, si no está creada tiene 0 elementos}
+    if not Assigned(l) then
+      Stack.SetInt(-1,0)
+    else
+      Stack.SetInt(-1,l.Count);
+  end;
+end;
+
+{ funcion MismoTipo(lista lst;inmutable x;entero posicion)logico resultado }
+function MismoTipo_(Caller: TPSExec; p: TPSExternalProcRec; Global, Stack: TPSStack): Boolean;
+var
+  arr: TPSVariantIFC;
+  l:TList;
+  index:integer;
+  e:PElementoLista;
+begin
+  arr:=NewTPSVariantIFC(Stack[Stack.Count-2],true);
+  Result := arr.aType.BaseType = btClass;
+  if Result then begin
+    Stack.SetBool(-1,False); //supongo que no son del mismo tipo, de serlo cambio el resultado
+    l := TList(Stack.GetClass(-2));
+    if Assigned(l) then begin // no necesito que esté creada, si no lo está, no son del mismo tipo
+      index := Stack.GetInt(-4) - 1; //TList cuenta desde 0 y lista desde 1
+      if (index >= 0)and(index <l.Count) then begin
+        e := l[index];
+        arr:=NewTPSVariantIFC(Stack[Stack.Count-3],true);
+        if arr.aType.BaseType = e^.tipo then begin//lo hago de esta forma para evitar una invocación costosa innecesaria
+          if (e^.tipo <> btRecord) or (e^.ename = arr.aType.ExportName) then //son el mismo tipo si no son estructuras o son el mismo tipo de estructura
+            Stack.SetBool(-1,True);
+        end;
+      end;
+    end;
+  end;
+end;
+
+{ funcion queTipo(inmutable x)cadena resultado }
+function queTipo_(Caller: TPSExec; p: TPSExternalProcRec; Global, Stack: TPSStack): Boolean;
+var
+  arr: TPSVariantIFC;
+begin
+  arr:=NewTPSVariantIFC(Stack[Stack.Count-2],true);
+  Result := true;
+  case arr.aType.BaseType of
+    btU8: Stack.SetString(-1,CS_boolean);
+    btU16,btU32: Stack.SetString(-1,CS_cardinal);
+    btS8,btS16,btS32: Stack.SetString(-1,CS_integer);
+    btSingle,btDouble,btExtended: Stack.SetString(-1,CS_real);
+    btCurrency: Stack.SetString(-1,CS_currency);
+    btClass: Stack.SetString(-1,CS_list);
+    btString: Stack.SetString(-1,CS_string);
+    btChar: Stack.SetString(-1,CS_char);
+    btRecord: Stack.SetString(-1,CS_record);
+    else
+      Stack.SetString(-1,CS_unknown);
+  end;
+end;
+
+{ procedimiento Reemplazar(lista lst;inmutable x;entero posicion) }
+function Reemplazar_(Caller: TPSExec; p: TPSExternalProcRec; Global, Stack: TPSStack): Boolean;
+var
+  arr: TPSVariantIFC;
+  l:TList;
+  s:string;
+  index:integer;
+  e:PElementoLista;
+begin
+  arr:=NewTPSVariantIFC(Stack[Stack.Count-2],true);
+  Result := arr.aType.BaseType = btClass;
+  if Result then begin
+    l := TList(Stack.GetClass(-2));
+    if Assigned(l) then begin // no necesito que esté creada, si no lo está, no tengo nada que reemplazar
+      index := Stack.GetInt(-4) - 1; //TList cuenta desde 0 y lista desde 1
+      if (index >= 0)and(index <l.Count) then begin
+        e := l[index];
+        //antes de reemplazar, liberar el contenido, si corresponde
+        FreePElemento(e);
+        arr:=NewTPSVariantIFC(Stack[Stack.Count-3],true);
+        e^.tipo := arr.aType.BaseType; //tipo del nuevo elemento
+        case arr.aType.BaseType of
+          btU8         : e^.vlogico:=Stack.GetBool(-3);
+          btS8,btU16,btS16,btU32,btS32 : e^.ventero:=Stack.GetInt(-3);
+          btString: begin //copio la cadena
+            s := Stack.GetString(-3);
+            e^.vcadena := StrNew(PChar(s));
+            end;
+          btChar     : begin
+            s := Stack.GetString(-3);
+            e^.vcaracter := s[1];
+            end;
+          btSingle,btDouble,btExtended,btCurrency   : e^.vreal:=Stack.GetReal(-3);
+          btRecord: begin
+            e^.ename := StrNew(PChar(arr.aType.ExportName));
+            e^.vtam := calcTamReg_(arr.Dta,arr.aType);
+            GetMem(e^.vestructura,e^.vtam);
+            copiarEstBuf_(arr.Dta,e^.vestructura,arr.aType);
+            end;
+          btClass: begin
+            {OJO!, si la lista que se está agregando, ya existe, debe copiarse, no agregarse
+            una referencia}
+            e^.vlista := TList(Stack.GetClass(-3));
+            if Assigned(e^.vlista) then
+              e^.vlista := CopiarLista_(e^.vlista);
+            end;
+          else Result:=false;
+        end;
+      end;
+    end;
+  end;
+end;
+
+function DoGetElem_(Stack:TPSStack;Lista:TList;stackpos,lstpos:integer):boolean;
+var
+  arr: TPSVariantIFC;
+  e:PElementoLista;
+begin
+  result := True;
+  if Assigned(lista) and (lstpos >= 0)and(lstpos <lista.Count) then begin
+    e := lista[lstpos];
+    arr:=NewTPSVariantIFC(Stack[Stack.Count+stackpos],true);
+    if arr.aType.BaseType = e^.tipo then begin
+      case arr.aType.BaseType of
+        btU8         : Stack.SetBool(stackpos,e^.vlogico);
+        btS8,btU16,btS16,btU32,btS32 : Stack.SetInt(stackpos,e^.ventero);
+        btString: Stack.SetString(stackpos,e^.vcadena);
+        btChar     : Stack.SetString(stackpos,e^.vcaracter);
+        btSingle,btDouble,btExtended,btCurrency   : Stack.SetReal(stackpos,e^.vreal);
+        btRecord: copiarBufEst_(e^.vestructura,arr.Dta,arr.aType);
+        btClass: begin //copiar la lista, de forma que no se modifique el contenido de la lista 'por fuera'
+          if Assigned(e^.vlista) then
+            Stack.SetClass(stackpos,CopiarLista_(e^.vlista))
+          else
+            Stack.SetClass(stackpos,e^.vlista);
+          end;
+        else Result:=false;
+      end;
+    end;
+  end;
+end;
+
+{ procedimiento Elemento(lista porRef lst;porRef x;entero posicion) }
+function Elemento_(Caller: TPSExec; p: TPSExternalProcRec; Global, Stack: TPSStack): Boolean;
+var
+  arr: TPSVariantIFC;
+begin
+  arr:=NewTPSVariantIFC(Stack[Stack.Count-1],true);
+  Result := arr.aType.BaseType = btClass;
+  if Result then
+    result := DoGetElem_(Stack,TList(Stack.GetClass(-1)),-2,Stack.GetInt(-3) - 1);
+end;
+
+{ procedimiento Primero(lista lst;porRef x) }
+function Primero_(Caller: TPSExec; p: TPSExternalProcRec; Global, Stack: TPSStack): Boolean;
+var
+  arr: TPSVariantIFC;
+begin
+  arr:=NewTPSVariantIFC(Stack[Stack.Count-1],true);
+  Result := arr.aType.BaseType = btClass;
+  if Result then
+    result := DoGetElem_(Stack,TList(Stack.GetClass(-1)),-2,0);
+end;
+
+{ procedimiento Ultimo(lista lst;porRef x) }
+function Ultimo_(Caller: TPSExec; p: TPSExternalProcRec; Global, Stack: TPSStack): Boolean;
+var
+  arr: TPSVariantIFC;
+  l:TList;
+begin
+  arr:=NewTPSVariantIFC(Stack[Stack.Count-1],true);
+  Result := arr.aType.BaseType = btClass;
+  if Result then begin
+    l := TList(Stack.GetClass(-1));
+    if Assigned(l) then
+      result := DoGetElem_(Stack,l,-2,l.Count - 1);
+  end;
+end;
+
+{ funcion menosUltimo(lista lst)lista resultado }
+function menosUltimo_(Caller: TPSExec; p: TPSExternalProcRec; Global, Stack: TPSStack): Boolean;
+var
+  arr: TPSVariantIFC;
+  e:PElementoLista;
+  l:TList;
+begin
+  arr:=NewTPSVariantIFC(Stack[Stack.Count-1],true);
+  Result := arr.aType.BaseType = btClass;
+  if Result then begin
+    l := TList(Stack.GetClass(-2));
+    if Assigned(l) and (l.Count > 0) then begin
+      e := l.Last;
+      {si es una cadena, tengo que liberar la memoria previamente reservada. Si es una
+      lista, la elimino ahora por eficiencia, si no lo hago va a eliminarse al final
+      de la ejecución, pero si el algoritmo hace un uso intensivo de las listas, esto
+      puede hacerlo explotar}
+      FreePElemento(e);
+      Dispose(e);
+      l.Delete(l.Count-1);
+    end;
+    Stack.SetClass(-1,l);
+  end;
+end;
+
+{ funcion menosPrimero(lista lst)lista resultado }
+function menosPrimero_(Caller: TPSExec; p: TPSExternalProcRec; Global, Stack: TPSStack): Boolean;
+var
+  arr: TPSVariantIFC;
+  e:PElementoLista;
+  l:TList;
+begin
+  arr:=NewTPSVariantIFC(Stack[Stack.Count-1],true);
+  Result := arr.aType.BaseType = btClass;
+  if Result then begin
+    l := TList(Stack.GetClass(-2));
+    if Assigned(l) and (l.Count > 0) then begin
+      e := l.First;
+      {si es una cadena, tengo que liberar la memoria previamente reservada. Si es una
+      lista, la elimino ahora por eficiencia, si no lo hago va a eliminarse al final
+      de la ejecución, pero si el algoritmo hace un uso intensivo de las listas, esto
+      puede hacerlo explotar}
+      FreePElemento(e);
+      Dispose(e);
+      l.Delete(0);
+    end;
+    Stack.SetClass(-1,l);
+  end;
+end;
+
+(* manipulación de listas *)
+{para que no haya pérdidas innecesarias de memoria se guardan referencias a los archivos abiertos para cerrarlos
+al finalizar la ejecución, si el algoritmo no es adecuado}
+var
+  Archivos:TList;
+
+{realiza la liberación de todos los archivos}
+procedure LimpiarArchivos;
+var
+  i:integer;
+begin
+  if Assigned(Archivos) then begin
+    for i:=0 to Archivos.Count - 1 do
+      TFileStream(Archivos[i]).Free;
+    Archivos.Free;
+    Archivos:=nil;
+  end;
+end;
+
+{subprogramas auxiliares para la manipulación de archivos}
+
+//hace la instanciación real de un FileStream en base al modo indicado
+function cArchivo_(archivo:string;modo:word):TFileStream;
+begin
+  try
+    result := TFileStream.Create(archivo,modo);
+    if not Assigned(Archivos) then
+      Archivos := Tlist.Create;
+    Archivos.Add(result);
+  except
+    result := nil;
+  end;
+end;
+//obtener la cabecera
+function gcArchivo_(f:TFileStream):CabeceraArchivo;
+var
+  ppos:integer;
+begin
+  ppos := f.Position;
+  try
+    if ppos < sizeof(result) then //nunca dejar el archivo al comienzo real
+      ppos := sizeof(result);
+    f.Seek(0,soFromBeginning);
+    f.Read(result,sizeof(result));
+  finally
+    f.Seek(ppos,soFromBeginning);
+  end;
+end;
+//escribir la cabecera
+procedure scArchivo_(f:TFileStream;cabecera:CabeceraArchivo);
+var
+  ppos:integer;
+begin
+  ppos := f.Position;
+  try
+    if ppos < sizeof(cabecera) then //nunca dejar el archivo al comienzo real
+      ppos := sizeof(cabecera);
+    f.Seek(0,soFromBeginning);
+    f.Write(cabecera,sizeof(cabecera));
+  finally
+    f.Seek(ppos,soFromBeginning);
+  end;
+end;
+//obtener la posición dentro del archivo, medida en registros
+function posArchivo_(f:TFileStream):integer;
+var
+  cabecera:CabeceraArchivo;
+  ppos,len:integer;
+begin
+  if not Assigned(f) then
+    result := -1
+  else if f.Size = 0 then
+    result := 1
+  else begin
+    cabecera := gcArchivo_(f);
+    if cabecera.tamreg = 0 then begin //dado que los registros no tienen tamaño fijo, tengo que recorrer el archivo para determinar la posición
+      ppos := f.Position;
+      try
+        f.Seek(sizeof(cabecera),soFromBeginning);
+        result := 1;
+        while f.Position <> ppos do begin
+          f.Read(len,sizeof(len));
+          f.Seek(len,soFromCurrent);
+          Inc(result);
+        end;
+      finally
+        f.Seek(ppos,soFromBeginning);
+      end;
+    end else
+     result := (f.Position - sizeof(cabecera)) div cabecera.tamreg;
+  end;
+end;
+
 //funcion CrearArchivo(cadena nombre)archivo resultado
 function crearArchivo_(Caller: TPSExec; p: TPSExternalProcRec; Global, Stack: TPSStack): Boolean;
 var
@@ -9875,6 +9914,41 @@ begin
       Result := False;
     end else
       Stack.SetClass(-1,nil);
+  end;
+end;
+
+{función auxiliar para desplazar el contenido de un archivo, es necesaria para el caso de registros
+de longitud variable, cuando se está sobrescribiendo un registro preexistente}
+procedure moverArchivo_(f:TFileStream;newLen:integer);
+var
+  ppos,oldLen:integer;
+  fl:TFileStream;
+begin
+  ppos := f.Position;
+  if ppos = f.Size then //nada que mover
+    exit;
+  try
+    f.Read(oldLen,sizeof(oldLen));
+    if oldLen = newLen then //nada que mover
+      exit;
+    f.Seek(oldLen,soFromCurrent); //siguiente registro
+    if f.Position = f.Size then //nada que mover
+      exit;
+    fl := TFileStream.Create('mover.tmp',fmCreate);
+    try
+      fl.CopyFrom(f,f.Size-f.Position);
+      if ppos + newLen + sizeof(oldLen) > f.Size then
+        f.Size := ppos + newLen + sizeof(oldLen)
+      else
+        f.Seek(ppos+newLen+sizeof(oldLen),soFromBeginning);
+      fl.Seek(0,soFromBeginning);
+      f.CopyFrom(fl,fl.Size);
+    finally
+      fl.Free;
+      DeleteFile('mover.tmp');
+    end;
+  finally
+    f.Seek(ppos,soFromBeginning);
   end;
 end;
 
@@ -9922,10 +9996,14 @@ begin
       end else if cabecera.tipo = btString then begin
         data := Stack.GetString(-3);
         len := Length(data);
+        //hacer lugar para el nuevo registro
+        moverArchivo_(f,len);
         f.Write(len,sizeof(len));
         f.Write(Pointer(data)^,len);
       end else if cabecera.tipo = btRecord then begin
         len := calcTamReg_(arr.Dta,arr.aType);
+        //hacer lugar para el nuevo registro
+        moverArchivo_(f,len);
         f.Write(len,sizeof(len));
         SetLength(data,len);
         copiarEstBuf_(Pointer(data),arr.Dta,arr.aType);
@@ -9952,7 +10030,9 @@ begin
   Result := arr.aType.BaseType = btClass;
   if Result then begin
     f := TFileStream(Stack.GetClass(-2));
-    if not Assigned(f) or (f.Position = f.Size) then
+    if not Assigned(f) then
+      Stack.SetInt(-1,-1)
+    else if (f.Position = f.Size) then
       Stack.SetInt(-1,0)
     else begin
       arr:=NewTPSVariantIFC(Stack[Stack.Count-3],true);
@@ -9992,7 +10072,7 @@ begin
   if Result then begin
     f := TFileStream(Stack.GetClass(-2));
     if not Assigned(f) or (f.Size = 0) then
-      Stack.SetInt(-1,-1)
+      Stack.SetInt(-1,0)
     else begin
       ppos := f.Position;
       try
@@ -10099,7 +10179,9 @@ begin
       end else
         npos := (f.Seek(sizeof(cabecera) + dpos * cabecera.tamreg,soFromBeginning) - sizeof(cabecera)) div cabecera.tamreg;
       Stack.SetInt(-1,npos);
-    end else
+    end else if Assigned(f) then
+      Stack.SetInt(-1,1)
+    else
       Stack.SetInt(-1,0);
   end;
 end;
