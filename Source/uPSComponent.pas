@@ -421,6 +421,8 @@ type
     procedure ClearBreakPoints;
 
     function GetVarContents(const Name: tbtstring): tbtstring;
+    //establecer el valor de una variable
+    function SetVarContents(const Name: tbtstring;const Data): boolean;
   published
 
     property OnIdle: TNotifyEvent read FOnIdle write FOnIdle;
@@ -1553,7 +1555,17 @@ begin
   end;
 end;
 
-procedure TPSScriptDebugger.StepInto;            
+function TPSScriptDebugger.SetVarContents(const Name: tbtstring;
+  const Data): boolean;
+var
+  dr:PIFRVariant;
+  v:PIfVariant;
+begin
+  v := GetVariable(Name);
+//  dr := NewVariant(Exec.FindBaseType(v.FType.BaseType));
+end;
+
+procedure TPSScriptDebugger.StepInto;
 begin
   if (FExec.Status = isRunning) or (FExec.Status = isLoaded) then
     FExec.StepInto

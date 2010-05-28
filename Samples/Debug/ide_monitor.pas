@@ -4,11 +4,13 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls,syncobjs, SynEdit, SynMemo;
+  ExtCtrls, StdCtrls, SynEdit, SynMemo,syncobjs;
 
 type
   TVMonitorForm = class(TForm)
     Edit1: TEdit;
+    MoveTimer: TTimer;
+    DelayTimer: TTimer;
     Memo: TSynMemo;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -22,8 +24,15 @@ type
     procedure FormResize(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure Memo1KeyPress(Sender: TObject; var Key: Char);
+    procedure MoveTimerTimer(Sender: TObject);
+    procedure DelayTimerTimer(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure FormKeyUp(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
   private
     { Private declarations }
+    FDirection:integer;
     FWidth:integer;
     FReaded:string;
     FReading:TSimpleEvent;
@@ -281,6 +290,47 @@ end;
 procedure TVMonitorForm.Memo1KeyPress(Sender: TObject; var Key: Char);
 begin
   FReading.SetEvent;
+end;
+
+procedure TVMonitorForm.MoveTimerTimer(Sender: TObject);
+var
+  delta:integer;
+begin
+  delta := Round(10 * screen.height / 768);
+  case FDirection of
+    0:Top := Top - delta;
+    1:Left := Left + delta;
+    2:Top := Top + delta;
+    3:Left := Left - delta;
+  end;
+end;
+
+procedure TVMonitorForm.DelayTimerTimer(Sender: TObject);
+begin
+  MoveTimer.Enabled := True;
+  DelayTimer.Enabled := False;
+end;
+
+procedure TVMonitorForm.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if (ssCtrl in Shift) then begin
+    FDirection := -1;
+    case Key of
+      VK_UP:FDirection := 0;
+      VK_DOWN:FDirection := 2;
+      VK_LEFT:FDirection := 3;
+      VK_RIGHT:FDirection := 1;
+    end;
+    DelayTimer.Enabled := Key in [VK_UP,VK_DOWN,VK_LEFT,VK_RIGHT];
+  end;
+end;
+
+procedure TVMonitorForm.FormKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  DelayTimer.Enabled := False;
+  MoveTimer.Enabled := False;
 end;
 
 end.
