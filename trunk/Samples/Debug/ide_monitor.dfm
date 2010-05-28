@@ -14,10 +14,13 @@ object VMonitorForm: TVMonitorForm
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   FormStyle = fsStayOnTop
+  KeyPreview = True
   OldCreateOrder = False
   OnActivate = FormActivate
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  OnKeyDown = FormKeyDown
+  OnKeyUp = FormKeyUp
   OnResize = FormResize
   OnShow = FormShow
   PixelsPerInch = 96
@@ -72,5 +75,18 @@ object VMonitorForm: TVMonitorForm
     OnKeyDown = Edit1KeyDown
     OnKeyPress = Edit1KeyPress
     OnKeyUp = Edit1KeyUp
+  end
+  object MoveTimer: TTimer
+    Enabled = False
+    Interval = 100
+    OnTimer = MoveTimerTimer
+    Left = 144
+    Top = 56
+  end
+  object DelayTimer: TTimer
+    Enabled = False
+    OnTimer = DelayTimerTimer
+    Left = 120
+    Top = 120
   end
 end

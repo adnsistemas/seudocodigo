@@ -18,8 +18,8 @@ object evaluator: Tevaluator
   TextHeight = 13
   object GroupBox1: TGroupBox
     Left = 0
-    Top = 152
-    Width = 307
+    Top = 161
+    Width = 315
     Height = 105
     Align = alBottom
     Caption = 'Nuevo valor'
@@ -27,7 +27,7 @@ object evaluator: Tevaluator
     object MemoNuevo: TMemo
       Left = 2
       Top = 15
-      Width = 303
+      Width = 311
       Height = 88
       Align = alClient
       Lines.Strings = (
@@ -40,7 +40,7 @@ object evaluator: Tevaluator
   object GroupBox2: TGroupBox
     Left = 0
     Top = 0
-    Width = 307
+    Width = 315
     Height = 49
     Align = alTop
     Caption = 'Expresión'
@@ -58,16 +58,16 @@ object evaluator: Tevaluator
   object GroupBox3: TGroupBox
     Left = 0
     Top = 49
-    Width = 307
-    Height = 103
+    Width = 315
+    Height = 112
     Align = alClient
     Caption = 'Valor actual'
     TabOrder = 2
     object MemoActual: TMemo
       Left = 2
       Top = 15
-      Width = 303
-      Height = 86
+      Width = 311
+      Height = 95
       TabStop = False
       Align = alClient
       Lines.Strings = (

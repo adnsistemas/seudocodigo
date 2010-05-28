@@ -390,6 +390,7 @@ const
   CS_endRecord = 'fin_estructura';
   CS_endWhile = 'fin_mientras';
   CS_except = 'fallado';
+  CS_exit = 'salir';
   CS_exports = 'exporta';
   CS_false = 'Falso';
   CS_far = 'lejano';

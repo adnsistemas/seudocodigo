@@ -337,6 +337,9 @@ begin
   SetHashFunc(CS_stdcall);
   SetHashFunc(CS_const);
   SetHashFunc(CS_except);
+  SetHashFunc(CS_exit);
+  SetHashFunc(CS_break);
+  SetHashFunc(CS_continue);
   SetHashFunc(CS_until);
   SetHashFunc(CS_finally);
   SetHashFunc(CS_interface);
