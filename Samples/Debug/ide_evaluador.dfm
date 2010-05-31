@@ -3,7 +3,7 @@ object evaluator: Tevaluator
   Top = 122
   Width = 323
   Height = 293
-  Caption = 'Evaluador de Expresiones'
+  Caption = 'Editor de Variables y Parámetros'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -43,7 +43,7 @@ object evaluator: Tevaluator
     Width = 315
     Height = 49
     Align = alTop
-    Caption = 'Expresión'
+    Caption = 'Variable / Parámetro'
     TabOrder = 1
     object EditVariable: TEdit
       Left = 8

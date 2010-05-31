@@ -6,6 +6,8 @@ uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls;
 
+resourcestring
+  RS_CANT_ASSIGN_VALUE = 'No se puede asignar el nuevo valor. Verifique que sean tipos compatibles';
 type
   Tevaluator = class(TForm)
     GroupBox1: TGroupBox;
@@ -66,7 +68,10 @@ end;
 
 procedure Tevaluator.SetNewValue;
 begin
-  ShowMessage('¡¡Algun día!!');
+  if not editor.ce.SetVarContents(EditVariable.Text,MemoNuevo.Text) then
+    MessageDlg(RS_CANT_ASSIGN_VALUE,mtError,[mbOk],0);
+  ShowVariable(EditVariable.Text);
+  editor.UpdateAll;
 end;
 
 procedure Tevaluator.MemoNuevoKeyDown(Sender: TObject; var Key: Word;

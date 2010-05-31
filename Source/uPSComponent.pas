@@ -422,7 +422,7 @@ type
 
     function GetVarContents(const Name: tbtstring): tbtstring;
     //establecer el valor de una variable
-    function SetVarContents(const Name: tbtstring;const Data): boolean;
+    function SetVarContents(const Name: tbtstring;content:tbtstring): boolean;
   published
 
     property OnIdle: TNotifyEvent read FOnIdle write FOnIdle;
@@ -1556,13 +1556,79 @@ begin
 end;
 
 function TPSScriptDebugger.SetVarContents(const Name: tbtstring;
-  const Data): boolean;
+  content:tbtString): boolean;
 var
-  dr:PIFRVariant;
-  v:PIfVariant;
+  i: Longint;
+  pv: PIFVariant;
+  s1, s: tbtstring;
+  varp: TPSVariantIFC;
 begin
-  v := GetVariable(Name);
-//  dr := NewVariant(Exec.FindBaseType(v.FType.BaseType));
+  result := False;
+  s := Uppercase(Name);
+  if pos('.', s) > 0 then
+  begin
+    s1 := copy(s,1,pos('.', s) -1);
+    delete(s,1,pos('.', Name));
+  end else begin
+    s1 := s;
+    s := '';
+  end;
+  pv := nil;
+  for i := 0 to Exec.CurrentProcVars.Count -1 do
+  begin
+    if Uppercase(Exec.CurrentProcVars[i]) =  s1 then
+    begin
+      pv := Exec.GetProcVar(i);
+      break;
+    end;
+  end;
+  if pv = nil then
+  begin
+    for i := 0 to Exec.CurrentProcParams.Count -1 do
+    begin
+      if Uppercase(Exec.CurrentProcParams[i]) =  s1 then
+      begin
+        pv := Exec.GetProcParam(i);
+        break;
+      end;
+    end;
+  end;
+  if pv = nil then
+  begin
+    for i := 0 to Exec.GlobalVarNames.Count -1 do
+    begin
+      if Uppercase(Exec.GlobalVarNames[i]) =  s1 then
+      begin
+        pv := Exec.GetGlobalVar(i);
+        break;
+      end;
+    end;
+  end;
+  if pv = nil then
+    exit;
+  result := True;
+  varp := NewTPSVariantIFC(pv, False);
+  try
+    case varp.aType.BaseType of
+      btChar, bts8, btU8: tbtu8(varp.Dta^) := tbtu8(strtoint(content));
+      {$IFNDEF PS_NOWIDESTRING}btWideChar, {$ENDIF}bts16, btU16: tbtu16(varp.Dta^) := tbtu16(strtoint(content));
+      btSingle: tbtSingle(varp.Dta^) := strtofloat(content);
+      bts32, btU32,btClass: tbtu32(varp.Dta^) := tbtu32(strtoint(content));
+      btPChar, btString: begin
+        SetLength(tbtString(varp.Dta^),length(content));
+        tbtString(varp.Dta^) := tbtString(content);
+      end;
+      btCurrency: tbtCurrency(varp.Dta^) := tbtCurrency(strtocurr(content));
+      btDouble: tbtdouble(varp.Dta^) := strtofloat(content);
+      {$IFNDEF PS_NOINT64}bts64: tbtS64(varp.Dta^) := strtoint64(content);{$ENDIF}
+      btExtended: tbtExtended(varp.Dta^) := tbtExtended(strtofloat(content));
+      btVariant: Variant(varp.Dta^) := content;
+      else
+        result := False;
+    end;
+  except
+    result := False;
+  end;
 end;
 
 procedure TPSScriptDebugger.StepInto;
