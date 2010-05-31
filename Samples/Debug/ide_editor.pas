@@ -1542,6 +1542,8 @@ end;
 
 procedure Teditor.Seudocdigo1Click(Sender: TObject);
 begin
+  if application.HelpFile[1] = '.' then
+    application.HelpFile := ExtractFilePath(application.ExeName) + copy(application.HelpFile,3,Length(application.HelpFile));
   if FileExists(application.HelpFile) then
     application.HelpCommand(HELP_FINDER,0)
   else
