@@ -73,7 +73,7 @@ object AcercaForm: TAcercaForm
     Align = alTop
     Alignment = taCenter
     AutoSize = False
-    Caption = 'Argentina - 2009'
+    Caption = 'Argentina - 2009/2010'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -13
