@@ -9272,6 +9272,7 @@ begin
     result := Length(tbtString(P^));
     Move(result,buffer^,sizeof(result));
     Move(Pointer(tbtString(P^))^,Pointer(integer(buffer)+sizeof(result))^,result);
+    result := result + sizeof(result);
   end else begin
     result := aType.RealSize;
     Move(P^,buffer^,result);
@@ -9294,6 +9295,7 @@ begin
     Move(buffer^,result,sizeof(result));
     SetLength(tbtString(P^),result);
     Move(Pointer(integer(buffer)+sizeof(result))^,Pointer(tbtString(P^))^,result);
+    result := result + sizeof(result);
   end else begin
     result := aType.RealSize;
     Move(buffer^,P^,result);
@@ -9885,7 +9887,7 @@ begin
       try
         f.Seek(sizeof(cabecera),soFromBeginning);
         result := 1;
-        while f.Position <> ppos do begin
+        while f.Position < ppos do begin
           f.Read(len,sizeof(len));
           f.Seek(len,soFromCurrent);
           Inc(result);
@@ -9894,7 +9896,7 @@ begin
         f.Seek(ppos,soFromBeginning);
       end;
     end else
-     result := (f.Position - sizeof(cabecera)) div cabecera.tamreg;
+     result := ((f.Position - sizeof(cabecera)) div cabecera.tamreg) + 1;
   end;
 end;
 
@@ -10177,7 +10179,7 @@ begin
           npos := npos + 1;
         end;
       end else
-        npos := (f.Seek(sizeof(cabecera) + dpos * cabecera.tamreg,soFromBeginning) - sizeof(cabecera)) div cabecera.tamreg;
+        npos := ((f.Seek(sizeof(cabecera) + (dpos - 1) * cabecera.tamreg,soFromBeginning) - sizeof(cabecera)) div cabecera.tamreg) + 1;
       Stack.SetInt(-1,npos);
     end else if Assigned(f) then
       Stack.SetInt(-1,1)

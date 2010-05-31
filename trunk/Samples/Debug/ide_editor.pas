@@ -119,6 +119,9 @@ type
     ABuscar: TAction;
     ADetener: TAction;
     Detener1: TMenuItem;
+    N7: TMenuItem;
+    Evaluador1: TMenuItem;
+    EVP: TAction;
     procedure edSpecialLineColors(Sender: TObject; Line: Integer;
       var Special: Boolean; var FG, BG: TColor);
     procedure BreakPointMenuClick(Sender: TObject);
@@ -200,6 +203,8 @@ type
     procedure ALimpiarMensajesExecute(Sender: TObject);
     procedure ABuscarExecute(Sender: TObject);
     procedure ADetenerExecute(Sender: TObject);
+    procedure EVPUpdate(Sender: TObject);
+    procedure EVPExecute(Sender: TObject);
   private
     function getSPCount: integer;
     function GetCurrentEd: TSynEdit;
@@ -267,6 +272,7 @@ type
   public
     function SaveCheck(page:TTabSheet): Boolean;
     procedure AddWatch(varname:string);
+    procedure UpdateAll;
     property CurrentEd:TSynEdit read GetCurrentEd;
   end;
 
@@ -831,7 +837,8 @@ end;
 
 procedure Teditor.ListBox1DblClick(Sender: TObject);
 begin
-  evaluator.ShowVariable(FWatches[ListBox1.ItemIndex]);
+  if ListBox1.ItemIndex >= 0 then
+    evaluator.ShowVariable(FWatches[ListBox1.ItemIndex]);
 end;
 
 procedure Teditor.MemoLocalesDblClick(Sender: TObject);
@@ -995,7 +1002,7 @@ end;
 procedure Teditor.ListBox1KeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
-  if Key = 13 then
+  if (Key = 13) and (ListBox1.ItemIndex >= 0) then
     evaluator.ShowVariable(FWatches[ListBox1.ItemIndex])
   else if (Key = VK_DELETE) and (ListBox1.ItemIndex >= 0) then
     DeleteWatch(ListBox1.ItemIndex);
@@ -1814,6 +1821,24 @@ begin
   ce.Pause;
   ce.StepOver;
   StatusBar1.Panels[1].Text := RS_STOPPING;
+end;
+
+procedure Teditor.UpdateAll;
+begin
+  UpdateWatches;
+  UpdateGlobales;
+  UpdateLocales;
+end;
+
+procedure Teditor.EVPUpdate(Sender: TObject);
+begin
+  with Sender as TAction do
+    Enabled := ce.Running;
+end;
+
+procedure Teditor.EVPExecute(Sender: TObject);
+begin
+  evaluator.ShowVariable('');
 end;
 
 end.

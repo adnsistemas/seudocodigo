@@ -7,15 +7,16 @@
   produced executable.
 */
 
-#define ide_editor_RS_EXEC_ERROR 65088
-#define ide_editor_RS_STEP_INTO 65089
-#define ide_editor_RS_STEP_OVER 65090
-#define ide_editor_RS_STOPPING 65091
-#define ide_editor_RS_COMPILE_SUCCESS 65092
-#define ide_editor_RS_CONFIRM_SAVE 65093
-#define ide_editor_RS_DATE_FORMAT 65094
-#define ide_editor_RS_UNAVAILABLE 65095
-#define ide_editor_RS_EXAMPLE_CODE 65096
+#define ide_editor_RS_EXEC_SUCCESS 65088
+#define ide_editor_RS_EXEC_ERROR 65089
+#define ide_editor_RS_STEP_INTO 65090
+#define ide_editor_RS_STEP_OVER 65091
+#define ide_editor_RS_STOPPING 65092
+#define ide_editor_RS_COMPILE_SUCCESS 65093
+#define ide_editor_RS_CONFIRM_SAVE 65094
+#define ide_editor_RS_DATE_FORMAT 65095
+#define ide_editor_RS_UNAVAILABLE 65096
+#define ide_editor_RS_EXAMPLE_CODE 65097
 #define DbConsts_STextTrue 65104
 #define DbConsts_SParameterNotFound 65105
 #define DbConsts_SInvalidVersion 65106
@@ -24,14 +25,14 @@
 #define DbConsts_SProviderExecuteNotSupported 65109
 #define DbConsts_SRecordNotFound 65110
 #define SynHighlighterSeudoc_SYNS_AttrAssignment 65111
-#define jconsts_sChangeJPGSize 65112
-#define jconsts_sJPEGError 65113
-#define jconsts_sJPEGImageFile 65114
-#define ide_about_RS_VERSION 65115
-#define ide_editor_CS_SinNombre 65116
-#define ide_editor_RS_CANT_FIND_HELP 65117
-#define ide_editor_RS_EXECUTING 65118
-#define ide_editor_RS_EXEC_SUCCESS 65119
+#define ide_evaluador_RS_CANT_ASSIGN_VALUE 65112
+#define jconsts_sChangeJPGSize 65113
+#define jconsts_sJPEGError 65114
+#define jconsts_sJPEGImageFile 65115
+#define ide_about_RS_VERSION 65116
+#define ide_editor_CS_SinNombre 65117
+#define ide_editor_RS_CANT_FIND_HELP 65118
+#define ide_editor_RS_EXECUTING 65119
 #define DbConsts_SFieldOutOfRange 65120
 #define DbConsts_SBCDOverflow 65121
 #define DbConsts_SFieldRequired 65122
@@ -450,6 +451,7 @@
 #define SysConst_SInvalidInput 65535
 STRINGTABLE
 BEGIN
+	ide_editor_RS_EXEC_SUCCESS,	"Ejecución existosa"
 	ide_editor_RS_EXEC_ERROR,	"Error de ejecución: %1s en [%2d:%3d]"
 	ide_editor_RS_STEP_INTO,	"Ejecutando línea"
 	ide_editor_RS_STEP_OVER,	"Ejecutando instrucción"
@@ -467,6 +469,7 @@ BEGIN
 	DbConsts_SProviderExecuteNotSupported,	"Execute not supported: %s"
 	DbConsts_SRecordNotFound,	"Record not found"
 	SynHighlighterSeudoc_SYNS_AttrAssignment,	"Asignación"
+	ide_evaluador_RS_CANT_ASSIGN_VALUE,	"No se puede asignar el nuevo valor. Verifique que sean tipos compatibles"
 	jconsts_sChangeJPGSize,	"Cannot change the size of a JPEG image"
 	jconsts_sJPEGError,	"JPEG error #%d"
 	jconsts_sJPEGImageFile,	"JPEG Image File"
@@ -474,7 +477,6 @@ BEGIN
 	ide_editor_CS_SinNombre,	"Sin nombre"
 	ide_editor_RS_CANT_FIND_HELP,	"No se puede encontrar el archivo de ayuda %s"
 	ide_editor_RS_EXECUTING,	"Ejecutando.."
-	ide_editor_RS_EXEC_SUCCESS,	"Ejecución existosa"
 	DbConsts_SFieldOutOfRange,	"Value of field '%s' is out of range"
 	DbConsts_SBCDOverflow,	"(Overflow)"
 	DbConsts_SFieldRequired,	"Field '%s' must have a value"
