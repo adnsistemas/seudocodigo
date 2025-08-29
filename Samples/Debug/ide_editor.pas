@@ -286,7 +286,7 @@ var
 implementation
 
 uses ide_evaluador, SynEditTypes, ide_about,
-  id_config, ide_search, ide_monitor;
+  id_config, ide_search, ide_monitor, UAyudaForm;
 
 type
   TWatchRecord = class

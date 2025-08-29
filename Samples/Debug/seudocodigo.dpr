@@ -1,5 +1,7 @@
 program seudocodigo;
 
+{$R *.dres}
+
 uses
   Forms,
   ide_editor in 'ide_editor.pas' {editor},
@@ -8,7 +10,8 @@ uses
   id_config in 'id_config.pas' {FormConfiguracion},
   ide_search in 'ide_search.pas' {LocalizarForm},
   ide_monitor in 'ide_monitor.pas' {VMonitorForm},
-  UseHTMLHelp in '..\UseHTMLHelp.pas';
+  UseHTMLHelp in '..\UseHTMLHelp.pas',
+  UAyudaForm in '..\..\UAyudaForm.pas' {AyudaForm};
 
 {$R *.res}
 
@@ -22,5 +25,6 @@ begin
   Application.CreateForm(TFormConfiguracion, FormConfiguracion);
   Application.CreateForm(TLocalizarForm, LocalizarForm);
   Application.CreateForm(TVMonitorForm, VMonitorForm);
+  Application.CreateForm(TAyudaForm, AyudaForm);
   Application.Run;
 end.

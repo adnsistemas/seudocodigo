@@ -11,6 +11,7 @@ object AyudaForm: TAyudaForm
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object Splitter1: TSplitter
@@ -29,6 +30,8 @@ object AyudaForm: TAyudaForm
     Align = alLeft
     Indent = 19
     TabOrder = 0
+    OnDblClick = TreeView1DblClick
+    OnKeyDown = TreeView1KeyDown
   end
   object RichEdit1: TRichEdit
     Left = 180
@@ -48,5 +51,37 @@ object AyudaForm: TAyudaForm
     ScrollBars = ssBoth
     TabOrder = 1
     Zoom = 100
+  end
+  object CDSEstructura: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    Left = 72
+    Top = 144
+    object CDSEstructuranumero: TIntegerField
+      FieldName = 'numero'
+    end
+    object CDSEstructurapadre: TIntegerField
+      FieldName = 'padre'
+    end
+    object CDSEstructuratitulo: TStringField
+      FieldName = 'titulo'
+      Size = 180
+    end
+    object CDSEstructuracontenido: TIntegerField
+      FieldName = 'contenido'
+    end
+  end
+  object CDSContenidos: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    Left = 288
+    Top = 144
+    object CDSContenidosnumero: TIntegerField
+      FieldName = 'numero'
+    end
+    object CDSContenidoscontenido: TMemoField
+      FieldName = 'contenido'
+      BlobType = ftMemo
+    end
   end
 end

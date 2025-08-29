@@ -1,5 +1,5 @@
 *.dcu
 Dcu
-*/__history/*
+*__history*
 */Debug/*
 config.xml
