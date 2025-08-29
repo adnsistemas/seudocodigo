@@ -1472,12 +1472,7 @@ end;
 
 procedure Teditor.Seudocdigo1Click(Sender: TObject);
 begin
-  if application.HelpFile[1] = '.' then
-    application.HelpFile := ExtractFilePath(application.ExeName) + copy(application.HelpFile,3,Length(application.HelpFile));
-  if FileExists(application.HelpFile) then
-    application.HelpCommand(HELP_FINDER,0)
-  else
-    MessageDlg(Format(RS_CANT_FIND_HELP,[application.HelpFile]),mtError,[mbOk],0);
+  AyudaForm.ShowModal;
 end;
 
 procedure Teditor.AWordWrapUpdate(Sender: TObject);
