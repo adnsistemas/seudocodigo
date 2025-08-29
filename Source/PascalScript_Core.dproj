@@ -58,9 +58,9 @@
         <VerInfo_DLL>true</VerInfo_DLL>
         <VerInfo_Release>1</VerInfo_Release>
         <DCC_N>true</DCC_N>
-        <DCC_DcpOutput>..\Dcu\D5</DCC_DcpOutput>
-        <DCC_BplOutput>..\Dcu\D5</DCC_BplOutput>
-        <DCC_DcuOutput>..\Dcu\D5</DCC_DcuOutput>
+        <DCC_DcpOutput>..\Dcu\D10</DCC_DcpOutput>
+        <DCC_BplOutput>..\Dcu\D10</DCC_BplOutput>
+        <DCC_DcuOutput>..\Dcu\D10</DCC_DcuOutput>
         <VerInfo_AutoGenVersion>true</VerInfo_AutoGenVersion>
         <DesignOnlyPackage>true</DesignOnlyPackage>
         <DCC_S>false</DCC_S>
@@ -70,7 +70,7 @@
         <DCC_Description>RemObjects Pascal Script - Core Package</DCC_Description>
         <DCC_DebugInformation>1</DCC_DebugInformation>
         <VerInfo_Locale>11274</VerInfo_Locale>
-        <DCC_UnitSearchPath>$(BDSPROJECTSDIR)\SynEdit\Source;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <DCC_UnitSearchPath>..\SynEdit\Source;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <DCC_K>false</DCC_K>
         <DCC_OutputNeverBuildDcps>true</DCC_OutputNeverBuildDcps>
@@ -202,7 +202,6 @@
                     <Language Name="RootDir">..\..\..\..\Users\David\Documents\Embarcadero\Studio\Projects\seudoriginal\Source\</Language>
                 </Language>
                 <Excluded_Packages>
-                    <Excluded_Packages Name="C:\Users\David\Documents\Embarcadero\Studio\Projects\seudocodigo\Dcu\D29\win32\PascalScript_Core_D29.bpl">RemObjects Pascal Script - Core Package</Excluded_Packages>
                     <Excluded_Packages Name="$(BDSBIN)\dcloffice2k230.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
                     <Excluded_Packages Name="$(BDSBIN)\dclofficexp230.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
                 </Excluded_Packages>
