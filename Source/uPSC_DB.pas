@@ -173,7 +173,7 @@ With RegClassS(cl,Uppercase(CS_TCOMPONENT),Uppercase(CS_TDATASET)) do
   RegisterProperty(Uppercase(CS_FIELDVALUES), Uppercase(CS_VARIANT + ' ' + CS_String), iptrw);
   RegisterProperty(Uppercase(CS_FOUND), Uppercase(CS_BOOLEAN), iptr);
 {$IFDEF DELPHI6UP}
-  RegisterProperty(Uppercase(CS_ISUNIDIRECTIONAL), Uppercase(CS_BOOLEAN), iptr);
+//  RegisterProperty(Uppercase(CS_ISUNIDIRECTIONAL), Uppercase(CS_BOOLEAN), iptr);
 {$ENDIF}
   RegisterProperty(Uppercase(CS_MODIFIED), Uppercase(CS_BOOLEAN), iptr);
   RegisterProperty(Uppercase(CS_OBJECTVIEW), Uppercase(CS_BOOLEAN), iptrw);
@@ -249,7 +249,7 @@ With RegClassS(cl,Uppercase(CS_TCOLLECTIONITEM),Uppercase(CS_TPARAM)) do
   RegisterProperty(Uppercase(CS_ASBCD), Uppercase(CS_CURRENCY), iptrw);
 {$ENDIF}
 {$IFDEF DELPHI6UP}
-  RegisterProperty(Uppercase(CS_ASFMTBCD), Uppercase(CS_TBCD), iptrw);
+//  RegisterProperty(Uppercase(CS_ASFMTBCD), Uppercase(CS_TBCD), iptrw);
 {$ENDIF}
   RegisterProperty(Uppercase(CS_ASBLOB), Uppercase(CS_TBLOBDATA), iptrw);
   RegisterProperty(Uppercase(CS_ASBOOLEAN), Uppercase(CS_BOOLEAN), iptrw);
@@ -270,7 +270,7 @@ With RegClassS(cl,Uppercase(CS_TCOLLECTIONITEM),Uppercase(CS_TPARAM)) do
   RegisterProperty(Uppercase(CS_DATATYPE), Uppercase(CS_TFIELDTYPE), iptrw);
 {$IFDEF DELPHI6UP}
   RegisterProperty(Uppercase(CS_PRECISION), Uppercase(CS_INTEGER), iptrw);
-  RegisterProperty(Uppercase(CS_NUMERICSCALE), Uppercase(CS_INTEGER), iptrw);
+//  RegisterProperty(Uppercase(CS_NUMERICSCALE), Uppercase(CS_INTEGER), iptrw);
   RegisterProperty(Uppercase(CS_SIZE), Uppercase(CS_INTEGER), iptrw);
 {$ENDIF}
   RegisterProperty(Uppercase(CS_NAME), Uppercase(CS_String), iptrw);
@@ -364,7 +364,7 @@ With RegClassS(cl,Uppercase(CS_TFIELD),Uppercase(CS_TBLOBFIELD)) do
   RegisterProperty(Uppercase(CS_TRANSLITERATE), Uppercase(CS_BOOLEAN), iptrw);
   RegisterProperty(Uppercase(CS_BLOBTYPE), Uppercase(CS_TBLOBTYPE), iptrw);
 {$IFDEF DELPHI6UP}
-  RegisterProperty(Uppercase(CS_GRAPHICHEADER), Uppercase(CS_BOOLEAN), iptrw);
+//  RegisterProperty(Uppercase(CS_GRAPHICHEADER), Uppercase(CS_BOOLEAN), iptrw);
 {$ENDIF}
   end;
 end;
@@ -372,14 +372,14 @@ end;
 {$IFDEF DELPHI6UP}
 procedure SIRegisterTFMTBCDFIELD(CL: TPSPascalCompiler);
 Begin
-With RegClassS(cl,Uppercase(CS_TNUMERICFIELD),Uppercase(CS_TFMTBCDFIELD)) do
+{With RegClassS(cl,Uppercase(CS_TNUMERICFIELD),Uppercase(CS_TFMTBCDFIELD)) do
   begin
   RegisterProperty(Uppercase(CS_VALUE), Uppercase(CS_TBCD), iptrw);
   RegisterProperty(Uppercase(CS_CURRENCY), Uppercase(CS_BOOLEAN), iptrw);
   RegisterProperty(Uppercase(CS_MAXVALUE), Uppercase(CS_String), iptrw);
   RegisterProperty(Uppercase(CS_MINVALUE), Uppercase(CS_String), iptrw);
   RegisterProperty(Uppercase(CS_PRECISION), Uppercase(CS_INTEGER), iptrw);
-  end;
+  end;}
 end;
 {$ENDIF}
 
@@ -550,7 +550,7 @@ With RegClassS(cl,Uppercase(CS_TCOMPONENT),Uppercase(CS_TFIELD)) do
   RegisterMethod(CS_procedure + ' ' + CS_SETFIELDTYPE + '( VALUE : ' + CS_TFIELDTYPE + ')');
 //  RegisterMethod(CS_procedure + ' ' + CS_ VALIDATE( BUFFER : POINTER)');
 {$IFDEF DELPHI6UP}
-  RegisterProperty(Uppercase(CS_ASBCD), Uppercase(CS_TBCD), iptrw);
+//  RegisterProperty(Uppercase(CS_ASBCD), Uppercase(CS_TBCD), iptrw);
 {$ENDIF}
   RegisterProperty(Uppercase(CS_ASBOOLEAN), Uppercase(CS_BOOLEAN), iptrw);
   RegisterProperty(Uppercase(CS_ASCURRENCY), Uppercase(CS_CURRENCY), iptrw);

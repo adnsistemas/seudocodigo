@@ -91,10 +91,10 @@ function HtmlHelp(hwndCaller: THandle; pszFile: PChar; uCommand: cardinal; dwDat
 
 type
   TUseHTMLHelp = class(TObject)
-    function ApplicationHelp(Command: Word; Data: Longint; var CallHelp: Boolean): Boolean;
+    function ApplicationHelp(Command: Word; Data: NativeInt; var CallHelp: Boolean): Boolean;
   end;
 
-function TUseHTMLHelp.ApplicationHelp(Command: Word; Data: Longint; var CallHelp: Boolean): Boolean;
+function TUseHTMLHelp.ApplicationHelp(Command: Word; Data: Nativeint; var CallHelp: Boolean): Boolean;
 begin
   // Make sure VCL doesn't activate WinHelp
   CallHelp := False;

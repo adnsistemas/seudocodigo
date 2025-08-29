@@ -42,7 +42,7 @@ uses shellapi;
 {$R *.DFM}
 
 const
-  Urls:array[0..4] of PChar = ('http://www.frm.utn.edu.ar/algoritmos','http://www.remobjects.com/','http://synedit.sourceforge.net/','mailto:dabdala@frm.utn.edu.ar','http://code.google.com/p/seudocodigo/');
+  Urls:array[0..4] of PChar = ('http://www.frm.utn.edu.ar/','http://www.remobjects.com/','http://synedit.sourceforge.net/','mailto:dabdala@adnsistemas.com.ar','https://github.com/adnsistemas/seudocodigo');
 
 procedure TAcercaForm.Label7Click(Sender: TObject);
 begin

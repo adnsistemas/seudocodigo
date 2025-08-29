@@ -1,9 +1,9 @@
 object FormConfiguracion: TFormConfiguracion
   Left = 86
   Top = 71
-  Width = 555
-  Height = 318
-  Caption = 'Configuración'
+  Caption = 'Configuraci'#243'n'
+  ClientHeight = 291
+  ClientWidth = 547
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -55,24 +55,32 @@ object FormConfiguracion: TFormConfiguracion
     object TabSheet2: TTabSheet
       Caption = 'General'
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object CheckBox1: TCheckBox
         Left = 16
         Top = 8
         Width = 401
         Height = 25
-        Caption = 'Ocultar Monitor al finalizar la ejecución'
+        Caption = 'Ocultar Monitor al finalizar la ejecuci'#243'n'
         TabOrder = 0
       end
     end
     object TabSheet1: TTabSheet
       Caption = 'Directorios'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object GroupBox1: TGroupBox
         Left = 0
         Top = 0
         Width = 448
         Height = 263
         Align = alClient
-        Caption = 'Orden de búsqueda de archivos'
+        Caption = 'Orden de b'#250'squeda de archivos'
         TabOrder = 0
         object OrdenBusquedaMemo: TMemo
           Left = 2

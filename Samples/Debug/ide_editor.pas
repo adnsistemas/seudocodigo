@@ -10,7 +10,8 @@ uses
   uPSComponent_Forms, uPSComponent_Default, uPSComponent_Controls, uPSComponent,
   uPSDebugger, uPSComponent_DB, StdActns, ActnList,
   ImgList, SynHighlighterSeudoc, SynEditMiscClasses, SynEditSearch,
-  SynCompletionProposal, langdef, UseHTMLHelp;
+  SynCompletionProposal, langdef, UseHTMLHelp, System.Actions,
+  SynEditCodeFolding, SynHighlighterNuevo;
 
 resourcestring
   CS_SinNombre = 'Sin nombre';
@@ -59,7 +60,6 @@ type
     IFPS3CE_ComObj1: TPSImport_ComObj;
     Verificar1: TMenuItem;
     PSImport_DB1: TPSImport_DB;
-    SynSeudocSyn1: TSynSeudocSyn;
     Salir1: TMenuItem;
     Splitter2: TSplitter;
     PopupMenu2: TPopupMenu;
@@ -122,10 +122,10 @@ type
     N7: TMenuItem;
     Evaluador1: TMenuItem;
     EVP: TAction;
+    SynSeudoSyn1: TSynSeudoSyn;
     procedure edSpecialLineColors(Sender: TObject; Line: Integer;
       var Special: Boolean; var FG, BG: TColor);
     procedure BreakPointMenuClick(Sender: TObject);
-    procedure ceLineInfo(Sender: TObject; const FileName: String; Position, Row, Col: Cardinal);
     procedure Exit1Click(Sender: TObject);
     procedure ceIdle(Sender: TObject);
     procedure ceExecute(Sender: TPSScript);
@@ -136,9 +136,6 @@ type
     procedure Save1Click(Sender: TObject);
     procedure Saveas1Click(Sender: TObject);
     procedure edStatusChange(Sender: TObject; Changes: TSynStatusChanges);
-    function ceNeedFile(Sender: TObject; const OrginFileName: String;
-      var FileName, Output: String): Boolean;
-    procedure ceBreakpoint(Sender: TObject; const FileName: String; Position, Row, Col: Cardinal);
     procedure Verificar1Click(Sender: TObject);
     procedure AWordWrapExecute(Sender: TObject);
     procedure edGutterClick(Sender: TObject; Button: TMouseButton; X, Y,
@@ -165,8 +162,6 @@ type
     procedure MLocalesExecute(Sender: TObject);
     procedure Informacin1Click(Sender: TObject);
     procedure Q1Click(Sender: TObject);
-    function ceFindUnknownFile(Sender: TObject;
-      const OrginFileName: String; var FileName, Output: String): Boolean;
     procedure Configuracin1Click(Sender: TObject);
     procedure Cerrar1Click(Sender: TObject);
     procedure CerrarTodas1Click(Sender: TObject);
@@ -205,6 +200,15 @@ type
     procedure ADetenerExecute(Sender: TObject);
     procedure EVPUpdate(Sender: TObject);
     procedure EVPExecute(Sender: TObject);
+    procedure ceBreakpoint(Sender: TObject; const FileName: AnsiString;
+      Position, Row, Col: Cardinal);
+    function ceFindUnknownFile(Sender: TObject; const OrginFileName: AnsiString;
+      var FileName, Output: AnsiString): Boolean;
+    procedure ceLineInfo(Sender: TObject; const FileName: AnsiString; Position,
+      Row, Col: Cardinal);
+    function ceNeedFile(Sender: TObject; const OrginFileName: AnsiString;
+      var FileName, Output: AnsiString): Boolean;
+    function ceInt64Read(Sender: TObject; limit: Integer): Int64;
   private
     function getSPCount: integer;
     function GetCurrentEd: TSynEdit;
@@ -320,7 +324,9 @@ begin
   try
     if FMessageLine >= 0 then begin
       msg := ce.CompilerMessages[FMessageLine];
-      if Assigned(msg) and (CompareText(msg.ModuleName,sFile)=0) and (Line = msg.Row) then begin
+      if Assigned(msg) and
+      (((msg.ModuleName <> '') and (CompareText(msg.ModuleName,sFile)=0)) or ((msg.ModuleName = '') and (CompareText(ce.MainFileName,sFile) = 0) ))
+      and (Line = msg.Row) then begin
         Special := True;
         BG := clGreen;
         FG := clWhite;
@@ -360,26 +366,6 @@ begin
   else
     ce.SetBreakPoint(sFile, Line);
   CurrentEd.Refresh;
-end;
-
-procedure Teditor.ceLineInfo(Sender: TObject; const FileName: String; Position, Row,
-  Col: Cardinal);
-begin
-  if (ce.Exec.DebugMode <> dmRun)and Assigned(CurrentEd) then
-  begin
-    SetActivePage(FileName);
-    FActiveLine := Row;
-    if (FActiveLine < CurrentEd.TopLine +2) or (FActiveLine > CurrentEd.TopLine + CurrentEd.LinesInWindow -2) then
-      CurrentEd.TopLine := FActiveLine - (CurrentEd.LinesInWindow div 2);
-    Currented.CaretY := FActiveLine;
-    Currented.CaretX := 1;
-
-    Currented.Refresh;
-    UpdateWatches;
-    UpdateLocales;
-    UpdateGlobales;
-    StatusBar1.Panels[1].Text := 'Detenido';
-  end;
 end;
 
 procedure Teditor.Exit1Click(Sender: TObject);
@@ -427,6 +413,65 @@ begin
   ce.SetVarToInstance(CS_SELF, Self);
   ce.SetVarToInstance(CS_APPLICATION, Application);
   StatusBar1.Panels[1].Text := RS_EXECUTING;
+end;
+
+function Teditor.ceFindUnknownFile(Sender: TObject;
+  const OrginFileName: AnsiString; var FileName, Output: AnsiString): Boolean;
+var
+  path:string;
+  i:integer;
+  foundpos:integer;
+  fl:TFileStream;
+  fd:TFileRecord;
+begin
+  try
+    foundpos := -1;
+    FileName := FileName + '.sdc';
+    fd := TFileRecord(FFiles.Objects[PageControl.ActivePageIndex]);
+    path := ExtractFilePath(fd.NombreEnDisco);
+    try
+      //busco en los archivos abiertos
+      for i:=0 to PageControl.PageCount -1 do begin
+        fd := TFileRecord(FFiles.Objects[i]);
+        if CompareText(fd.NombreReal,FileName) = 0 then begin
+          Output := TSynEdit(PageControl.Pages[i].Controls[0]).Text;
+          fd.FScriptName := OrginFileName;
+          foundpos:=i;
+          Result := True;
+          exit;
+        end;
+      end;
+      //busco en el mismo directorio y luego en los especificados como directorios de búsqueda
+      result := FileExists(path + FileName);
+      if not result then begin
+        for i:=0 to SearchPathCount - 1 do begin
+          path := SetToSearchPath(i,path);
+          result := FileExists(path + FileName);
+          if result then
+            break;
+        end;
+      end;
+      if result then try
+        fl := TFileStream.Create(path + FileName,fmOpenRead);
+        try
+          SetLength(Output,fl.Size);
+          fl.Read(Pointer(Output)^,fl.Size);
+        finally
+          fl.Free;
+        end;
+        CreateTab(path + FileName);
+        foundpos := PageControl.ActivePageIndex;
+        fd := TFileRecord(FFiles.Objects[foundpos]);
+        fd.FScriptName := OrginFileName;
+      except
+        result := False;
+      end;
+    finally
+      UsarArchivo(foundpos);
+    end;
+  except
+    result := False;
+  end;
 end;
 
 procedure Teditor.ceAfterExecute(Sender: TPSScript);
@@ -547,62 +592,6 @@ begin
     StatusBar1.Panels[0].Text := IntToStr(Currented.CaretY)+':'+IntToStr(Currented.CaretX)
 end;
 
-function Teditor.ceNeedFile(Sender: TObject; const OrginFileName: String;
-  var FileName, Output: String): Boolean;
-var
-  path: string;
-  f: TFileStream;
-  i:integer;
-  fd:TFileRecord;
-begin
-  try
-    FileName := FileName + '.sdc';
-    for i:=0 to PageControl.PageCount - 1 do begin
-      if CompareText(PageControl.Pages[i].Caption,FileName)=0 then begin
-        Output := TSynEdit(PageControl.Pages[i].Controls[0]).Text;
-        Result := True;
-        exit;
-      end;
-    end;
-    fd := TFileRecord(FFiles.Objects[PageControl.ActivePageIndex]);
-    if aFile <> '' then
-      Path := ExtractFilePath(fd.NombreEnDisco)
-    else
-      Path := ExtractFilePath(ParamStr(0));
-    Path := Path + FileName;
-    try
-      F := TFileStream.Create(Path, fmOpenRead or fmShareDenyWrite);
-    except
-      Result := false;
-      exit;
-    end;
-    try
-      SetLength(Output, f.Size);
-      f.Read(Output[1], Length(Output));
-    finally
-      f.Free;
-    end;
-    Result := True;
-  except
-    Result := False;
-  end;
-end;
-
-procedure Teditor.ceBreakpoint(Sender: TObject; const FileName: String; Position, Row,
-  Col: Cardinal);
-begin
-  SetActivePage(FileName);
-  FActiveLine := Row;
-  if not Assigned(CurrentEd) then
-    exit;
-  if (FActiveLine < Currented.TopLine +2) or (FActiveLine > CurrentEd.TopLine + CurrentEd.LinesInWindow -2) then
-    CurrentEd.TopLine := FActiveLine - (CurrentEd.LinesInWindow div 2);
-  Currented.CaretY := FActiveLine;
-  Currented.CaretX := 1;
-  WatchPanel.Enabled := True;
-  Currented.Refresh;
-end;
-
 procedure Teditor.SetActiveFile(const Value: string);
 begin
   FActiveFile := ExtractFileName(Value);
@@ -637,10 +626,9 @@ end;
 
 procedure Teditor.Salir1Click(Sender: TObject);
 begin
-  if ce.Running then begin
+  if ce.Running then
     ce.Stop;
-    VMonitorForm.Stop;
-  end;
+  VMonitorForm.Stop;
   Close;
 end;
 
@@ -656,8 +644,8 @@ end;
 procedure Teditor.FormCreate(Sender: TObject);
 begin
   FFirstShow := True;
-  if ShortDateFormat <> RS_DATE_FORMAT then
-    ShortDateFormat := RS_DATE_FORMAT;
+  if FormatSettings.ShortDateFormat <> RS_DATE_FORMAT then
+    FormatSettings.ShortDateFormat := RS_DATE_FORMAT;
   FWatches := TStringlist.Create;
   FFiles := TStringList.Create;
   with FWatches as TStringList do begin
@@ -937,16 +925,13 @@ procedure Teditor.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
           Delete(apppath,1,i);
           Delete(path,1,i);
         end else if path[2] <> ':' then begin //no es un path absoluto
-          i := Pos('\',path);
-          if i > 0 then begin
-            repeat
-              i := Pos('\',apppath);
-              if i>0 then begin
-                Delete(apppath,1,i);
-                result := result + '..\';
-              end;
-            until i=0;
-          end;
+          repeat
+            i := Pos('\',apppath);
+            if i>0 then begin
+              Delete(apppath,1,i);
+              result := result + '..\';
+            end;
+          until i=0;
           result := result + path;
         end else begin
           result:=path;
@@ -954,6 +939,8 @@ procedure Teditor.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
         end;
       end;
     until i=0;
+    if result = '' then
+      result := path;
   end;
 var
   i:integer;
@@ -1182,65 +1169,6 @@ begin
     except
     end;
   until VMonitorForm.Stopped;
-end;
-
-function Teditor.ceFindUnknownFile(Sender: TObject;
-  const OrginFileName: String; var FileName, Output: String): Boolean;
-var
-  path:string;
-  i:integer;
-  foundpos:integer;
-  fl:TFileStream;
-  fd:TFileRecord;
-begin
-  try
-    foundpos := -1;
-    FileName := FileName + '.sdc';
-    fd := TFileRecord(FFiles.Objects[PageControl.ActivePageIndex]);
-    path := ExtractFilePath(fd.NombreEnDisco);
-    try
-      //busco en los archivos abiertos
-      for i:=0 to PageControl.PageCount -1 do begin
-        fd := TFileRecord(FFiles.Objects[i]);
-        if CompareText(fd.NombreReal,FileName) = 0 then begin
-          Output := TSynEdit(PageControl.Pages[i].Controls[0]).Text;
-          fd.FScriptName := OrginFileName;
-          foundpos:=i;
-          Result := True;
-          exit;
-        end;
-      end;
-      //busco en el mismo directorio y luego en los especificados como directorios de búsqueda
-      result := FileExists(path + FileName);
-      if not result then begin
-        for i:=0 to SearchPathCount - 1 do begin
-          path := SetToSearchPath(i,path);
-          result := FileExists(path + FileName);
-          if result then
-            break;
-        end;
-      end;
-      if result then try
-        fl := TFileStream.Create(path + FileName,fmOpenRead);
-        try
-          SetLength(Output,fl.Size);
-          fl.Read(Pointer(Output)^,fl.Size);
-        finally
-          fl.Free;
-        end;
-        CreateTab(path + FileName);
-        foundpos := PageControl.ActivePageIndex;
-        fd := TFileRecord(FFiles.Objects[foundpos]);
-        fd.FScriptName := OrginFileName;
-      except
-        result := False;
-      end;
-    finally
-      UsarArchivo(foundpos);
-    end;
-  except
-    result := False;
-  end;
 end;
 
 function Teditor.getSPCount: integer;
@@ -1505,17 +1433,19 @@ procedure Teditor.FormShow(Sender: TObject);
 var
   i:integer;
   arcs:TStringList;
+  app:string;
 begin
   if FFirstShow then begin
     FFirstShow := False;
+    app := ExtractFilepath(application.ExeName);
     arcs:=TStringList.Create;
     try
       FormConfiguracion.LoadConfig('edicion','archivo',arcs);
       if (arcs.Count > 0)or(ParamCount > 1) then while PageControl.PageCount > 0 do
         DestroyTab(0);
       for i:=0 to arcs.Count - 1 do begin
-        if FileExists(arcs[i]) then
-          CreateTab(arcs[i]);
+        if FileExists(app + arcs[i]) then
+          CreateTab(app + arcs[i]);
       end;
     finally
       arcs.Free;
@@ -1572,6 +1502,16 @@ var
 begin
   ReadReal(r);
   result := r;
+end;
+
+function Teditor.ceInt64Read(Sender: TObject; limit: Integer): Int64;
+var
+  entero:integer;
+begin
+  repeat
+    ReadInt(entero);
+  until (entero <= limit)and(entero > -limit);
+  result := entero;
 end;
 
 function Teditor.ceIntegerRead(Sender: TObject; limit: Integer): Integer;
@@ -1647,6 +1587,21 @@ begin
   PosListItem;
 end;
 
+procedure Teditor.ceBreakpoint(Sender: TObject; const FileName: AnsiString;
+  Position, Row, Col: Cardinal);
+begin
+  SetActivePage(FileName);
+  FActiveLine := Row;
+  if not Assigned(CurrentEd) then
+    exit;
+  if (FActiveLine < Currented.TopLine +2) or (FActiveLine > CurrentEd.TopLine + CurrentEd.LinesInWindow -2) then
+    CurrentEd.TopLine := FActiveLine - (CurrentEd.LinesInWindow div 2);
+  Currented.CaretY := FActiveLine;
+  Currented.CaretX := 1;
+  WatchPanel.Enabled := True;
+  Currented.Refresh;
+end;
+
 procedure Teditor.ceStringShow(Sender: TObject; const data: String);
 begin
   PreListItem(CS_quote);
@@ -1706,6 +1661,26 @@ begin
   VMonitorForm.Stop;
 end;
 
+procedure Teditor.ceLineInfo(Sender: TObject; const FileName: AnsiString;
+  Position, Row, Col: Cardinal);
+begin
+  if (ce.Exec.DebugMode <> dmRun)and Assigned(CurrentEd) then
+  begin
+    SetActivePage(FileName);
+    FActiveLine := Row;
+    if (FActiveLine < CurrentEd.TopLine +2) or (FActiveLine > CurrentEd.TopLine + CurrentEd.LinesInWindow -2) then
+      CurrentEd.TopLine := FActiveLine - (CurrentEd.LinesInWindow div 2);
+    Currented.CaretY := FActiveLine;
+    Currented.CaretX := 1;
+
+    Currented.Refresh;
+    UpdateWatches;
+    UpdateLocales;
+    UpdateGlobales;
+    StatusBar1.Panels[1].Text := 'Detenido';
+  end;
+end;
+
 procedure Teditor.ceListShow(Sender: TObject; const data: Integer);
 begin
   PreListItem;
@@ -1717,6 +1692,47 @@ begin
   end else begin
     WriteStr(')');
     PosListItem;
+  end;
+end;
+
+function Teditor.ceNeedFile(Sender: TObject; const OrginFileName: AnsiString;
+  var FileName, Output: AnsiString): Boolean;
+var
+  path: string;
+  f: TFileStream;
+  i:integer;
+  fd:TFileRecord;
+begin
+  try
+    FileName := FileName + '.sdc';
+    for i:=0 to PageControl.PageCount - 1 do begin
+      if CompareText(PageControl.Pages[i].Caption,FileName)=0 then begin
+        Output := TSynEdit(PageControl.Pages[i].Controls[0]).Text;
+        Result := True;
+        exit;
+      end;
+    end;
+    fd := TFileRecord(FFiles.Objects[PageControl.ActivePageIndex]);
+    if aFile <> '' then
+      Path := ExtractFilePath(fd.NombreEnDisco)
+    else
+      Path := ExtractFilePath(ParamStr(0));
+    Path := Path + FileName;
+    try
+      F := TFileStream.Create(Path, fmOpenRead or fmShareDenyWrite);
+    except
+      Result := false;
+      exit;
+    end;
+    try
+      SetLength(Output, f.Size);
+      f.Read(Output[1], Length(Output));
+    finally
+      f.Free;
+    end;
+    Result := True;
+  except
+    Result := False;
   end;
 end;
 

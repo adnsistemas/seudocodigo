@@ -1,11 +1,11 @@
 object editor: Teditor
   Left = 150
   Top = 98
-  Width = 718
-  Height = 498
   Caption = 
-    'Seudocódigo  - Universidad Tecnológica Nacional - Facultad Regio' +
+    'Seudoc'#243'digo  - Universidad Tecnol'#243'gica Nacional - Facultad Regio' +
     'nal Mendoza'
+  ClientHeight = 351
+  ClientWidth = 729
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -23,23 +23,24 @@ object editor: Teditor
   TextHeight = 13
   object Splitter1: TSplitter
     Left = 0
-    Top = 309
-    Width = 702
+    Top = 218
+    Width = 729
     Height = 3
     Cursor = crVSplit
     Align = alBottom
+    ExplicitTop = 309
+    ExplicitWidth = 702
   end
   object Splitter2: TSplitter
     Left = 185
     Top = 0
-    Width = 3
-    Height = 309
-    Cursor = crHSplit
+    Height = 218
+    ExplicitHeight = 309
   end
   object StatusBar1: TStatusBar
     Left = 0
-    Top = 423
-    Width = 702
+    Top = 332
+    Width = 729
     Height = 19
     Panels = <
       item
@@ -51,24 +52,23 @@ object editor: Teditor
       item
         Width = 400
       end>
-    SimplePanel = False
     OnResize = StatusBar1Resize
   end
   object PageControl1: TPageControl
     Left = 0
-    Top = 312
-    Width = 702
+    Top = 221
+    Width = 729
     Height = 111
     ActivePage = TabSheet1
     Align = alBottom
     DockSite = True
     TabOrder = 1
     object TabSheet1: TTabSheet
-      Caption = 'Información'
+      Caption = 'Informaci'#243'n'
       object messages: TListBox
         Left = 0
         Top = 0
-        Width = 694
+        Width = 721
         Height = 83
         TabStop = False
         Align = alClient
@@ -83,16 +83,16 @@ object editor: Teditor
   object PageControl: TPageControl
     Left = 188
     Top = 0
-    Width = 514
-    Height = 309
+    Width = 541
+    Height = 218
     Align = alClient
     PopupMenu = PopupMenu3
     TabOrder = 2
     OnChange = PageControlChange
   end
   object ed: TSynEdit
-    Left = 236
-    Top = 72
+    Left = 194
+    Top = 8
     Width = 349
     Height = 209
     HelpContext = 102
@@ -106,17 +106,27 @@ object editor: Teditor
     Visible = False
     OnEnter = edEnter
     OnKeyDown = edKeyDown
+    CodeFolding.GutterShapeSize = 11
+    CodeFolding.CollapsedLineColor = clGrayText
+    CodeFolding.FolderBarLinesColor = clGrayText
+    CodeFolding.IndentGuidesColor = clGray
+    CodeFolding.IndentGuides = True
+    CodeFolding.ShowCollapsedLine = False
+    CodeFolding.ShowHintMark = True
+    UseCodeFolding = False
+    Gutter.AutoSize = True
     Gutter.Font.Charset = DEFAULT_CHARSET
     Gutter.Font.Color = clWindowText
     Gutter.Font.Height = -11
     Gutter.Font.Name = 'Terminal'
     Gutter.Font.Style = []
-    Gutter.LeftOffset = 8
+    Gutter.LeftOffset = 2
     Gutter.ShowLineNumbers = True
-    Highlighter = SynSeudocSyn1
+    Highlighter = SynSeudoSyn1
     Lines.Strings = (
       'programa Ejemplo'
       'inicio'
+      #9'una <- 5'
       'fin_programa.')
     Options = [eoAutoIndent, eoDragDropEditing, eoEnhanceEndKey, eoGroupUndo, eoScrollPastEol, eoShowScrollHint, eoSmartTabDelete, eoTabIndent, eoTabsToSpaces, eoTrimTrailingSpaces]
     SearchEngine = SynEditSearch1
@@ -125,6 +135,7 @@ object editor: Teditor
     OnGutterClick = edGutterClick
     OnSpecialLineColors = edSpecialLineColors
     OnStatusChange = edStatusChange
+    FontSmoothing = fsmNone
     RemovedKeystrokes = <
       item
         Command = ecContextHelp
@@ -140,7 +151,7 @@ object editor: Teditor
     Left = 0
     Top = 0
     Width = 185
-    Height = 309
+    Height = 218
     Align = alLeft
     BevelOuter = bvNone
     Caption = 'Panel1'
@@ -149,7 +160,7 @@ object editor: Teditor
       Left = 0
       Top = 0
       Width = 185
-      Height = 309
+      Height = 218
       Align = alClient
       BevelOuter = bvNone
       Enabled = False
@@ -157,19 +168,21 @@ object editor: Teditor
       OnResize = WatchPanelResize
       object Splitter3: TSplitter
         Left = 0
-        Top = 201
+        Top = 110
         Width = 185
         Height = 3
         Cursor = crVSplit
         Align = alBottom
+        ExplicitTop = 201
       end
       object Splitter4: TSplitter
         Left = 0
-        Top = 93
+        Top = 2
         Width = 185
         Height = 3
         Cursor = crVSplit
         Align = alBottom
+        ExplicitTop = 93
       end
       object ListBox1: TListBox
         Left = 0
@@ -189,7 +202,7 @@ object editor: Teditor
         Width = 185
         Height = 49
         Align = alTop
-        Caption = 'Inspección'
+        Caption = 'Inspecci'#243'n'
         TabOrder = 1
         object Edit1: TEdit
           Left = 8
@@ -202,7 +215,7 @@ object editor: Teditor
       end
       object GroupBox2: TGroupBox
         Left = 0
-        Top = 96
+        Top = 5
         Width = 185
         Height = 105
         Align = alBottom
@@ -231,6 +244,9 @@ object editor: Teditor
           Align = alTop
           BevelOuter = bvNone
           TabOrder = 1
+          DesignSize = (
+            181
+            18)
           object CheckBox1: TCheckBox
             Left = 8
             Top = 1
@@ -244,7 +260,7 @@ object editor: Teditor
       end
       object GroupBox3: TGroupBox
         Left = 0
-        Top = 204
+        Top = 113
         Width = 185
         Height = 105
         Align = alBottom
@@ -273,6 +289,9 @@ object editor: Teditor
           Align = alTop
           BevelOuter = bvNone
           TabOrder = 1
+          DesignSize = (
+            181
+            18)
           object CheckBox2: TCheckBox
             Left = 8
             Top = 1
@@ -318,6 +337,7 @@ object editor: Teditor
     OnNeedFile = ceNeedFile
     OnFindUnknownFile = ceFindUnknownFile
     OnIntegerRead = ceIntegerRead
+    OnInt64Read = ceInt64Read
     OnRealRead = ceRealRead
     OnStringRead = ceStringRead
     OnCharRead = ceCharRead
@@ -345,12 +365,12 @@ object editor: Teditor
     Left = 592
     Top = 16
     object BreakPointMenu: TMenuItem
-      Caption = 'Establecer/Quitar &Interrupción'
+      Caption = 'Establecer/Quitar &Interrupci'#243'n'
       ShortCut = 116
       OnClick = BreakPointMenuClick
     end
     object MostrarOcultarnmerosdelnea1: TMenuItem
-      Caption = '&Mostrar/Ocultar números de línea'
+      Caption = '&Mostrar/Ocultar n'#250'meros de l'#237'nea'
       ShortCut = 123
       OnClick = MostrarOcultarnmerosdelnea1Click
     end
@@ -396,7 +416,7 @@ object editor: Teditor
       end
     end
     object Configuracin1: TMenuItem
-      Caption = '&Configuración'
+      Caption = '&Configuraci'#243'n'
       HelpContext = 101
       OnClick = Configuracin1Click
     end
@@ -481,14 +501,14 @@ object editor: Teditor
   end
   object SaveDialog1: TSaveDialog
     DefaultExt = 'sdc'
-    Filter = 'Seudocódigo|*.sdc'
+    Filter = 'Seudoc'#243'digo|*.sdc'
     Options = [ofHideReadOnly, ofPathMustExist, ofEnableSizing]
     Left = 200
     Top = 104
   end
   object OpenDialog1: TOpenDialog
     DefaultExt = 'sdc'
-    Filter = 'Seudocódigo|*.sdc|Cualquiera|*.*'
+    Filter = 'Seudoc'#243'digo|*.sdc|Cualquiera|*.*'
     Options = [ofHideReadOnly, ofAllowMultiSelect, ofPathMustExist, ofFileMustExist, ofEnableSizing]
     Left = 168
     Top = 104
@@ -530,22 +550,6 @@ object editor: Teditor
     Left = 328
     Top = 232
   end
-  object SynSeudocSyn1: TSynSeudocSyn
-    DefaultFilter = 
-      'Pascal Files (*.pas;*.pp;*.dpr;*.dpk;*.inc)|*.pas;*.pp;*.dpr;*.d' +
-      'pk;*.inc'
-    CommentAttri.Foreground = clGray
-    KeyAttri.Foreground = clNavy
-    NumberAttri.Foreground = clMaroon
-    StringAttri.Foreground = clPurple
-    SymbolAttri.Foreground = clGreen
-    InnerRoutineAttri.Foreground = clBlack
-    InnerRoutineAttri.Style = [fsBold]
-    AssignmentAttri.Foreground = clMaroon
-    AssignmentAttri.Style = [fsBold]
-    Left = 592
-    Top = 64
-  end
   object PopupMenu2: TPopupMenu
     Left = 56
     Top = 112
@@ -570,7 +574,7 @@ object editor: Teditor
       OnExecute = MGlobalesExecute
     end
     object AWordWrap: TAction
-      Caption = '&Cortar líneas largas'
+      Caption = '&Cortar l'#237'neas largas'
       ShortCut = 49219
       OnExecute = AWordWrapExecute
       OnUpdate = AWordWrapUpdate
@@ -584,7 +588,7 @@ object editor: Teditor
     end
     object AELinea: TAction
       Category = 'Ejecutar'
-      Caption = '&Línea'
+      Caption = '&L'#237'nea'
       ShortCut = 119
       OnExecute = AELineaExecute
       OnUpdate = AETodoUpdate
@@ -592,7 +596,7 @@ object editor: Teditor
     object AEInstruccion: TAction
       Tag = 1
       Category = 'Ejecutar'
-      Caption = '&Instrucción'
+      Caption = '&Instrucci'#243'n'
       ShortCut = 118
       OnExecute = AELineaExecute
       OnUpdate = AETodoUpdate
@@ -658,5 +662,28 @@ object editor: Teditor
     object Limpiar1: TMenuItem
       Action = ALimpiarMensajes
     end
+  end
+  object SynSeudoSyn1: TSynSeudoSyn
+    DefaultFilter = 'Seudoc'#243'digo (*.sdc) | *.sdc'
+    Options.AutoDetectEnabled = False
+    Options.AutoDetectLineLimit = 0
+    Options.DefaultExtension = 'sdc'
+    Options.Visible = False
+    CommentAttri.Foreground = clBtnShadow
+    KeyAttri.Foreground = clTeal
+    NumberAttri.Foreground = clGreen
+    FloatAttri.Foreground = clGreen
+    HexAttri.Foreground = clGreen
+    StringAttri.Foreground = clBlue
+    StringAttri.Style = [fsItalic]
+    CharAttri.Foreground = clBlue
+    CharAttri.Style = [fsItalic]
+    SymbolAttri.Style = [fsBold]
+    AssignmentAttri.Foreground = clRed
+    AssignmentAttri.Style = [fsBold]
+    InnerRoutineAttri.Foreground = clOlive
+    InnerRoutineAttri.Style = [fsBold]
+    Left = 544
+    Top = 64
   end
 end

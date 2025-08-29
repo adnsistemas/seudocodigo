@@ -91,6 +91,8 @@ const
 
   btNotificationVariant = 27;
 
+  btUnicodeString = 28;
+
   btType = 130;
 
   btEnum = 129;
@@ -321,6 +323,8 @@ type
 
 const
 
+  PointerSize = IPointer({$IFDEF CPU64}8{$ELSE}4{$ENDIF});
+  PointerSize2 = IPointer(2*PointerSize);
   MaxListSize = Maxint div 16;
 
 type
@@ -1141,7 +1145,7 @@ var
     begin
       result := False;
       for n := 0 to Length(searched) - 1 do begin
-        if FText[st+n] <> searched[n + 1] then
+        if FText[st+n] <> AnsiChar(searched[n + 1]) then
           exit;
       end;
       result := True;
@@ -1188,7 +1192,7 @@ var
             while p^<>#0 do
             begin
               if p^ in [#97..#122,#225,#233,#237,#241,#243,#250,#252] then
-                Dec(Byte(p^), 32);
+                p^ := AnsiChar(Byte(p^) - 32);
               inc(p);
             end;
             if not CheckReserved(FLastUpToken, CurrTokenId) then

@@ -1,1 +1,1 @@
-<config><edicion></edicion></config>
+<config><edicion><archivo><![CDATA[..\..\..\..\..\..\prueba.sdc]]></archivo></edicion><general><monitor><![CDATA[no]]></monitor></general><busqueda><directorio><![CDATA[.]]></directorio><directorio><![CDATA[auxiliares]]></directorio></busqueda></config>

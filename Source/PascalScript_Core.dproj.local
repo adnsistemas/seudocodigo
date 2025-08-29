@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+  <Transactions>
+    <Transaction>2025/08/16 23:33:12.941,=rtl.dcp</Transaction>
+    <Transaction>2025/08/16 23:33:12.957,=vcl.dcp</Transaction>
+    <Transaction>2025/08/16 23:33:12.969,=dbrtl.dcp</Transaction>
+    <Transaction>2025/08/16 23:33:12.980,=SynEdit_R.dcp</Transaction>
+    <Transaction>2025/08/17 00:06:12.173,=C:\Users\David\Documents\Embarcadero\Studio\Projects\seudoriginal\Source\SynHighlighterNuevo.pas</Transaction>
+    <Transaction>2025/08/17 10:13:23.574,C:\Users\David\Documents\Embarcadero\Studio\Projects\seudoriginal\Source\SynHighlighterSeudoc.pas=</Transaction>
+    <Transaction>2025/08/28 23:22:20.775,C:\Users\David\Documents\Embarcadero\Studio\Projects\seudoriginal\Source\PascalScript_Core.dproj=C:\Users\David\Documents\Embarcadero\Studio\Projects\seudoriginal\Source\PascalScript_Core_D5.dproj</Transaction>
+  </Transactions>
+</BorlandProject>

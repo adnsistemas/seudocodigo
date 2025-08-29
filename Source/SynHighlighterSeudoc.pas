@@ -138,7 +138,7 @@ type
     procedure UnknownProc;
     procedure SetPackageSource(const Value: Boolean);
   protected
-    function GetIdentChars: TSynIdentChars; override;
+//    function GetIdentChars: TSynIdentChars; override;
     function GetSampleSource: string; override;
     function IsFilterStored: boolean; override;
   public
@@ -156,9 +156,9 @@ type
     function GetTokenPos: Integer; override;
     procedure Next; override;
     procedure ResetRange; override;
-    procedure SetLine(NewValue: string; LineNumber:Integer); override;
+    procedure SetLine(const NewValue: string; LineNumber:Integer); override;
     procedure SetRange(Value: Pointer); override;
-    property IdentChars;
+//    property IdentChars;
   published
     property CommentAttri: TSynHighlighterAttributes read fCommentAttri
       write fCommentAttri;
@@ -639,7 +639,7 @@ begin
   fDefaultFilter := SYNS_FilterSeudocodigo;
 end; { Create }
 
-procedure TSynSeudocSyn.SetLine(NewValue: string; LineNumber:Integer);
+procedure TSynSeudocSyn.SetLine(const NewValue: string; LineNumber:Integer);
 begin
   fLine := PChar(NewValue);
   Run := 0;
@@ -1005,10 +1005,10 @@ begin
   fRange:= rsUnknown;
 end;
 
-function TSynSeudocSyn.GetIdentChars: TSynIdentChars;
+{function TSynSeudocSyn.GetIdentChars: TSynIdentChars;
 begin
   Result := TSynValidStringChars;
-end;
+end;}
 
 function TSynSeudocSyn.GetSampleSource: string;
 begin

@@ -1755,6 +1755,7 @@ const
   CS_wsNormal = 'epNormal';
   SYNS_FilterSeudocodigo = 'Seudocódigo (*.sdc)|*.sdc';
   SYNS_LangSeudocodigo = 'Seudocódigo';
+  SYNS_FriendlyLangSeudocodigo = 'Seudocódigo en Español';
 
 const
 { sintaxis }

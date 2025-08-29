@@ -26,8 +26,8 @@ type
     function GetOM: boolean;
   public
     { Public declarations }
-    procedure SaveConfig(groupName,itemName:string;Items:TStrings);
-    procedure LoadConfig(groupName,itemName:string;Items:TStrings);
+    procedure SaveConfig(groupName,itemName:AnsiString;Items:TStrings);
+    procedure LoadConfig(groupName,itemName:AnsiString;Items:TStrings);
     property OcultarMonitor:boolean read GetOM;
   end;
 
@@ -70,7 +70,7 @@ begin
   dums:=TStringList.Create;
   try
     LoadConfig('general','monitor',dums);
-    CheckBox1.Checked := dums[0] = 'si';
+    CheckBox1.Checked := (dums.Count > 0) and (dums[0] = 'si');
   finally
     dums.Free;
   end;
@@ -78,15 +78,15 @@ end;
 
 procedure TFormConfiguracion.FormCreate(Sender: TObject);
 begin
-//  LeerConfiguracion;
+  LeerConfiguracion;
 end;
 
 const
   BuffSize = 4096;
-  function FindOpening(Str:TStream;OpenTag:string;var data:string;ParentClose:string=''):boolean;
+  function FindOpening(Str:TStream;OpenTag:AnsiString;var data:AnsiString;ParentClose:AnsiString=''):boolean;
   var
-    prevdata:string;
-    buff:string;
+    prevdata:AnsiString;
+    buff:AnsiString;
     len,i,p:integer;
   begin
     result := False;
@@ -112,7 +112,7 @@ const
       prevdata := prevdata + buff;
     until Length(buff) = 0;
   end;
-  function GetUntilClose(Str:TStream;CloseTag:string;var data:string):string;
+  function GetUntilClose(Str:TStream;CloseTag:AnsiString;var data:AnsiString):AnsiString;
   var
     prevdata:string;
     buff:string;
@@ -137,17 +137,18 @@ const
     until Length(buff) = 0;
   end;
 
-procedure TFormConfiguracion.LoadConfig(groupName, itemName: string;
+procedure TFormConfiguracion.LoadConfig(groupName, itemName: AnsiString;
   Items: TStrings);
 var
   fl:TFileStream;
-  bus,mcl:string;
+  bus,mcl:AnsiString;
   len:integer;
-  data,item:string;
+  data,item:AnsiString;
 begin
   try
     fl:=TFileStream.Create(ExtractFilePath(application.ExeName)+'config.xml',fmOpenRead);
     try
+      data := '';
       if FindOpening(fl,'<' + groupName + '>',data,'</config>') then begin
         mcl := '</' + groupName + '>';
         bus := '<' + itemName + '><![CDATA[';
@@ -165,14 +166,33 @@ begin
   end;
 end;
 
-procedure TFormConfiguracion.SaveConfig(groupName, itemName: string;
+procedure TFormConfiguracion.SaveConfig(groupName, itemName: AnsiString;
   Items: TStrings);
+  procedure escribirGrupo(destino:TStream);
+  var
+    gopc,io,ic:AnsiString;
+    i:integer;
+  begin
+    gopc := '<' + groupName + '>';
+    destino.Write(Pointer(gopc)^,Length(gopc));
+    io := '<' + itemName + '><![CDATA[';
+    ic := ']]></' + itemName + '>';
+    for i := 0 to Items.Count -1 do begin
+      destino.Write(Pointer(io)^,Length(io));
+      gopc := Items[i];
+      destino.Write(Pointer(gopc)^,Length(gopc));
+      destino.Write(Pointer(ic)^,Length(ic));
+    end;
+    gopc := '</' + groupName + '>';
+    destino.Write(Pointer(gopc)^,Length(gopc));
+  end;
 var
   fs,fd:TFileStream;
-  bus,mcl:string;
+  bus:AnsiString;
   len,prevpos:integer;
-  data,item:string;
+  data:AnsiString;
 begin
+  data := '';
   try
     fd:=TFileStream.Create(ExtractFilePath(application.ExeName)+'config.xmlt',fmOpenReadWrite or fmCreate);
     try
@@ -180,6 +200,7 @@ begin
       fs := nil;
       try
         fs:=TFileStream.Create(ExtractFilePath(application.ExeName)+'config.xml',fmOpenRead);
+        fs.Seek(0,soFromBeginning);
       except
       end;
       if Assigned(fs) then try
@@ -190,38 +211,33 @@ begin
           fs.Position := 0;
           fd.CopyFrom(fs,len);
           fs.Position := prevpos;
-          fd.Write(Pointer(bus)^,Length(bus));
-          bus := '<' + itemName + '><![CDATA[';
-          mcl := ']]></' + itemName + '>';
-          for len := 0 to Items.Count -1 do begin
-            fd.Write(Pointer(bus)^,Length(bus));
-            item := Items[len];
-            fd.Write(Pointer(item)^,Length(item));
-            fd.Write(Pointer(mcl)^,Length(mcl));
-          end;
+          escribirGrupo(fd);
           bus := '</' + groupName + '>';
           FindOpening(fs,bus,data,'</config>');
+          if Pos(bus,data) = 1 then
+            Delete(data,1,Length(bus));
           fd.Write(Pointer(data)^,Length(data));
           if fs.Size > fs.Position then
             fd.CopyFrom(fs,fs.Size - fs.Position);
+        end else begin
+          bus := '<config>';
+          fd.Write(Pointer(bus)^,Length(bus));
+          escribirGrupo(fd);
+          if fs.Size > 0 then begin
+            fs.Position := Length('<config>');
+            len := fs.Size - fs.Position;
+            fd.CopyFrom(fs,len);
+          end else begin
+            bus := '</config>';
+            fd.Write(Pointer(bus)^,Length(bus));
+          end;
         end;
       finally
         fs.Free;
       end else begin
         bus := '<config>';
         fd.Write(Pointer(bus)^,Length(bus));
-        bus := '<' + groupName + '>';
-        fd.Write(Pointer(bus)^,Length(bus));
-        bus := '<' + itemName + '><![CDATA[';
-        mcl := ']]></' + itemName + '>';
-        for len := 0 to Items.Count -1 do begin
-          fd.Write(Pointer(bus)^,Length(bus));
-          item := Items[len];
-          fd.Write(Pointer(item)^,Length(item));
-          fd.Write(Pointer(mcl)^,Length(mcl));
-        end;
-        bus := '</' + groupName + '>';
-        fd.Write(Pointer(bus)^,Length(bus));
+        escribirGrupo(fd);
         bus := '</config>';
         fd.Write(Pointer(bus)^,Length(bus));
       end;

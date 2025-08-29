@@ -2,7 +2,7 @@ object AcercaForm: TAcercaForm
   Left = 192
   Top = 122
   BorderStyle = bsDialog
-  Caption = 'Acerca de Seudocódigo'
+  Caption = 'Acerca de Seudoc'#243'digo'
   ClientHeight = 242
   ClientWidth = 467
   Color = clBtnFace
@@ -22,7 +22,7 @@ object AcercaForm: TAcercaForm
     Height = 20
     Align = alTop
     Alignment = taCenter
-    Caption = 'Programa de distribución libre, bajo licencia LGPL'
+    Caption = 'Programa de distribuci'#243'n libre, bajo licencia LGPL'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -16
@@ -30,6 +30,7 @@ object AcercaForm: TAcercaForm
     Font.Style = [fsBold]
     ParentFont = False
     Layout = tlCenter
+    ExplicitWidth = 398
   end
   object Label2: TLabel
     Left = 0
@@ -39,7 +40,7 @@ object AcercaForm: TAcercaForm
     Align = alTop
     Alignment = taCenter
     AutoSize = False
-    Caption = 'Desarrollado por la cátedra de Algoritmos y Estructuras de Datos'
+    Caption = 'Desarrollado por la c'#225'tedra de Algoritmos y Estructuras de Datos'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -13
@@ -56,7 +57,7 @@ object AcercaForm: TAcercaForm
     Align = alTop
     Alignment = taCenter
     AutoSize = False
-    Caption = 'Universidad Tecnológica Nacional - Facultad Regional Mendoza'
+    Caption = 'Universidad Tecnol'#243'gica Nacional - Facultad Regional Mendoza'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -13
@@ -131,7 +132,7 @@ object AcercaForm: TAcercaForm
     Align = alTop
     Alignment = taCenter
     AutoSize = False
-    Caption = 'www.frm.utn.edu.ar/algoritmos'
+    Caption = 'www.frm.utn.edu.ar'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clHighlight
     Font.Height = -13
@@ -151,7 +152,7 @@ object AcercaForm: TAcercaForm
     Align = alTop
     Alignment = taCenter
     AutoSize = False
-    Caption = 'Proyecto Google Code'
+    Caption = 'Proyecto en GitHub'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clHighlight
     Font.Height = -11
@@ -606,6 +607,9 @@ object AcercaForm: TAcercaForm
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 0
+    DesignSize = (
+      467
+      41)
     object Label8: TLabel
       Left = 0
       Top = 0
@@ -614,7 +618,7 @@ object AcercaForm: TAcercaForm
       Align = alClient
       Alignment = taCenter
       AutoSize = False
-      Caption = 'Versión 1.0'
+      Caption = 'Versi'#243'n 1.1'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -13
@@ -638,11 +642,11 @@ object AcercaForm: TAcercaForm
         Tag = 3
         Left = 56
         Top = 0
-        Width = 153
+        Width = 217
         Height = 17
         Cursor = crHandPoint
         AutoSize = False
-        Caption = 'dabdala@frm.utn.edu.ar'
+        Caption = 'dabdala@adnsistemas.com.ar'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clHighlight
         Font.Height = -13

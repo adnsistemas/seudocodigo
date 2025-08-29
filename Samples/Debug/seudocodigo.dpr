@@ -4,7 +4,6 @@ uses
   Forms,
   ide_editor in 'ide_editor.pas' {editor},
   ide_evaluador in 'ide_evaluador.pas' {evaluator},
-  SynHighlighterSeudoc in '..\..\Source\SynHighlighterSeudoc.pas',
   ide_about in 'ide_about.pas' {AcercaForm},
   id_config in 'id_config.pas' {FormConfiguracion},
   ide_search in 'ide_search.pas' {LocalizarForm},

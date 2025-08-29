@@ -1099,9 +1099,10 @@ type
     case tipo:TPSBaseType of
       btU8:(vlogico:boolean); //lógico
       btS8,btU16,btS16,btU32,btS32:(ventero:integer);//entero
+      btS64:(venterolargo:int64);//entero_largo
       btSingle,btDouble,btExtended,btCurrency:(vreal:real);//real o moneda
-      btChar:(vcaracter:char);//caracter
-      btString:(vcadena:PChar);//cadena
+      btChar:(vcaracter:WideChar);//caracter
+      btString:(vcadena:PWideChar);//cadena
       btRecord:(ename:PChar;vtam:integer;vestructura:Pointer);//estructura
       btClass:(vlista:TList);//lista
   end;
@@ -9190,7 +9191,11 @@ begin
       Caller.OnRead(Caller,btS32,i);
       Stack.SetInt(StackPos,Tbts32(i));    //Integer/LongInt
       end;
-    btString     : begin
+    btS64         : begin
+      Caller.OnRead(Caller,btS64,i);
+      Stack.SetInt64(StackPos,Tbts64(i));    //Integer/LongInt
+      end;
+    btString,btWideString: begin
       Caller.OnRead(Caller,btString,s);
       Stack.SetString(StackPos,tbtString(s));
       end;
@@ -9206,9 +9211,9 @@ begin
       Caller.OnRead(Caller,btExtended,r);
       Stack.SetReal(StackPos,r);
       end;
-    btChar       : begin
+    btChar,btWideChar: begin
       Caller.OnRead(Caller,btChar,c);
-      Stack.SetChar(StackPos,tbtChar(c));
+      Stack.SetChar(StackPos,Char(tbtChar(c)));
       end;
     btCurrency   : begin
       Caller.OnRead(Caller,btCurrency,r);
@@ -9336,10 +9341,11 @@ begin
   case e.tipo of
     btU8         : Caller.OnShow(Caller,e.tipo,e.vlogico);     //Boolean
     btS8,btU16,btS16,btU32,btS32: Caller.OnShow(Caller,e.tipo,e.ventero);
-    btString     : Caller.OnShow(Caller,e.tipo,e.vcadena);
+    btS64: Caller.OnShow(Caller,e.tipo,e.venterolargo);
+    btString,btWideString     : Caller.OnShow(Caller,e.tipo,e.vcadena);
     btSingle,btDouble,btExtended,btCurrency: Caller.OnShow(Caller,e.tipo,e.vreal);
-    btChar       : Caller.OnShow(Caller,e.tipo,e.vcaracter);
-{    btRecord: No hay forma de mostrar un registro } 
+    btChar,btWideChar       : Caller.OnShow(Caller,e.tipo,e.vcaracter);
+{    btRecord: No hay forma de mostrar un registro }
     btClass: begin
         if Assigned(e.vlista) then
           i := e.vlista.Count
@@ -9371,8 +9377,10 @@ begin
       btU8         : e.vlogico := Stack.GetBool(-1);
       btS8,btU16,btS16,btU32,btS32: e.ventero := Stack.GetInt(-1);
       btString     : e.vcadena := PChar(Stack.GetString(-1));
+      btWideString : e.vcadena := PWideChar(Stack.GetWideString(-1));
       btSingle,btDouble,btExtended,btCurrency: e.vreal := Stack.GetReal(-1);
       btChar       : e.vcaracter := Stack.GetString(-1)[1];
+      btWideChar   : e.vcaracter := Stack.GetWideString(-1)[1];
       btRecord: begin
         e.vtam := calcTamReg_(arr.Dta,arr.aType);
         GetMem(e.vestructura,e.vtam);
@@ -9382,6 +9390,7 @@ begin
           VerificarLista(Stack,-1);
           e.vlista := TList(Stack.GetClass(-1));
         end;
+      btS64: e.venterolargo := Stack.GetInt64(-1);
       else Result:=false;
     end;
     if Result then try
@@ -10677,21 +10686,56 @@ begin
 end;
 
 
-{$ifndef FPC}
-  {$include x86.inc}
-{$else}
-{$IFDEF Delphi6UP}
-  {$if defined(cpu86)}
-    {$include x86.inc}
-  {$elseif defined(cpupowerpc)}
-    {$include powerpc.inc}
-  {$else}
-    {$fatal Pascal Script is not supported for your architecture at the moment!}
-  {$ifend}
+{$IFNDEF FPC}
+  {$UNDEF _INVOKECALL_INC_}
+  {$UNDEF USEINVOKECALL}
+
+  {$IFDEF DELPHI23UP}
+  {$IFNDEF AUTOREFCOUNT}
+  {$IFNDEF PS_USECLASSICINVOKE}
+    {$DEFINE USEINVOKECALL}
+  {$ENDIF}
+  {$ENDIF}
+  {$ENDIF}
+
+  {$IFDEF USEINVOKECALL}
+    {$include InvokeCall.inc}
+    {$DEFINE _INVOKECALL_INC_}
+  {$ELSE}
+    {$IFDEF Delphi6UP}
+      {$IFDEF CPUX64}
+        {$include x64.inc}
+      {$ELSE}
+        {$include x86.inc}
+      {$ENDIF}
+    {$ELSE}
+      {$include x86.inc}
+    {$ENDIF}
+  {$ENDIF}
 {$ELSE}
-{$include x86.inc}
+
+  {$IFDEF USEINVOKECALL}
+    {$include InvokeCall.inc}
+    {$DEFINE _INVOKECALL_INC_}
+  {$ELSE}
+  {$IFDEF Delphi6UP}
+    {$if defined(cpu86)}
+      {$include x86.inc}
+    {$elseif defined(cpupowerpc)}
+      {$include powerpc.inc}
+    {$elseif defined(cpuarm)}
+      {$include arm.inc}
+    {$elseif defined(CPUX86_64)}
+      {$include x64.inc}
+    {$else}
+      {$fatal Pascal Script is not supported for your architecture at the moment!}
+    {$ifend}
+  {$ELSE}
+    {$include x86.inc}
+  {$ENDIF}
+  {$ENDIF}
 {$ENDIF}
-{$endif}
+
 
 type
   PScriptMethodInfo = ^TScriptMethodInfo;
@@ -11695,6 +11739,7 @@ var
   I, ParamCount: Longint;
   Params: TPSList;
   n: TPSVariantIFC;
+  data: TMethod;
   n2: PIFVariant;
   FSelf: Pointer;
 begin
@@ -11725,26 +11770,27 @@ begin
       Caller.CMD_Err(erNullPointerException);
       exit;
     end;
-    n2 := CreateHeapVariant(Caller.FindType2(btDouble));
+    n2 := CreateHeapVariant(Caller.FindType2(btPChar));
     if n2 = nil then
     begin
       Result := False;
       exit;
     end;
-    TMethod(PPSVariantDouble(n2).Data).Code := nil;
-    TMethod(PPSVariantDouble(n2).Data).Data := nil;
     Params := TPSList.Create;
-    Params.Add(NewPPSVariantIFC(n2, True));
+    data.Code := nil;
+    data.Data := nil;
+    PPSVariantDynamicArray(n2)^.Data:= @data;
+    Params.Add(NewPPSVariantIFC(n2, false));
     for i := Stack.Count -3 downto Longint(Stack.Count) - ParamCount -2 do
       Params.Add(NewPPSVariantIFC(Stack[i], False));
     try
       Result := Caller.InnerfuseCall(FSelf, p.Ext1, cdRegister, Params, nil);
     finally
-      Cardinal(n.Dta^) := getMethodNo(TMethod(PPSVariantDouble(n2).Data), Caller);
+      Cardinal(n.Dta^) := getMethodNo(data, Caller);
       if Cardinal(n.Dta^) = 0 then
       begin
-        Pointer(Pointer((IPointer(n.dta)+4))^) := TMethod(PPSVariantDouble(n2).Data).Data;
-        Pointer(Pointer((IPointer(n.dta)+8))^) := TMethod(PPSVariantDouble(n2).Data).Code;
+        Pointer(Pointer((IPointer(n.dta)+ PointerSize))^) := data.Data;
+        Pointer(Pointer((IPointer(n.dta)+ PointerSize2))^) := data.Code;
       end;
       DestroyHeapVariant(n2);
       DisposePPSVariantIFCList(Params);
@@ -11765,24 +11811,13 @@ begin
       Caller.CMD_Err(erNullPointerException);
       exit;
     end;
-    n2 := CreateHeapVariant(Caller.FindType2(btDouble));
-    if n2 = nil then
-    begin
-      Result := False;
-      exit;
-    end;
-    TMethod(PPSVariantDouble(n2).Data) := MkMethod(Caller, cardinal(n.dta^));
     Params := TPSList.Create;
-    Params.Add(NewPPSVariantIFC(n2, False));
+    Params.Add(@n);
 
-    for i := Stack.Count -2 downto Longint(Stack.Count) - ParamCount -1 do
-    begin
-      Params.Add(NewPPSVariantIFC(Stack[I], False));
-    end;
     try
       Result := Caller.InnerfuseCall(FSelf, p.Ext2, cdregister, Params, nil);
     finally
-      DestroyHeapVariant(n2);
+      Params.Clear;
       DisposePPSVariantIFCList(Params);
     end;
   end;
@@ -13470,7 +13505,7 @@ begin
   else
     val := items[ItemNo];
   ok := true;
-  PSSetChar(@PPSVariantData(val).Data, val.FType, ok, Data);
+  PSSetChar(@PPSVariantData(val).Data, val.FType, ok, AnsiChar(Data));
   if not ok then raise Exception.Create(RPS_TypeMismatch);
 end;
 

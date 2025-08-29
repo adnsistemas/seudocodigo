@@ -118,6 +118,7 @@ type
                             Var Continue: Boolean) of Object;  // jgv
 
   TIntegerReadEvent = function (Sender:TObject;limit:integer):integer of object;
+  TLargeIntegerReadEvent = function (Sender:TObject;limit:integer):int64 of object;
   TRealReadEvent = function (Sender:TObject;size:integer):real of object;
   TStringReadEvent = function (Sender:TObject):string of object;
   TCharReadEvent = function (Sender:TObject):char of object;
@@ -161,6 +162,7 @@ type
     FOnBoolRead: TBooleanReadEvent;
     FOnCharRead: TCharReadEvent;
     FOnIntRead: TIntegerReadEvent;
+    FOnInt64Read: TLargeIntegerReadEvent;
     FOnRealRead: TRealReadEvent;
     FOnStringRead: TStringReadEvent;
     FOnCurrencyRead: TCurrencyReadEvent;
@@ -346,6 +348,7 @@ type
   published
     //-- utn-frm
     property OnIntegerRead:TIntegerReadEvent read FOnIntRead write FOnIntRead;
+    property OnInt64Read:TLargeIntegerReadEvent read FOnInt64Read write FOnInt64Read;
     property OnRealRead:TRealReadEvent read FOnRealRead write FOnRealRead;
     property OnStringRead:TStringReadEvent read FOnStringRead write FOnStringRead;
     property OnCharRead:TCharReadEvent read FOnCharRead write FOnCharRead;
@@ -504,7 +507,13 @@ begin
       if Assigned(scp.FOnIntRead) then
         Integer(Data) := scp.FOnIntRead(scp,limit);
     end;
-    btString: begin //cadena
+    btS64: begin
+      Int64(Data) := 0;
+      limit := High(Int64);
+      if Assigned(scp.FOnInt64Read) then
+        Int64(Data) := scp.FOnInt64Read(scp,limit);
+    end;
+    btString,btWideString: begin //cadena
       string(Pointer(data)) := '';
       if Assigned(scp.FOnStringRead) then
         string(Pointer(data)) := scp.FOnStringRead(scp);
@@ -525,7 +534,7 @@ begin
       if Assigned(scp.FOnCurrencyRead) then
         currency(data) := scp.FOnCurrencyRead(scp);
     end;
-    btChar: begin //caracter
+    btChar,btWideChar: begin //caracter
       char(data) := #0;
       if Assigned(scp.FOnCharRead) then
         char(data) := scp.FOnCharRead(scp);
@@ -551,7 +560,11 @@ begin
       if Assigned(scp.FOnIntShow) then
         scp.FOnIntShow(scp,integer(data));
     end;
-    btString: begin //cadena
+    btS64: begin
+      if Assigned(scp.FOnIntShow) then
+        scp.FOnIntShow(scp,int64(data));
+    end;
+    btString,btWideString: begin //cadena
       if Assigned(scp.FOnStringShow) then
         scp.FOnStringShow(scp,string(PChar(data)));
     end;
@@ -563,7 +576,7 @@ begin
       if Assigned(scp.FOnCurrencyShow) then
         scp.FOnCurrencyShow(scp,currency(data));
     end;
-    btChar: begin //caracter
+    btChar,btWideChar: begin //caracter
       if Assigned(scp.FOnCharShow) then
         scp.FOnCharShow(scp,char(data));
     end;
