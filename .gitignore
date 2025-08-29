@@ -1,0 +1,4 @@
+*.dcu
+Dcu
+*/__history/*
+*/Debug/*
