@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2025/08/29 12:09:53.000.450,=C:\Users\David\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2025/08/29 12:10:28.000.941,C:\Users\David\Documents\Embarcadero\Studio\Projects\Unit1.pas=C:\Users\David\Documents\Embarcadero\Studio\Projects\seudoriginal\UEditorAyudaForm.pas</Transaction>
+    <Transaction>2025/08/29 12:10:28.000.941,C:\Users\David\Documents\Embarcadero\Studio\Projects\Unit1.dfm=C:\Users\David\Documents\Embarcadero\Studio\Projects\seudoriginal\UEditorAyudaForm.dfm</Transaction>
+    <Transaction>2025/08/29 12:10:43.000.738,C:\Users\David\Documents\Embarcadero\Studio\Projects\Project1.dproj=C:\Users\David\Documents\Embarcadero\Studio\Projects\seudoriginal\editorAyuda.dproj</Transaction>
+    <Transaction>2025/08/29 18:58:53.000.913,=C:\Users\David\Documents\Embarcadero\Studio\Projects\seudoriginal\Unit1.pas</Transaction>
+    <Transaction>2025/08/29 19:00:34.000.726,C:\Users\David\Documents\Embarcadero\Studio\Projects\seudoriginal\Unit1.dfm=C:\Users\David\Documents\Embarcadero\Studio\Projects\seudoriginal\UArbolEstructuraFrame.dfm</Transaction>
+    <Transaction>2025/08/29 19:00:34.000.726,C:\Users\David\Documents\Embarcadero\Studio\Projects\seudoriginal\Unit1.pas=C:\Users\David\Documents\Embarcadero\Studio\Projects\seudoriginal\UArbolEstructuraFrame.pas</Transaction>
+    <Transaction>2025/08/29 19:44:22.000.856,=C:\Users\David\Documents\Embarcadero\Studio\Projects\seudoriginal\Unit1.pas</Transaction>
+    <Transaction>2025/08/29 19:45:19.000.305,C:\Users\David\Documents\Embarcadero\Studio\Projects\seudoriginal\Unit1.dfm=C:\Users\David\Documents\Embarcadero\Studio\Projects\seudoriginal\UContenidoAyudaFrame.dfm</Transaction>
+    <Transaction>2025/08/29 19:45:19.000.305,C:\Users\David\Documents\Embarcadero\Studio\Projects\seudoriginal\Unit1.pas=C:\Users\David\Documents\Embarcadero\Studio\Projects\seudoriginal\UContenidoAyudaFrame.pas</Transaction>
+    <Transaction>2025/08/30 00:14:06.000.718,=C:\Users\David\Documents\Embarcadero\Studio\Projects\seudoriginal\Unit1.pas</Transaction>
+    <Transaction>2025/08/30 00:14:16.000.111,C:\Users\David\Documents\Embarcadero\Studio\Projects\seudoriginal\Unit1.pas=C:\Users\David\Documents\Embarcadero\Studio\Projects\seudoriginal\RichOle.pas</Transaction>
+  </Transactions>
+</BorlandProject>

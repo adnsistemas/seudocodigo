@@ -11,7 +11,9 @@ uses
   ide_search in 'ide_search.pas' {LocalizarForm},
   ide_monitor in 'ide_monitor.pas' {VMonitorForm},
   UseHTMLHelp in '..\UseHTMLHelp.pas',
-  UAyudaForm in '..\..\UAyudaForm.pas' {AyudaForm};
+  UAyudaForm in '..\..\UAyudaForm.pas' {AyudaForm},
+  UArbolEstructuraFrame in '..\..\UArbolEstructuraFrame.pas' {ArbolEstructuraFrame: TFrame},
+  UContenidoAyudaFrame in '..\..\UContenidoAyudaFrame.pas' {ContenidoAyudaFrame: TFrame};
 
 {$R *.res}
 

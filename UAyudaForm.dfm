@@ -1,7 +1,7 @@
 object AyudaForm: TAyudaForm
   Left = 0
   Top = 0
-  Caption = 'Ayuda Seudoc'#243'digo'
+  Caption = 'Ayuda'
   ClientHeight = 311
   ClientWidth = 514
   Color = clBtnFace
@@ -12,76 +12,49 @@ object AyudaForm: TAyudaForm
   Font.Style = []
   OldCreateOrder = False
   OnCreate = FormCreate
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object Splitter1: TSplitter
-    Left = 177
+    Left = 201
     Top = 0
     Height = 311
-    ExplicitLeft = 256
-    ExplicitTop = 200
-    ExplicitHeight = 100
+    ExplicitLeft = 400
+    ExplicitTop = -8
   end
-  object TreeView1: TTreeView
+  inline ArbolEstructuraFrame1: TArbolEstructuraFrame
     Left = 0
     Top = 0
-    Width = 177
+    Width = 201
     Height = 311
     Align = alLeft
-    Indent = 19
     TabOrder = 0
-    OnDblClick = TreeView1DblClick
-    OnKeyDown = TreeView1KeyDown
+    ExplicitWidth = 201
+    ExplicitHeight = 311
+    inherited TreeView: TTreeView
+      Width = 201
+      Height = 311
+      OnDblClick = TreeView1DblClick
+      OnKeyDown = TreeView1KeyDown
+      ExplicitTop = 0
+      ExplicitWidth = 201
+    end
   end
-  object RichEdit1: TRichEdit
-    Left = 180
+  inline ContenidoAyudaFrame1: TContenidoAyudaFrame
+    Left = 204
     Top = 0
-    Width = 334
+    Width = 310
     Height = 311
     Align = alClient
-    Font.Charset = ANSI_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    Lines.Strings = (
-      'RichEdit1')
-    ParentFont = False
-    ReadOnly = True
-    ScrollBars = ssBoth
     TabOrder = 1
-    Zoom = 100
-  end
-  object CDSEstructura: TClientDataSet
-    Aggregates = <>
-    Params = <>
-    Left = 72
-    Top = 144
-    object CDSEstructuranumero: TIntegerField
-      FieldName = 'numero'
-    end
-    object CDSEstructurapadre: TIntegerField
-      FieldName = 'padre'
-    end
-    object CDSEstructuratitulo: TStringField
-      FieldName = 'titulo'
-      Size = 180
-    end
-    object CDSEstructuracontenido: TIntegerField
-      FieldName = 'contenido'
-    end
-  end
-  object CDSContenidos: TClientDataSet
-    Aggregates = <>
-    Params = <>
-    Left = 288
-    Top = 144
-    object CDSContenidosnumero: TIntegerField
-      FieldName = 'numero'
-    end
-    object CDSContenidoscontenido: TMemoField
-      FieldName = 'contenido'
-      BlobType = ftMemo
+    ExplicitLeft = 204
+    ExplicitWidth = 310
+    ExplicitHeight = 311
+    inherited RichEdit: TRichEdit
+      Width = 310
+      Height = 311
+      ExplicitWidth = 310
+      ExplicitHeight = 311
     end
   end
 end

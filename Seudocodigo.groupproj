@@ -12,6 +12,9 @@
         <Projects Include="Samples\Debug\seudocodigo.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="editorAyuda.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -47,14 +50,23 @@
     <Target Name="seudocodigo:Make">
         <MSBuild Projects="Samples\Debug\seudocodigo.dproj" Targets="Make"/>
     </Target>
+    <Target Name="editorAyuda">
+        <MSBuild Projects="editorAyuda.dproj"/>
+    </Target>
+    <Target Name="editorAyuda:Clean">
+        <MSBuild Projects="editorAyuda.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="editorAyuda:Make">
+        <MSBuild Projects="editorAyuda.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="SynEdit_R;PascalScript_Core;seudocodigo"/>
+        <CallTarget Targets="SynEdit_R;PascalScript_Core;seudocodigo;editorAyuda"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="SynEdit_R:Clean;PascalScript_Core:Clean;seudocodigo:Clean"/>
+        <CallTarget Targets="SynEdit_R:Clean;PascalScript_Core:Clean;seudocodigo:Clean;editorAyuda:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="SynEdit_R:Make;PascalScript_Core:Make;seudocodigo:Make"/>
+        <CallTarget Targets="SynEdit_R:Make;PascalScript_Core:Make;seudocodigo:Make;editorAyuda:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

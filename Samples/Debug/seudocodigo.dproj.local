@@ -1,9 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
-  <Transactions>
-    <Transaction>2025/08/17 00:06:02.159,C:\Users\David\Documents\Embarcadero\Studio\Projects\seudoriginal\Source\SynHighlighterSeudoc.pas=</Transaction>
-    <Transaction>2025/08/29 11:29:41.320,=C:\Users\David\Documents\Embarcadero\Studio\Projects\seudoriginal\UAyudaForm.pas</Transaction>
-    <Transaction>2025/08/29 11:42:05.879,=C:\Users\David\Documents\Embarcadero\Studio\Projects\seudoriginal\contenidos.cds</Transaction>
-    <Transaction>2025/08/29 11:42:05.928,=C:\Users\David\Documents\Embarcadero\Studio\Projects\seudoriginal\estructura.cds</Transaction>
+	<Transactions>
+    <Transaction>2025/08/17 00:06:02.000.159,C:\Users\David\Documents\Embarcadero\Studio\Projects\seudoriginal\Source\SynHighlighterSeudoc.pas=</Transaction>
+    <Transaction>2025/08/29 11:29:41.000.320,=C:\Users\David\Documents\Embarcadero\Studio\Projects\seudoriginal\UAyudaForm.pas</Transaction>
+    <Transaction>2025/08/29 11:42:05.000.879,=C:\Users\David\Documents\Embarcadero\Studio\Projects\seudoriginal\contenidos.cds</Transaction>
+    <Transaction>2025/08/29 11:42:05.000.928,=C:\Users\David\Documents\Embarcadero\Studio\Projects\seudoriginal\estructura.cds</Transaction>
+    <Transaction>2025/08/29 19:59:58.000.672,=C:\Users\David\Documents\Embarcadero\Studio\Projects\seudoriginal\UArbolEstructuraFrame.pas</Transaction>
+    <Transaction>2025/08/29 19:59:58.000.684,=C:\Users\David\Documents\Embarcadero\Studio\Projects\seudoriginal\UContenidoAyudaFrame.pas</Transaction>
+    <Transaction>2025/08/30 14:53:36.126,=C:\Users\David\Documents\Embarcadero\Studio\Projects\seudoriginal\imagenes.cds</Transaction>
   </Transactions>
 </BorlandProject>

@@ -5,30 +5,27 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ComCtrls, Vcl.ExtCtrls,
-  Data.DB, Datasnap.DBClient;
+  Data.DB, Datasnap.DBClient, UArbolEstructuraFrame, UContenidoAyudaFrame;
 
 type
   TAyudaForm = class(TForm)
-    TreeView1: TTreeView;
     Splitter1: TSplitter;
-    RichEdit1: TRichEdit;
-    CDSEstructura: TClientDataSet;
-    CDSContenidos: TClientDataSet;
-    CDSEstructuranumero: TIntegerField;
-    CDSEstructurapadre: TIntegerField;
-    CDSEstructuratitulo: TStringField;
-    CDSEstructuracontenido: TIntegerField;
-    CDSContenidosnumero: TIntegerField;
-    CDSContenidoscontenido: TMemoField;
+    ArbolEstructuraFrame1: TArbolEstructuraFrame;
+    ContenidoAyudaFrame1: TContenidoAyudaFrame;
     procedure TreeView1KeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure TreeView1DblClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
+    FActual,FAyuda: string;
+    FUsarArchivos: boolean;
     { Private declarations }
   public
     { Public declarations }
     procedure mostrarContenido;
+    property usarArchivos:boolean read FUsarArchivos write FUsarArchivos default false;
+    property nombreAyuda:string read FAyuda write FAyuda;
   end;
 
 var
@@ -39,30 +36,34 @@ implementation
 {$R *.dfm}
 
 procedure TAyudaForm.FormCreate(Sender: TObject);
-var
-  rs:TResourceStream;
 begin
-  try
-    rs := TResourceStream.Create(HInstance,'CDSE',RT_RCDATA);
-    try
-      CDSEstructura.LoadFromStream(rs);
-    finally
-      rs.Free;
-    end;
-    rs := TResourceStream.Create(HInstance,'CDSC',RT_RCDATA);
-    try
-      CDSContenidos.LoadFromStream(rs);
-    finally
-      rs.Free;
-    end;
-  except
-    // ignorar
+  nombreAyuda := '.';
+end;
+
+procedure TAyudaForm.FormShow(Sender: TObject);
+var
+  nombre:string;
+begin
+  if FActual <> FAyuda then begin
+    FActual := FAyuda;
+    nombre := '';
+    if FAyuda <> '.' then
+      nombre := FAyuda;
+    ArbolEstructuraFrame1.Load(nombre,FUsarArchivos);
+    ContenidoAyudaFrame1.Load(nombre,FUsarArchivos);
   end;
+  if (ArbolEstructuraFrame1.TreeView.Items.Count > 0) and not Assigned(ArbolEstructuraFrame1.NodoActual) then
+    ArbolEstructuraFrame1.TreeView.Select(ArbolEstructuraFrame1.TreeView.Items[0]);
+  mostrarContenido;
 end;
 
 procedure TAyudaForm.mostrarContenido;
 begin
   // cargar la sección seleccionada en el RichEdit
+  if Assigned(ArbolEstructuraFrame1.NodoActual) and ArbolEstructuraFrame1.CDSEstructura.Locate('numero',ArbolEstructuraFrame1.numeroActual,[]) then
+    ContenidoAyudaFrame1.Mostrar(ArbolEstructuraFrame1.CDSEstructura.FieldByName('contenido').AsInteger,true)
+  else
+    ContenidoAyudaFrame1.Mostrar(0);
 end;
 
 procedure TAyudaForm.TreeView1DblClick(Sender: TObject);

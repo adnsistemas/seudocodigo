@@ -1,7 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
   <Default.Personality>
-    <Projects ActiveProject="C:\Users\David\Documents\Embarcadero\Studio\Projects\seudoriginal\Samples\Debug\seudocodigo.dproj"/>
+    <Projects ActiveProject="C:\Users\David\Documents\Embarcadero\Studio\Projects\seudoriginal\editorAyuda.dproj"/>
   </Default.Personality>
-  <Transactions> </Transactions>
+  <Transactions>
+    <Transaction>2025/08/29 11:06:17.405,C:\Users\David\Documents\Embarcadero\Studio\Projects\seudoriginal\Seudocodigo.groupproj=C:\Users\David\Documents\Embarcadero\Studio\Projects\seudoriginal\Source\Seudocodigo.groupproj</Transaction>
+  </Transactions>
 </BorlandProject>
