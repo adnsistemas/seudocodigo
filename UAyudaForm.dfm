@@ -53,6 +53,7 @@ object AyudaForm: TAyudaForm
     inherited RichEdit: TRichEdit
       Width = 310
       Height = 311
+      ScrollBars = ssVertical
       ExplicitWidth = 310
       ExplicitHeight = 311
     end
